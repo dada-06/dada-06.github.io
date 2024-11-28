@@ -1,12 +1,12 @@
 const preCache = [
-  "/csd-one.github.io/images/taichi.png",
-  "/csd-one.github.io/images/banner.webp",
-  "/csd-one.github.io/images/taichi-fill.png",
-  "/csd-one.github.io/css/loader.css",
-  "/csd-one.github.io/css/style.css",
-  "/csd-one.github.io/js/script.js",
+  "/csd-one/images/taichi.png",
+  "/csd-one/images/banner.webp",
+  "/csd-one/images/taichi-fill.png",
+  "/csd-one/css/loader.css",
+  "/csd-one/css/style.css",
+  "/csd-one/js/script.js",
 ];
-const VERSION = "1732755607119";
+const VERSION = "1732756542961";
 const cacheDomain = [
   "fonts.googleapis.com",
   "npm.webcache.cn",
