@@ -1,18 +1,18 @@
 :root {
-  --blue-0: #f00;
-  --blue-1: #ff5252;
-  --blue-2: #ff7c7c;
-  --blue-3: #ffafaf;
-  --blue-4: #ffd0d0;
-  --blue-5: #ffecec;
-  --blue-5-5: #fff3f3;
-  --blue-6: #fff7f7;
+  --red-0: #f00;
+  --red-1: #ff5252;
+  --red-2: #ff7c7c;
+  --red-3: #ffafaf;
+  --red-4: #ffd0d0;
+  --red-5: #ffecec;
+  --red-5-5: #fff3f3;
+  --red-6: #fff7f7;
   --grey-9: #888;
   --grey-7: var(--color-default);
   --color-archive-year: #000;
   --color-default: #555;
-  --color-border: var(--blue-3);
-  --color-link: var(--blue-1);
+  --color-border: var(--red-3);
+  --color-link: var(--red-1);
   --color-background: #eee;
   --color-code-background: #f8f8f8;
   --color-header-background: rgba(255,255,255,0.9);
@@ -21,11 +21,11 @@
   --color-wrap: #fff;
   --color-sticky: #fff;
   --color-h2-border: #eee;
-  --color-meta-shadow: var(--blue-6);
+  --color-meta-shadow: var(--red-6);
   --color-hover-shadow: rgba(120,120,120,0.15);
-  --color-h2-after: var(--blue-1);
-  --color-blue-6-shadow: rgba(255,78,78,0.6);
-  --color-blue-3-shadow: rgba(255,78,78,0.3);
+  --color-h2-after: var(--red-1);
+  --color-red-6-shadow: rgba(255,78,78,0.6);
+  --color-red-3-shadow: rgba(255,78,78,0.3);
   --highlight-nav: #e6e6e6;
   --highlight-scrollbar: #d6d6d6;
   --highlight-background: #f7f7f7;
@@ -33,12 +33,12 @@
   --highlight-selection: #e9e9e9;
   --highlight-foreground: #4d4d4d;
   --highlight-comment: #7d7d7d;
-  --highlight-blue: #c8362b;
+  --highlight-red: #c8362b;
   --highlight-orange: #b66014;
   --highlight-yellow: #cb911d;
   --highlight-green: #2ea52e;
   --highlight-aqua: #479d9d;
-  --highlight-blue: #1973b8;
+  --highlight-red: #1973b8;
   --highlight-purple: #7135ac;
   --cursor-default: url("../images/cursor/reimu-cursor-default.png"), auto;
   --cursor-pointer: url("../images/cursor/reimu-cursor-pointer.png"), pointer;
@@ -48,14 +48,14 @@
   --top-icon: url("../images/taichi.png");
 }
 [data-theme="dark"]:root {
-  --blue-0: var(--blue-1);
-  --blue-4: rgba(255,208,208,0.5);
-  --blue-5: rgba(255,228,228,0.15);
-  --blue-5-5: rgba(255,236,236,0.05);
-  --blue-6: rgba(255,243,243,0.2);
+  --red-0: var(--red-1);
+  --red-4: rgba(255,208,208,0.5);
+  --red-5: rgba(255,228,228,0.15);
+  --red-5-5: rgba(255,236,236,0.05);
+  --red-6: rgba(255,243,243,0.2);
   --color-archive-year: #999;
   --color-default: #999;
-  --color-border: var(--blue-5);
+  --color-border: var(--red-5);
   --color-background: #21252b;
   --color-code-background: rgba(232,232,232,0.1);
   --color-header-background: #222;
@@ -72,12 +72,12 @@
   --highlight-selection: #515151;
   --highlight-foreground: #ccc;
   --highlight-comment: #999;
-  --highlight-blue: #f47067;
+  --highlight-red: #f47067;
   --highlight-orange: #f69d50;
   --highlight-yellow: #fc6;
   --highlight-green: #9c9;
   --highlight-aqua: #6cc;
-  --highlight-blue: #54b6ff;
+  --highlight-red: #54b6ff;
   --highlight-purple: #dcbdfb;
 }
 [data-theme="dark"]:root img {
