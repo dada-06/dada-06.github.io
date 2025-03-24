@@ -17,7 +17,7 @@
   <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":"复制成功(*^▽^*)","fail":"复制失败 (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"本文版权：本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！"}};window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://csd0617.github.io';</script>
   
   <title>
-    Hello World |
+    php内置类信息泄露 |
     
     达达的博客
   </title>
@@ -32,15 +32,15 @@
 
   
   
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+    <meta name="description" content="通过 __toString() 方法输出数据，从而被滥用于信息泄露。 1. ExceptionException 的 __toString() 方法会输出 message，可以用来泄露敏感信息： 1?v1&#x3D;Exception&amp;v2&#x3D;file_get_contents&amp;arg&#x3D;&#x2F;etc&#x2F;passwd  相当于： 1echo new Exception(file_get_content">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://csd0617.github.io/2024/11/28/hello-world/index.html">
+<meta property="og:title" content="php内置类信息泄露">
+<meta property="og:url" content="http://csd0617.github.io/2025/03/24/php%E5%86%85%E7%BD%AE%E7%B1%BB%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/index.html">
 <meta property="og:site_name" content="达达的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="通过 __toString() 方法输出数据，从而被滥用于信息泄露。 1. ExceptionException 的 __toString() 方法会输出 message，可以用来泄露敏感信息： 1?v1&#x3D;Exception&amp;v2&#x3D;file_get_contents&amp;arg&#x3D;&#x2F;etc&#x2F;passwd  相当于： 1echo new Exception(file_get_content">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-11-27T16:21:10.334Z">
-<meta property="article:modified_time" content="2024-11-27T16:21:10.334Z">
+<meta property="article:published_time" content="2025-03-24T12:45:00.000Z">
+<meta property="article:modified_time" content="2025-03-24T12:46:03.693Z">
 <meta property="article:author" content="达达">
 <meta name="twitter:card" content="summary">
   
@@ -180,7 +180,7 @@
           
         </picture>
         
-          <img  fetchpriority="high" src="/images/banner.webp" alt="Hello World">
+          <img  fetchpriority="high" src="/images/banner.webp" alt="php内置类信息泄露">
         
       
     
@@ -191,7 +191,7 @@
         
         
           <a href="/" id="logo">
-            <h1 data-aos="slide-up">Hello World</h1>
+            <h1 data-aos="slide-up">php内置类信息泄露</h1>
           </a>
         
       
@@ -218,7 +218,7 @@
   <h3 class="toc-title">文章目录</h3>
   <div class="sidebar-toc-wrapper toc-div-class" >
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Exception"><span class="toc-number">1.</span> <span class="toc-text">1. Exception</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Error"><span class="toc-number">2.</span> <span class="toc-text">2. Error</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-ReflectionClass"><span class="toc-number">3.</span> <span class="toc-text">3. ReflectionClass</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-ReflectionFunction"><span class="toc-number">4.</span> <span class="toc-text">4. ReflectionFunction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-DateTime"><span class="toc-number">5.</span> <span class="toc-text">5. DateTime</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-SimpleXMLElement"><span class="toc-number">6.</span> <span class="toc-text">6. SimpleXMLElement</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-DOMDocument"><span class="toc-number">7.</span> <span class="toc-text">7. DOMDocument</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-SplFileObject"><span class="toc-number">8.</span> <span class="toc-text">8. SplFileObject</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-FilesystemIterator"><span class="toc-number">9.</span> <span class="toc-text">9. FilesystemIterator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-DirectoryIterator"><span class="toc-number">10.</span> <span class="toc-text">10. DirectoryIterator</span></a></li></ol>
       
   </div>
 </div>
@@ -302,13 +302,13 @@
   
 </aside>
 
-          <section id="main"><article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+          <section id="main"><article id="post-php内置类信息泄露" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-inner" data-aos="fade-up">
     <div class="article-meta">
       <div class="article-date">
   <span class="article-date-link" data-aos="zoom-in">
-    <time datetime="2024-11-27T16:21:10.334Z" itemprop="datePublished">2024-11-28</time>
-    <time style="display: none;" id="post-update-time">2024-11-28</time>
+    <time datetime="2025-03-24T12:45:00.000Z" itemprop="datePublished">2025-03-24</time>
+    <time style="display: none;" id="post-update-time">2025-03-24</time>
   </span>
 </div>
 
@@ -321,19 +321,124 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+        <p>通过 <code>__toString()</code> 方法输出数据，从而被滥用于信息泄露。</p>
+<h2 id="1-Exception"><a href="#1-Exception" class="headerlink" title="1. Exception"></a><strong>1. <code>Exception</code></strong></h2><p><code>Exception</code> 的 <code>__toString()</code> 方法会输出 <code>message</code>，可以用来泄露敏感信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?v1=Exception&amp;v2=file_get_contents&amp;arg=/etc/passwd</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>相当于：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo new Exception(file_get_contents(&#x27;/etc/passwd&#x27;));</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>如果 <code>file_get_contents(&#39;/etc/passwd&#39;)</code> 成功读取到了内容，它就会直接输出异常，导致信息泄露。</p>
+<hr>
+<h2 id="2-Error"><a href="#2-Error" class="headerlink" title="2. Error"></a><strong>2. <code>Error</code></strong></h2><p>PHP 7+ 之后，<code>Error</code> 继承自 <code>Throwable</code>，其行为和 <code>Exception</code> 类似：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?v1=Error&amp;v2=file_get_contents&amp;arg=/etc/passwd</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>它会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error: /etc/passwd in script.php:3</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<hr>
+<h2 id="3-ReflectionClass"><a href="#3-ReflectionClass" class="headerlink" title="3. ReflectionClass"></a><strong>3. <code>ReflectionClass</code></strong></h2><p><code>ReflectionClass</code> 的 <code>__toString()</code> 方法会输出类的结构信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?v1=ReflectionClass&amp;v2=scandir&amp;arg=/</span><br></pre></td></tr></table></figure>
+
+<p>相当于：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo new ReflectionClass(scandir(&#x27;/&#x27;));</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>scandir(&#39;/&#39;)</code> 返回根目录的文件列表，<code>ReflectionClass</code> 可能会尝试解析它，并导致错误信息输出 <strong>部分目录信息</strong>。</p>
+<hr>
+<h2 id="4-ReflectionFunction"><a href="#4-ReflectionFunction" class="headerlink" title="4. ReflectionFunction"></a><strong>4. <code>ReflectionFunction</code></strong></h2><p><code>ReflectionFunction</code> 也可以用于信息泄露：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?v1=ReflectionFunction&amp;v2=phpinfo</span><br></pre></td></tr></table></figure>
+
+<p>等效于：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo new ReflectionFunction(&#x27;phpinfo&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>这可能会导致 <code>phpinfo()</code> 输出，泄露 PHP 版本、服务器环境变量、路径等。</p>
+<hr>
+<h2 id="5-DateTime"><a href="#5-DateTime" class="headerlink" title="5. DateTime"></a><strong>5. <code>DateTime</code></strong></h2><p><code>DateTime</code> 类有 <code>__toString()</code> 方法，它会输出日期信息，但如果传入错误的参数，它可能会触发错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?v1=DateTime&amp;v2=file_get_contents&amp;arg=/etc/passwd</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>file_get_contents(&#39;/etc/passwd&#39;)</code> 作为 <code>DateTime</code> 的构造参数，它可能会引发错误，并在错误信息中 <strong>部分泄露</strong> <code>/etc/passwd</code>。</p>
+<hr>
+<h2 id="6-SimpleXMLElement"><a href="#6-SimpleXMLElement" class="headerlink" title="6. SimpleXMLElement"></a><strong>6. <code>SimpleXMLElement</code></strong></h2><p>如果你传入 XML 作为字符串，它可能会解析并输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?v1=SimpleXMLElement&amp;v2=file_get_contents&amp;arg=/etc/passwd</span><br></pre></td></tr></table></figure>
+
+<p>它的 <code>__toString()</code> 方法可能会输出解析后的 XML，如果 <code>/etc/passwd</code> 格式合适，可能会导致信息泄露。</p>
+<hr>
+<h2 id="7-DOMDocument"><a href="#7-DOMDocument" class="headerlink" title="7. DOMDocument"></a><strong>7. <code>DOMDocument</code></strong></h2><p><code>DOMDocument</code> 也可以用于文件读取攻击：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?v1=DOMDocument&amp;v2=file_get_contents&amp;arg=/etc/passwd</span><br></pre></td></tr></table></figure>
+
+<p>它的 <code>__toString()</code> 方法可能会尝试解析 <code>/etc/passwd</code>，并在错误信息中泄露部分内容。</p>
+<hr>
+<h2 id="8-SplFileObject"><a href="#8-SplFileObject" class="headerlink" title="8. SplFileObject"></a><strong>8. <code>SplFileObject</code></strong></h2><p><code>SplFileObject</code> 直接与文件系统交互：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?v1=SplFileObject&amp;v2=file_get_contents&amp;arg=/etc/passwd</span><br></pre></td></tr></table></figure>
+
+<p>可能会读取文件并尝试解析它，导致部分数据泄露。</p>
+<hr>
+<h2 id="9-FilesystemIterator"><a href="#9-FilesystemIterator" class="headerlink" title="9. FilesystemIterator"></a><strong>9. <code>FilesystemIterator</code></strong></h2><p><code>FilesystemIterator</code> 可以遍历目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?v1=FilesystemIterator&amp;v2=scandir&amp;arg=/</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>scandir(&#39;/&#39;)</code> 返回目录列表，<code>FilesystemIterator</code> 可能会输出 <strong>部分目录结构</strong>。</p>
+<hr>
+<h2 id="10-DirectoryIterator"><a href="#10-DirectoryIterator" class="headerlink" title="10. DirectoryIterator"></a><strong>10. <code>DirectoryIterator</code></strong></h2><p><code>DirectoryIterator</code> 类似于 <code>FilesystemIterator</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?v1=DirectoryIterator&amp;v2=scandir&amp;arg=/</span><br></pre></td></tr></table></figure>
+
+<p>它可能会输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DirectoryIterator Object ( [pathName] =&gt; /etc )</span><br></pre></td></tr></table></figure>
+
+<p>如果路径可访问，它可以用于 <strong>遍历目录</strong>。</p>
+<p>攻击者可以用 <strong>各种 PHP 内置类</strong> 来输出敏感信息，例如：</p>
+<table>
+<thead>
+<tr>
+<th>类</th>
+<th>可能泄露的信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Exception</code></td>
+<td>文件内容、错误信息</td>
+</tr>
+<tr>
+<td><code>Error</code></td>
+<td>类似 <code>Exception</code>，但用于 PHP 7+</td>
+</tr>
+<tr>
+<td><code>ReflectionClass</code></td>
+<td>类定义信息（可能间接泄露）</td>
+</tr>
+<tr>
+<td><code>ReflectionFunction</code></td>
+<td>可能导致 <code>phpinfo()</code> 泄露</td>
+</tr>
+<tr>
+<td><code>DateTime</code></td>
+<td>可能引发错误并泄露内容</td>
+</tr>
+<tr>
+<td><code>SimpleXMLElement</code></td>
+<td>可能解析 XML 格式的文件</td>
+</tr>
+<tr>
+<td><code>DOMDocument</code></td>
+<td>可能解析 HTML&#x2F;XML 并导致信息泄露</td>
+</tr>
+<tr>
+<td><code>SplFileObject</code></td>
+<td>可能读取文件并输出</td>
+</tr>
+<tr>
+<td><code>FilesystemIterator</code></td>
+<td>可能遍历目录</td>
+</tr>
+<tr>
+<td><code>DirectoryIterator</code></td>
+<td>可能遍历目录</td>
+</tr>
+</tbody></table>
+<p>**<code>Exception</code> &#x2F; <code>Error</code>**（错误信息泄露）</p>
+<p>**<code>ReflectionClass</code>**（类信息泄露）</p>
+<p>**<code>SplFileObject</code> &#x2F; <code>FilesystemIterator</code>**（文件&#x2F;目录遍历）</p>
+<p>**<code>DirectoryIterator</code>**（目录遍历）</p>
+<p>**<code>DOMDocument</code> &#x2F; <code>SimpleXMLElement</code>**（XML 解析）</p>
 
       
     </div>
@@ -343,8 +448,8 @@
       
       
       
-        <a data-aos="zoom-in" href="/2024/11/28/hello-world/#comments" class="article-comment-link">
-          <span class="post-comments-count waline-comment-count" data-path="/2024/11/28/hello-world/" itemprop="commentCount"></span>
+        <a data-aos="zoom-in" href="/2025/03/24/php%E5%86%85%E7%BD%AE%E7%B1%BB%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/#comments" class="article-comment-link">
+          <span class="post-comments-count waline-comment-count" data-path="/2025/03/24/php%E5%86%85%E7%BD%AE%E7%B1%BB%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" itemprop="commentCount"></span>
           留言
         </a>
       
@@ -352,7 +457,7 @@
       
       
         <span data-aos="zoom-in" class="article-visitor-link">
-          <span class="waline-pageview-count" data-path="/2024/11/28/hello-world/">0</span>
+          <span class="waline-pageview-count" data-path="/2025/03/24/php%E5%86%85%E7%BD%AE%E7%B1%BB%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/">0</span>
           <em class="post-meta-item-text">阅读量</em>
         </span>
       
@@ -368,18 +473,35 @@
         
           
           
-            <img data-src="https://d-sketon.top/img/backimg/bg1.jpg" data-sizes="auto" alt="达达" class="lazyload">
+            <img data-src="https://d-sketon.top/img/backimg/bg1.jpg" data-sizes="auto" alt="" class="lazyload">
           
         
-        <a href="/2024/11/28/%E8%BE%BE%E8%BE%BE/"></a>
+        <a href="/2025/03/24/%5BNSSRound#28%20Team%5Dez_php/"></a>
         <div class="article-nav-caption">前一篇</div>
         <h3 class="article-nav-title">
           
-            达达
+            (no title)
           
         </h3>
       </div>
     
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        
+        
+          <img data-src="https://d-sketon.top/img/backimg/bg1.jpg" data-sizes="auto" alt="达达" class="lazyload">
+        
+      
+      <a href="/2024/11/28/%E8%BE%BE%E8%BE%BE/"></a>
+      <div class="article-nav-caption">后一篇</div>
+      <h3 class="article-nav-title">
+        
+          达达
+        
+      </h3>
+    </div>
     
   </nav>
 
@@ -454,7 +576,7 @@
   <h3 class="toc-title">文章目录</h3>
   <div class="sidebar-toc-wrapper toc-div-class" >
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Exception"><span class="toc-number">1.</span> <span class="toc-text">1. Exception</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Error"><span class="toc-number">2.</span> <span class="toc-text">2. Error</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-ReflectionClass"><span class="toc-number">3.</span> <span class="toc-text">3. ReflectionClass</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-ReflectionFunction"><span class="toc-number">4.</span> <span class="toc-text">4. ReflectionFunction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-DateTime"><span class="toc-number">5.</span> <span class="toc-text">5. DateTime</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-SimpleXMLElement"><span class="toc-number">6.</span> <span class="toc-text">6. SimpleXMLElement</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-DOMDocument"><span class="toc-number">7.</span> <span class="toc-text">7. DOMDocument</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-SplFileObject"><span class="toc-number">8.</span> <span class="toc-text">8. SplFileObject</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-FilesystemIterator"><span class="toc-number">9.</span> <span class="toc-text">9. FilesystemIterator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-DirectoryIterator"><span class="toc-number">10.</span> <span class="toc-text">10. DirectoryIterator</span></a></li></ol>
       
   </div>
 </div>
@@ -601,13 +723,13 @@
       <script data-pjax>
         window.REIMU_POST = {
           author: "达达",
-          title: "Hello World",
-          url: "http://csd0617.github.io/2024/11/28/hello-world/",
+          title: "php内置类信息泄露",
+          url: "http://csd0617.github.io/2025/03/24/php%E5%86%85%E7%BD%AE%E7%B1%BB%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/",
           excerpt: "",
           description: "",
-          stripContent: "Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new &amp;quot;My New Po",
-          date: "Thu Nov 28 2024 00:21:10 GMT+0800",
-          updated: "Thu Nov 28 2024 00:21:10 GMT+0800",
+          stripContent: "通过 __toString() 方法输出数据，从而被滥用于信息泄露。 1. ExceptionException 的 __toString() 方法会输出 message，可以用来泄露敏感信息： 1?v1=Exception&amp;amp;v2=file_get_contents&amp;amp;arg=/etc/passwd  相当于： 1echo new Exception(file_get_contents(&amp;#x27;/etc/passwd&amp;#x27;));  如果 file_get_contents",
+          date: "Mon Mar 24 2025 20:45:00 GMT+0800",
+          updated: "Mon Mar 24 2025 20:46:03 GMT+0800",
           cover: "/images/banner.webp",
         };
       </script>

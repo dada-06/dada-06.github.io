@@ -216,7 +216,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
-    <div class="sidebar-state-number">2</div>
+    <div class="sidebar-state-number">4</div>
   </div>
   <div class="sidebar-state-category">
     <div>分类</div>
@@ -283,6 +283,84 @@
   
   
     
+    
+      <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/03/24/%5BNSSRound#28%20Team%5Dez_php/" aria-label=""></a>
+    
+    
+    <div class="post-cover-left">
+      
+        
+        
+          <img data-src="https://d-sketon.top/img/backimg/bg1.jpg" data-sizes="auto" alt="" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-03-24</span>
+        <span><span class="icon-pencil"></span>231 字</span>
+        <span><span class="icon-clock"></span>1 分钟</span>
+      </div>
+      <h2 class="post-title"></h2>
+      <article class="post-article">
+        
+          [NSSRound#28 Team]ez_php
+
+先看代码呗
+post传参  a b  get传参 pssword
+password不能是纯数字   又要等于123456
+is_numeric检验password是不是数字  如果是数字就会执行第一个die
+password!&amp;#x3D;123456  是非严格比较
+PHP 进行 非严格比较 (!=) 时，会尝试将字符串转换成数字。如果字符串以数字开头，PHP 会尽可能解析成数字，&amp;quot;123456abc&amp;quot; 会被当作 123456 来比较
+所以这里我们可以通过传password&amp;#x3D;123456abc进行绕过
+1if (
+        
+      </article>
+    </div>
+  </div>
+</div>
+      
+    
+      <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/03/24/php%E5%86%85%E7%BD%AE%E7%B1%BB%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" aria-label="php内置类信息泄露"></a>
+    
+    
+    <div class="post-cover-right">
+      
+        
+        
+          <img data-src="https://d-sketon.top/img/backimg/bg1.jpg" data-sizes="auto" alt="php内置类信息泄露" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-03-24</span>
+        <span><span class="icon-pencil"></span>729 字</span>
+        <span><span class="icon-clock"></span>3 分钟</span>
+      </div>
+      <h2 class="post-title">php内置类信息泄露</h2>
+      <article class="post-article">
+        
+          通过 __toString() 方法输出数据，从而被滥用于信息泄露。
+1. ExceptionException 的 __toString() 方法会输出 message，可以用来泄露敏感信息：
+1?v1=Exception&amp;amp;v2=file_get_contents&amp;amp;arg=/etc/passwd
+
+相当于：
+1echo new Exception(file_get_contents(&amp;#x27;/etc/passwd&amp;#x27;));
+
+如果 file_get_contents(&amp;#39;/etc/passwd&amp;#39;) 成功读取到了内容，它就会直接输出异常，导致信息泄露。
+        
+      </article>
+    </div>
+  </div>
+</div>
+      
     
       <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
@@ -379,10 +457,10 @@ Run server1$ hexo ser
     
       <div>
         <span class="icon-brush"></span>
-        75
+        1k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        00:02
+        00:06
       </div>
     
     
@@ -418,7 +496,7 @@ Run server1$ hexo ser
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
-    <div class="sidebar-state-number">2</div>
+    <div class="sidebar-state-number">4</div>
   </div>
   <div class="sidebar-state-category">
     <div>分类</div>
