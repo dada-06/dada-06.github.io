@@ -342,7 +342,6 @@ strops函数匹配上传的参
       <article class="post-article">
         
           Base  ctf  千年樱
-
 设置cookie：  from&amp;#x3D;ISCTF
 
 访问&amp;#x2F;get_contents_qwerghjkl.php
@@ -350,7 +349,7 @@ strops函数匹配上传的参
 这里有个file_get_content函数   用data:&amp;#x2F;&amp;#x2F;伪协议绕过
 file_get_contents($_POST[‘name’])   会尝试读取一个文件  名为name  而不是文件的内容
 所以这里要让 file_get_contents() 读取的是一个“伪造的文件”，它的内容正好是 &amp;quot;ISCTF&amp;quot;。
-而data:// 是 PHP 的 数据流（Stream Wrapper），允许
+而data:// 是 PHP 的 数据流（Stream Wrapper），允许直
         
       </article>
     </div>
