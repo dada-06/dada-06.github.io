@@ -41,12 +41,12 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="c:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250316105250599.png">
 <meta property="og:image" content="c:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250318195110595.png">
-<meta property="og:image" content="c:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250330100022834.png">
-<meta property="og:image" content="c:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250319213743317.png">
-<meta property="og:image" content="c:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250323111807538.png">
-<meta property="og:image" content="c:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250330103256994.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250330100022834.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250319213743317.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250323111807538.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250330103256994.png">
 <meta property="article:published_time" content="2025-03-31T10:09:00.000Z">
-<meta property="article:modified_time" content="2025-03-31T10:10:30.756Z">
+<meta property="article:modified_time" content="2025-03-31T11:19:30.469Z">
 <meta property="article:author" content="达达">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="c:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250316105250599.png">
@@ -754,7 +754,7 @@ $base：转换所使用的「进制」
 <p>另一种解释sh1  两个数组的话指针在比较时不相等，但作为sha1的参数时，会调用方法变成字符串Array，故sha1相等</p>
 <p>sh1碰撞  aaK1STfY  aaO8zKZF</p>
 <h3 id="parse-str-v1-v2"><a href="#parse-str-v1-v2" class="headerlink" title="parse_str($v1,$v2);"></a>parse_str($v1,$v2);</h3><p><code>parse_str($b);</code> 的作用是解析 <code>b=key=value</code> 形式的字符串，并将变量 <code>key</code> 赋值为 <code>value</code>。</p>
-<p><img src="C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250330100022834.png" alt="image-20250330100022834"></p>
+<p><img src="/../picture/image-20250330100022834.png" alt="image-20250330100022834"></p>
 <p>比如这个要给a[0]赋值  但是不能直接传参   就可以通过parse_str函数  传参b&#x3D;a[ ]&#x3D;“xxx” 将 a[]赋值为xxx</p>
 <p><code>parse_str()</code> 是一个 PHP 内置函数，它的作用是将查询字符串解析为 PHP 变量</p>
 <p>这行代码的作用是：</p>
@@ -784,7 +784,7 @@ $base：转换所使用的「进制」
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [message] =&gt; Hello World!</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
 <p>✅ <code>parse_str()</code> 自动解码 URL 编码的字符，如 <code>%20</code> → 空格，<code>%21</code> → <code>!</code>。</p>
-<p><img src="C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250319213743317.png" alt="image-20250319213743317"></p>
+<p><img src="/../picture/image-20250319213743317.png" alt="image-20250319213743317"></p>
 <p>本题中**<code>$v2[&#39;flag&#39;]</code> 代表 <code>$v2</code> 数组中 <code>flag</code> 这个键对应的值**。</p>
 <p>也就是我们传入的v1  要给它一个flag键</p>
 <p>然后parse_str函数会将flag的键值存储到$v2里然后与md5($v3)比较</p>
@@ -1064,7 +1064,7 @@ $base：转换所使用的「进制」
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">assert(&#x27;phpinfo();&#x27;);</span><br></pre></td></tr></table></figure>
 
 <p>这将会执行 <code>phpinfo()</code> 函数，并显示 PHP 配置信息。</p>
-<p><img src="C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250323111807538.png" alt="image-20250323111807538"></p>
+<p><img src="/../picture/image-20250323111807538.png" alt="image-20250323111807538"></p>
 <p>比如这个题里  我传入?$fl0g&#x3D;flag_give_me</p>
 <p>因为server  就相当与传入了一个 $_GET[‘fl0g’]&#x3D;flag_give_me</p>
 <p>但是现在还没有将flag_give_me真正储存到$fl0g这个变量里<br>所以我们就需要通过fun&#x3D;assert($a[0])   因为a&#x3D;server[‘argv’]  相当于传入了一个数组</p>
@@ -1210,7 +1210,7 @@ $base：转换所使用的「进制」
 <p><code>usleep()</code> 是一个 PHP 函数，接受一个整数参数并使程序暂停一段时间（微秒）。</p>
 <p>如果 <code>usleep()</code> 被传递 <code>null</code> 或无效参数时，通常 PHP 会抛出一个警告。但是有可能，在某些情况下（如 <code>null</code> 被转换为 <code>0</code>），<code>usleep()</code> 可能不抛出警告或 PHP 会以某种方式“静默”处理它。</p>
 <h3 id="switch循环语句传参"><a href="#switch循环语句传参" class="headerlink" title="switch循环语句传参"></a>switch循环语句传参</h3><p>在 PHP 中，<code>switch</code> 语句的比较是通过 <strong>严格比较（&#x3D;&#x3D;）</strong> 来进行的。当你传递一个非数字字符串（例如 <code>&quot;flag&quot;</code>）时，PHP 会<strong>尝试将其转换为数字</strong>。这个转换过程有些特殊，通常会把任何非数字字符串转换为 **<code>0</code>**。</p>
-<p><img src="C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250330103256994.png" alt="image-20250330103256994"></p>
+<p><img src="/../picture/image-20250330103256994.png" alt="image-20250330103256994"></p>
 
       
     </div>
@@ -1481,7 +1481,7 @@ $base：转换所使用的「进制」
           description: "",
           stripContent: "其中笔记多为查询ai获得 ai直接解释不清楚的  为自行查找并总结 strops()strpos() 是 PHP 用来查找字符串 的函数，它用于查找 某个字符串 在 另一个字符串 中 首次出现的位置。     if (strpos($xdmtql, &amp;#39;sys nb&amp;#39;) !== false) &amp;#123;          echo &amp;#39;flag&amp;#123;*******&amp;#125;&amp;#39;;     &amp;#125; else &amp;#123;          echo &amp;#3",
           date: "Mon Mar 31 2025 18:09:00 GMT+0800",
-          updated: "Mon Mar 31 2025 18:10:30 GMT+0800",
+          updated: "Mon Mar 31 2025 19:19:30 GMT+0800",
           cover: "/../covers/5.jpg",
         };
       </script>

