@@ -1,4 +1,445 @@
-<h3 id="RceMe"><a href="#RceMe" class="headerlink" title="RceMe"></a>RceMe</h3><h1 id=""><a href="#" class="headerlink" title=""></a><img src="/../picture/image-20250409193626219.png" alt="image-20250409193626219"></h1><p>这题只限制了payload为五字符以内</p>
+
+  <!DOCTYPE html>
+  <html lang="zh-CN"  
+    
+      data-theme-mode="auto"
+    
+  >
+  <head>
+  
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":"复制成功(*^▽^*)","fail":"复制失败 (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"本文版权：本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！"}};window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://csd0617.github.io';</script>
+  
+  <title>
+    SQCTF web |
+    
+    达达
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic&display=swap" media="print" onload="this.media&#x3D;&#39;all&#39;">
+  
+  
+    <link rel="preload" href="//at.alicdn.com/t/c/font_4552607_0khxww3tj3q9.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  
+  
+    
+<link rel="stylesheet" href="/css/loader.css">
+
+  
+  
+    <meta name="description" content="RceMe这题只限制了payload为五字符以内 先传    1?com&#x3D;ls &#x2F;    得出flag目录  读取flag文件的话  通过nl命令  使用nl命令：nl是用于添加行号的命令，支持短路径通配符。 通配符匹配路径：&#x2F;*匹配根目录下的所有文件，假设&#x2F;flag是其中唯一可读的文件。  1payload:?com&#x3D;nl &#x2F;*     命令长度：n + l + 空格 + &#x2F; + * → 共5个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQCTF web">
+<meta property="og:url" content="http://csd0617.github.io/2025/04/15/SQCTF/index.html">
+<meta property="og:site_name" content="达达">
+<meta property="og:description" content="RceMe这题只限制了payload为五字符以内 先传    1?com&#x3D;ls &#x2F;    得出flag目录  读取flag文件的话  通过nl命令  使用nl命令：nl是用于添加行号的命令，支持短路径通配符。 通配符匹配路径：&#x2F;*匹配根目录下的所有文件，假设&#x2F;flag是其中唯一可读的文件。  1payload:?com&#x3D;nl &#x2F;*     命令长度：n + l + 空格 + &#x2F; + * → 共5个">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409193626219.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409193810014.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409194202918.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409194404529.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409195023071.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409195656195.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409195945130.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409200254801.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409201416796.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409201501661.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409201604015.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409201636139.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409201717494.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409201816922.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409201918137.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409202009593.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409202055980.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409202119026.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409202449181.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409202639107.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409202740096.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409202808619.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409203014300.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409203216416.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409203250662.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409203334921.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409203417204.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409203652517.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409204510008.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409204952168.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409205003296.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409205417955.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409210014642.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409210812998.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250410170202051.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409211638092.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409212529723.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409212951218.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409213104295.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409213250525.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409213435590.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409213510570.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409214050075.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409214242620.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409214312854.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409214442128.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250410120806996.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250410121025625.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250410121039169.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409214857486.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409214934172.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409215010099.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409215042931.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409215106283.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409215223464.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409215254275.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409215514805.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250410122120762.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250410122133292.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250410122426898.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250410122407058.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409215631060.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409215758573.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409215938742.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409220624808.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409221059282.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409221147385.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409221415755.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250409221755986.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413105021280.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413105032638.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250410114240366.png">
+<meta property="og:image" content="http://csd0617.github.io/2025/04/15/picture/image-20250410121519837.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250410122005930.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250410122524229.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250410122824054.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250410122809896.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250410122856824.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250410163205756.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250410164450485.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250410164553368.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250410164603360.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413094533891.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413095707904.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413095934903.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413100028000.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413100102831.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413100157845.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413100226195.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413100427309.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413100453099.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413100534543.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413100623752.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413100617186.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413112422669.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413112509788.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413112525788.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413113537188.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413101423697.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413101430797.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413101702836.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413101820540.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413102055002.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413102129979.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413102214875.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413102622335.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413103107083.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413103424707.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413103536032.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413103938881.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413104539598.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413104642349.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413105756527.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413105859684.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413105947128.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413110422308.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413110547933.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413110648096.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413110803018.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413111124256.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413111149705.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413111543938.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413111622655.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413111711568.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413111959242.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413112114106.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413112138986.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250413112222475.png">
+<meta property="article:published_time" content="2025-04-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-04-14T15:40:54.938Z">
+<meta property="article:author" content="达达">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://csd0617.github.io/picture/image-20250409193626219.png">
+  
+  
+    <link rel="alternate" href="/atom.xml" title="达达" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  
+    
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js" integrity="sha384-k6YtvFUEIuEFBdrLKJ3YAUbBki333tj1CSUisai5Cswsg9wcLNaPzsTHDswp4Az8" crossorigin="anonymous"></script>
+
+  
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@reimujs/aos@0.1.0/dist/aos.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+  <body>
+    
+    
+  <div id='loader'>
+    <div class="loading-left-bg loading-bg"></div>
+    <div class="loading-right-bg loading-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi rotate">
+        
+          <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="https://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+            <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="var(--red-1, #ff5252)" />
+            <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z 
+           M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95z" fill="var(--red-1, #ff5252)" />
+          </svg>
+        
+      </div>
+      <div class="loading-word">少女祈祷中...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    var startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    var endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('DOMContentLoaded', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+<div id="copy-tooltip" style="pointer-events: none; opacity: 0; transition: all 0.2s ease; position: fixed;top: 50%;left: 50%;z-index: 999;transform: translate(-50%, -50%);color: white;background: rgba(0, 0, 0, 0.5);padding: 10px 15px;border-radius: 10px;">
+</div>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/">首页</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/archives">归档</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/about">关于</a>
+        </span>
+      
+        <span class="main-nav-link-wrap">
+          <div class="main-nav-icon icon rotate">
+            &#xe62b;
+          </div>
+          <a class="main-nav-link" href="/friend">友链</a>
+        </span>
+      
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅" target="_blank"></a>
+    
+    
+    
+  </nav>
+  
+</div>
+<header id="header">
+  
+    <picture></picture>
+    <img  fetchpriority="high" src="/../covers/4.jpg" alt="SQCTF web">
+  
+  <div id="header-outer">
+    <div id="header-title">
+      
+        
+        
+          <a href="/" id="logo">
+            <h1 data-aos="slide-up">SQCTF web</h1>
+          </a>
+        
+      
+      
+        
+        <h2 id="subtitle-wrap" data-aos="slide-down">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content"  class="sidebar-right" >
+          <aside id="sidebar">
+  
+  
+  
+  <div class="sidebar-wrapper wrap-sticky">
+    <div class="sidebar-wrap" data-aos="fade-up">
+      
+        
+          <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#RceMe"><span class="toc-number">1.</span> <span class="toc-text">RceMe</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number"></span> <span class="toc-text"></span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ezGame"><span class="toc-number">1.</span> <span class="toc-text">ezGame</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1"><span class="toc-number">1.1.</span> <span class="toc-text">1.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2"><span class="toc-number">1.2.</span> <span class="toc-text">2.</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ping"><span class="toc-number">2.</span> <span class="toc-text">Ping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%95%86%E5%B8%88%E4%B8%80%E6%97%A5%E6%B8%B8"><span class="toc-number">3.</span> <span class="toc-text">商师一日游</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E5%B0%8F%E6%9F%A5%E8%AF%A2%E7%B3%BB%E7%BB%9F"><span class="toc-number">4.</span> <span class="toc-text">小小查询系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#baby-include"><span class="toc-number">5.</span> <span class="toc-text">baby include</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-a-number"><span class="toc-number">6.</span> <span class="toc-text">Input a number</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ez-calculate"><span class="toc-number">7.</span> <span class="toc-text">Ez_calculate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#My-Blog"><span class="toc-number">8.</span> <span class="toc-text">My Blog</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%94%AF%E4%B8%80"><span class="toc-number">9.</span> <span class="toc-text">唯一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BD%E6%9C%88%E5%85%89"><span class="toc-number">10.</span> <span class="toc-text">白月光</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Upload-Level1"><span class="toc-number">11.</span> <span class="toc-text">Upload_Level1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Upload-Level2"><span class="toc-number">12.</span> <span class="toc-text">Upload_Level2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E5%B1%95%E7%A4%BA%E5%8A%9F%E8%83%BD"><span class="toc-number">13.</span> <span class="toc-text">图片展示功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#baby-rce"><span class="toc-number">14.</span> <span class="toc-text">baby rce</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eeaassyy"><span class="toc-number">15.</span> <span class="toc-text">eeaassyy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%83"><span class="toc-number">16.</span> <span class="toc-text">逃</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%98%BF%E5%98%BF%E5%98%BF"><span class="toc-number">17.</span> <span class="toc-text">嘿嘿嘿</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%AA%E8%A3%85"><span class="toc-number">18.</span> <span class="toc-text">伪装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Are-you-from-SQNU"><span class="toc-number">19.</span> <span class="toc-text">Are you from SQNU?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Look-for-the-homepag"><span class="toc-number">20.</span> <span class="toc-text">Look for the homepag</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#levle1"><span class="toc-number">20.1.</span> <span class="toc-text">levle1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8E%E9%9D%A2levle2"><span class="toc-number">20.2.</span> <span class="toc-text">后面levle2</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#file-download"><span class="toc-number">21.</span> <span class="toc-text">file_download</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E7%A7%81%E7%9A%84%E5%B0%8Fs"><span class="toc-number">22.</span> <span class="toc-text">自私的小s</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pickle"><span class="toc-number">23.</span> <span class="toc-text">pickle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E5%8F%82%E4%B9%8B%E8%88%9E"><span class="toc-number">24.</span> <span class="toc-text">无参之舞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%83%E6%9F%A5%E4%B8%87%E5%88%AB"><span class="toc-number">25.</span> <span class="toc-text">千查万别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ggoodd"><span class="toc-number">26.</span> <span class="toc-text">ggoodd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E7%9A%84%E5%B0%8F%E5%A4%B1%E8%AF%AF"><span class="toc-number">27.</span> <span class="toc-text">开发人员的小失误</span></a></li></ol>
+      
+  </div>
+</div>
+</div>
+          <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="达达" class="lazyload">
+  <div class="sidebar-author-name">达达</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">11</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分类</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>标签</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="首页"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">首页</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="归档"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">归档</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="关于"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">关于</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">友链</div>
+      </div>
+    
+  
+</div>
+</div>
+        
+      
+      
+        
+          <div class="sidebar-btn-wrapper" style="position:static">
+            <div class="sidebar-toc-btn current"></div>
+            <div class="sidebar-common-btn"></div>
+          </div>
+        
+      
+    </div>
+  </div>
+
+  <div class="sidebar-widget">
+  
+  </div>
+  
+</aside>
+
+          <section id="main"><article id="post-SQCTF" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner" data-aos="fade-up">
+    <div class="article-meta">
+      <div class="article-date">
+  <span class="article-date-link" data-aos="zoom-in">
+    <time datetime="2025-04-14T16:00:00.000Z" itemprop="datePublished">2025-04-15</time>
+    <time style="display: none;" id="post-update-time">2025-04-14</time>
+  </span>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+      
+        <h3 id="RceMe"><a href="#RceMe" class="headerlink" title="RceMe"></a>RceMe</h3><h1 id=""><a href="#" class="headerlink" title=""></a><img src="/../picture/image-20250409193626219.png" alt="image-20250409193626219"></h1><p>这题只限制了payload为五字符以内</p>
 <p>先传   </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?com=ls / </span><br></pre></td></tr></table></figure>
 
@@ -478,3 +919,384 @@
 <p>有一个&#x2F;backup.sql 文件</p>
 <p>访问会下载该文件   打开得到flag</p>
 <p><img src="/../picture/image-20250413112222475.png" alt="image-20250413112222475"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+  <nav id="article-nav" data-aos="fade-up">
+    
+      
+      <div class="article-nav-link-wrap article-nav-link-left">
+        
+          <img data-src="/../covers/4.jpg" data-sizes="auto" alt="TGCTF web" class="lazyload">
+        
+        <a href="/2025/04/15/TGCTF/"></a>
+        <div class="article-nav-caption">前一篇</div>
+        <h3 class="article-nav-title">
+          
+            TGCTF web
+          
+        </h3>
+      </div>
+    
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        <img data-src="/../covers/2.jpg" data-sizes="auto" alt="php死亡exit()绕过(待补充)" class="lazyload">
+      
+      <a href="/2025/04/14/php%E6%AD%BB%E4%BA%A1exit()%E7%BB%95%E8%BF%87/"></a>
+      <div class="article-nav-caption">后一篇</div>
+      <h3 class="article-nav-title">
+        
+          php死亡exit()绕过(待补充)
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+</article>
+
+
+
+
+
+
+
+
+
+
+</section>
+        </div>
+        <footer id="footer">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div id="footer-info">
+    
+    <div>
+      <span class="icon-copyright"></span>
+      
+      
+      
+        2020-2025
+      
+      <span class="footer-info-sep rotate"></span>
+      达达
+    </div>
+    
+      <div>
+        基于&nbsp;<a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a>&nbsp;
+        Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" rel="noopener external nofollow noreferrer" target="_blank">Reimu</a>
+      </div>
+    
+    
+      <div>
+        <span class="icon-brush"></span>
+        24.3k
+        &nbsp;|&nbsp;
+        <span class="icon-coffee"></span>
+        01:41
+      </div>
+    
+    
+    
+    
+      <div>
+        <span class="icon-eye"></span>
+        <span id="busuanzi_container_site_pv">总访问量&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+        &nbsp;|&nbsp;
+        <span class="icon-user"></span>
+        <span id="busuanzi_container_site_uv">总访客量&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+      </div>
+    
+  </div>
+</footer>
+
+        
+          <div class="sidebar-top">
+            <div class="sidebar-top-taichi rotate"></div>
+            <div class="arrow-up"></div>
+          </div>
+        
+        <div id="mask" class="hide"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      
+        <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper toc-div-class" >
+      
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#RceMe"><span class="toc-number">1.</span> <span class="toc-text">RceMe</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number"></span> <span class="toc-text"></span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ezGame"><span class="toc-number">1.</span> <span class="toc-text">ezGame</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1"><span class="toc-number">1.1.</span> <span class="toc-text">1.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2"><span class="toc-number">1.2.</span> <span class="toc-text">2.</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ping"><span class="toc-number">2.</span> <span class="toc-text">Ping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%95%86%E5%B8%88%E4%B8%80%E6%97%A5%E6%B8%B8"><span class="toc-number">3.</span> <span class="toc-text">商师一日游</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E5%B0%8F%E6%9F%A5%E8%AF%A2%E7%B3%BB%E7%BB%9F"><span class="toc-number">4.</span> <span class="toc-text">小小查询系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#baby-include"><span class="toc-number">5.</span> <span class="toc-text">baby include</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Input-a-number"><span class="toc-number">6.</span> <span class="toc-text">Input a number</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ez-calculate"><span class="toc-number">7.</span> <span class="toc-text">Ez_calculate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#My-Blog"><span class="toc-number">8.</span> <span class="toc-text">My Blog</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%94%AF%E4%B8%80"><span class="toc-number">9.</span> <span class="toc-text">唯一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BD%E6%9C%88%E5%85%89"><span class="toc-number">10.</span> <span class="toc-text">白月光</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Upload-Level1"><span class="toc-number">11.</span> <span class="toc-text">Upload_Level1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Upload-Level2"><span class="toc-number">12.</span> <span class="toc-text">Upload_Level2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E5%B1%95%E7%A4%BA%E5%8A%9F%E8%83%BD"><span class="toc-number">13.</span> <span class="toc-text">图片展示功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#baby-rce"><span class="toc-number">14.</span> <span class="toc-text">baby rce</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eeaassyy"><span class="toc-number">15.</span> <span class="toc-text">eeaassyy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%83"><span class="toc-number">16.</span> <span class="toc-text">逃</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%98%BF%E5%98%BF%E5%98%BF"><span class="toc-number">17.</span> <span class="toc-text">嘿嘿嘿</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%AA%E8%A3%85"><span class="toc-number">18.</span> <span class="toc-text">伪装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Are-you-from-SQNU"><span class="toc-number">19.</span> <span class="toc-text">Are you from SQNU?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Look-for-the-homepag"><span class="toc-number">20.</span> <span class="toc-text">Look for the homepag</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#levle1"><span class="toc-number">20.1.</span> <span class="toc-text">levle1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8E%E9%9D%A2levle2"><span class="toc-number">20.2.</span> <span class="toc-text">后面levle2</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#file-download"><span class="toc-number">21.</span> <span class="toc-text">file_download</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E7%A7%81%E7%9A%84%E5%B0%8Fs"><span class="toc-number">22.</span> <span class="toc-text">自私的小s</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pickle"><span class="toc-number">23.</span> <span class="toc-text">pickle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E5%8F%82%E4%B9%8B%E8%88%9E"><span class="toc-number">24.</span> <span class="toc-text">无参之舞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%83%E6%9F%A5%E4%B8%87%E5%88%AB"><span class="toc-number">25.</span> <span class="toc-text">千查万别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ggoodd"><span class="toc-number">26.</span> <span class="toc-text">ggoodd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E7%9A%84%E5%B0%8F%E5%A4%B1%E8%AF%AF"><span class="toc-number">27.</span> <span class="toc-text">开发人员的小失误</span></a></li></ol>
+      
+  </div>
+</div>
+</div>
+        <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/avatar.webp" data-sizes="auto" alt="达达" class="lazyload">
+  <div class="sidebar-author-name">达达</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">11</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分类</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>标签</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/" aria-label="首页"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">首页</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/archives" aria-label="归档"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">归档</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/about" aria-label="关于"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">关于</div>
+      </div>
+    
+      <div class="sidebar-menu-link-wrap">
+        <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
+        <div class="sidebar-menu-icon icon rotate">
+          &#xe62b;
+        </div>
+        <div class="sidebar-menu-link">友链</div>
+      </div>
+    
+  
+</div>
+</div>
+      
+    
+  </div>
+  
+    
+      <div class="sidebar-btn-wrapper">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+    
+  
+</nav>
+
+    </div>
+    
+    
+    
+    
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-3gT&#x2F;vsepWkfz&#x2F;ff7PpWNUeMzeWoH3cDhm&#x2F;A8jM7ouoAK0&#x2F;fP&#x2F;9bcHHR5kHq2nf+e" crossorigin="anonymous"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js" integrity="sha384-J08i8An&#x2F;QeARD9ExYpvphB8BsyOj3Gh2TSh1aLINKO3L0cMSH2dN3E22zFoXEi0Q" crossorigin="anonymous"></script>
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  
+<script src="/js/aos.js"></script>
+
+  <script>
+    var aosInit = () => {
+      AOS.init({
+        duration: 1000,
+        easing: "ease",
+        once: true,
+        offset: 50,
+      });
+    };
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', aosInit);
+    } else {
+      aosInit();
+    }
+  </script>
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.1.1/dist/index.umd.js" integrity="sha384-8LyaidD9GPxQQgLJO&#x2F;WRw&#x2F;O2h3BoNq&#x2F;ApI&#x2F;ecpvM6RsrCz2qP2ppBXUKihP4V&#x2F;2d" crossorigin="anonymous"></script>
+
+  <script>
+    window.firework && window.firework(JSON.parse('{"excludeElements":["a","button"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["var(--red-1)","var(--red-2)","var(--red-3)","var(--red-4)"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["var(--red-0)"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+
+
+
+<div id="lazy-script">
+  <div>
+    
+      
+      
+      <script data-pjax>
+        window.REIMU_POST = {
+          author: "达达",
+          title: "SQCTF web",
+          url: "http://csd0617.github.io/2025/04/15/SQCTF/",
+          excerpt: "",
+          description: "",
+          stripContent: "RceMe这题只限制了payload为五字符以内 先传    1?com=ls /    得出flag目录  读取flag文件的话  通过nl命令  使用nl命令：nl是用于添加行号的命令，支持短路径通配符。 通配符匹配路径：/*匹配根目录下的所有文件，假设/flag是其中唯一可读的文件。  1payload:?com=nl /*     命令长度：n + l + 空格 + / + * → 共5个字符。 执行效果：列出根目录下所有文件的内容（带行号），若/flag存在且可读，其内容将被输出   ",
+          date: "Tue Apr 15 2025 00:00:00 GMT+0800",
+          updated: "Mon Apr 14 2025 23:40:54 GMT+0800",
+          cover: "/../covers/4.jpg",
+        };
+      </script>
+       
+    
+    
+      
+        
+<script src="/js/insert_highlight.js" data-pjax></script>
+
+        
+      
+    
+    
+      <script type="module" data-pjax>
+        const PhotoSwipeLightbox = (await safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js", "sha384-DiL6M/gG+wmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF/N6lrZi/")).default;
+        
+        const pswp = () => {
+          if (_$$('.article-entry a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-entry',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          if(_$$('.article-gallery a.article-gallery-item').length > 0) {
+            new PhotoSwipeLightbox({
+              gallery: '.article-gallery',
+              children: 'a.article-gallery-item',
+              pswpModule: () => safeImport("https://npm.webcache.cn/photoswipe@5.4.4/dist/photoswipe.esm.min.js", "sha384-WkkO3GCmgkC3VQWpaV8DqhKJqpzpF9JoByxDmnV8+oTJ7m3DfYEWX1fu1scuS4+s")
+            }).init();
+          }
+          window.lightboxStatus = 'done';
+          window.removeEventListener('lightbox:ready', pswp);
+        }
+        if(window.lightboxStatus === 'ready') {
+          pswp()
+        } else {
+          window.addEventListener('lightbox:ready', pswp);
+        }
+      </script>
+      
+        
+
+
+
+
+
+
+
+
+      
+    
+  </div>
+</div>
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '1.8.0' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" integrity="sha384-0M75wtSkhjIInv4coYlaJU83+OypaRCIq2SukQVQX04eGTCBXJDuWAbJet56id+S" crossorigin="anonymous" async></script>
+
+
+
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+</script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+  </html>
+
