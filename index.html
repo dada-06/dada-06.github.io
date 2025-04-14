@@ -216,7 +216,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
-    <div class="sidebar-state-number">9</div>
+    <div class="sidebar-state-number">11</div>
   </div>
   <div class="sidebar-state-category">
     <div>分类</div>
@@ -287,10 +287,133 @@
       <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2025/04/06/NSSRound30/" aria-label="NSSCTF Round#30 小桃的PHP挑战"></a>
+      <a class="post-link" href="/2025/04/15/TGCTF/" aria-label="TGCTF web"></a>
     
     
     <div class="post-cover-left">
+      
+        <img data-src="/../covers/4.jpg" data-sizes="auto" alt="TGCTF web" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-04-15</span>
+        <span><span class="icon-pencil"></span>1.4k 字</span>
+        <span><span class="icon-clock"></span>5 分钟</span>
+      </div>
+      <h2 class="post-title">TGCTF web</h2>
+      <article class="post-article">
+        
+          TGCTF(ez)upload上传一个图片马 抓包   通过  &amp;#x2F;.  绕过
+在upload.php.bak里我们可以看到源码
+
+
+
+上传成功  访问uploads&amp;#x2F;shell.php
+执行命令    
+1shell=system(&amp;#x27;env&amp;#x27;);
+
+
+AAA偷渡阴平
+可以通过无参rce读取
+要列出根目录，可以利用 PHP 的预定义常量 DIRECTORY_SEPARATOR 绕过对斜杠 / 的过滤。
+方法：使用 DIRECTORY_SEPARATOR 常量
+PHP 的 DIRECTORY_SEPARATOR 是一个预定义常量，在 Linux 系统中值为 
+        
+      </article>
+    </div>
+  </div>
+</div>
+      
+    
+      <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/04/15/SQCTF/" aria-label="SQCTF web"></a>
+    
+    
+    <div class="post-cover-right">
+      
+        <img data-src="/../covers/4.jpg" data-sizes="auto" alt="SQCTF web" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-04-15</span>
+        <span><span class="icon-pencil"></span>4.8k 字</span>
+        <span><span class="icon-clock"></span>20 分钟</span>
+      </div>
+      <h2 class="post-title">SQCTF web</h2>
+      <article class="post-article">
+        
+          RceMe这题只限制了payload为五字符以内
+先传   
+1?com=ls / 
+
+ 得出flag目录
+
+读取flag文件的话  通过nl命令
+
+使用nl命令：nl是用于添加行号的命令，支持短路径通配符。
+通配符匹配路径：/*匹配根目录下的所有文件，假设/flag是其中唯一可读的文件。
+
+1payload:?com=nl /*
+
+
+
+
+命令长度：n + l + 空格 + / + * → 共5个字符。
+执行效果：列出根目录下所有文件的内容（带行号），若/flag存在且可读，其内容将被输出
+
+
+ezGame很明显需要你得分高于2048（游戏高手可以选择自己慢慢玩QAQ）
+查看源码   搜索sc
+        
+      </article>
+    </div>
+  </div>
+</div>
+      
+    
+      <div class="post-wrapper">
+  <div class="post-wrap-left" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/04/14/php%E6%AD%BB%E4%BA%A1exit()%E7%BB%95%E8%BF%87/" aria-label="php死亡exit()绕过(待补充)"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        <img data-src="/../covers/2.jpg" data-sizes="auto" alt="php死亡exit()绕过(待补充)" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-04-14</span>
+        <span><span class="icon-pencil"></span>211 字</span>
+        <span><span class="icon-clock"></span>1 分钟</span>
+      </div>
+      <h2 class="post-title">php死亡exit()绕过(待补充)</h2>
+      <article class="post-article">
+        
+          php死亡exit()绕过需要绕过exit()的地方一般都是file_put_contents
+大致有如下三种
+123file_put_contents($filename,&amp;quot;&amp;lt;?php exit();&amp;quot;.$content);file_put_contents($content,&amp;quot;&amp;lt;?php exit();&amp;quot;.$content);file_put_contents($filename,$content . &amp;quot;\nxxxxxx&amp;quot;);
+
+tips：伪协议处理时会对过滤器urldecode一次；面对不可用的规则是报个Warnin
+        
+      </article>
+    </div>
+  </div>
+</div>
+      
+    
+      <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/04/06/NSSRound30/" aria-label="NSSCTF Round#30 小桃的PHP挑战"></a>
+    
+    
+    <div class="post-cover-right">
       
         <img data-src="/../covers/2.jpg" data-sizes="auto" alt="NSSCTF Round#30 小桃的PHP挑战" class="lazyload">
       
@@ -319,41 +442,6 @@ strlen($add) = 2 &amp;gt; 1 → ✅ 条件成立
 🚫 黑名单限制：
 
 禁止：;、空格、$、#、反引号、单双引号、星号
-        
-      </article>
-    </div>
-  </div>
-</div>
-      
-    
-      <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2025/04/01/php%E6%AD%BB%E4%BA%A1exit()%E7%BB%95%E8%BF%87/" aria-label=""></a>
-    
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="/covers/3.jpg" data-sizes="auto" alt="" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2025-04-01</span>
-        <span><span class="icon-pencil"></span>211 字</span>
-        <span><span class="icon-clock"></span>1 分钟</span>
-      </div>
-      <h2 class="post-title"></h2>
-      <article class="post-article">
-        
-          php死亡exit()绕过需要绕过exit()的地方一般都是file_put_contents
-大致有如下三种
-123file_put_contents($filename,&amp;quot;&amp;lt;?php exit();&amp;quot;.$content);file_put_contents($content,&amp;quot;&amp;lt;?php exit();&amp;quot;.$content);file_put_contents($filename,$content . &amp;quot;\nxxxxxx&amp;quot;);
-
-tips：伪协议处理时会对过滤器urldecode一次；面对不可用的规则是报个Warnin
         
       </article>
     </div>
@@ -538,14 +626,14 @@ file_get_contents($_POST[‘name’])   会尝试读取一个文件  名为name 
           
 get传参b&amp;#x3D;a[0]&amp;#x3D;QLTHNDT
 md5弱比较  这里是0e绕过    QNKCDZO与QLTHNDT经过md5编码后都是0e开头
-因为PHP 试图解析它们为数值，发现它们符合 0eX（科学计数法），都被解释为 **0 * 10^X = 0**。
-结果是 0 == 0，所以 **返回 true**。
+因为PHP 试图解析它们为数值，发现它们符合 0eX（科学计数法），都被解释为 0 * 10^X = 0。
+结果是 0 == 0，所以 返回 true。
 然后post  num
 num&amp;#x3D;2024  不能有字母    intval($num,0)&amp;#x3D;2024
 小数点绕过即可   
 post传参num&amp;#x3D;2024.1
 intval() 转换小数类型时，只返回个位数，不遵循四舍五入的原则。
-接下来是一
+接下来是一个switch循
         
       </article>
     </div>
@@ -590,43 +678,13 @@ PHP 进行 非严格比较 (!=) 时，会尝试将字符串转换成数字。如
 </div>
       
     
-      <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
-    
-      <a class="post-link" href="/2025/03/24/php%E5%86%85%E7%BD%AE%E7%B1%BB%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" aria-label="php内置类信息泄露"></a>
-    
-    
-    <div class="post-cover-left">
-      
-        <img data-src="/../covers/1.png" data-sizes="auto" alt="php内置类信息泄露" class="lazyload">
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2025-03-24</span>
-        <span><span class="icon-pencil"></span>729 字</span>
-        <span><span class="icon-clock"></span>3 分钟</span>
-      </div>
-      <h2 class="post-title">php内置类信息泄露</h2>
-      <article class="post-article">
-        
-          通过 __toString() 方法输出数据，从而被滥用于信息泄露。
-1. ExceptionException 的 __toString() 方法会输出 message，可以用来泄露敏感信息：
-1?v1=Exception&amp;amp;v2=file_get_contents&amp;amp;arg=/etc/passwd
-
-相当于：
-1echo new Exception(file_get_contents(&amp;#x27;/etc/passwd&amp;#x27;));
-
-如果 file_get_contents(&amp;#39;/etc/passwd&amp;#39;) 成功读取到了内容，它就会直接输出异常，导致信息泄露。
-        
-      </article>
-    </div>
-  </div>
-</div>
-      
-    
   
 
+
+  <nav id="page-nav" data-aos="fade-up">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+  </nav>
 
 
 </section>
@@ -654,10 +712,10 @@ PHP 进行 非严格比较 (!=) 时，会尝试将字符串转换成数字。如
     
       <div>
         <span class="icon-brush"></span>
-        18k
+        24.3k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        01:16
+        01:41
       </div>
     
     
@@ -693,7 +751,7 @@ PHP 进行 非严格比较 (!=) 时，会尝试将字符串转换成数字。如
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
-    <div class="sidebar-state-number">9</div>
+    <div class="sidebar-state-number">11</div>
   </div>
   <div class="sidebar-state-category">
     <div>分类</div>
