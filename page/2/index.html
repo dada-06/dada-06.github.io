@@ -215,7 +215,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
-    <div class="sidebar-state-number">12</div>
+    <div class="sidebar-state-number">13</div>
   </div>
   <div class="sidebar-state-category">
     <div>分类</div>
@@ -286,10 +286,48 @@
       <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2025/03/27/NSSRound%20Teamez_php/" aria-label="NSSRound#28 Team ez_php"></a>
+      <a class="post-link" href="/2025/03/30/%E5%B0%8F%E8%93%9D%E9%B2%A8%E7%9A%84%E5%86%92%E9%99%A9/" aria-label="ISCTF小蓝鲨的冒险"></a>
     
     
     <div class="post-cover-left">
+      
+        <img data-src="/../covers/11.gif" data-sizes="auto" alt="ISCTF小蓝鲨的冒险" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-03-30</span>
+        <span><span class="icon-pencil"></span>660 字</span>
+        <span><span class="icon-clock"></span>2 分钟</span>
+      </div>
+      <h2 class="post-title">ISCTF小蓝鲨的冒险</h2>
+      <article class="post-article">
+        
+          
+get传参b&amp;#x3D;a[0]&amp;#x3D;QLTHNDT
+md5弱比较  这里是0e绕过    QNKCDZO与QLTHNDT经过md5编码后都是0e开头
+因为PHP 试图解析它们为数值，发现它们符合 0eX（科学计数法），都被解释为 0 * 10^X = 0。
+结果是 0 == 0，所以 返回 true。
+然后post  num
+num&amp;#x3D;2024  不能有字母    intval($num,0)&amp;#x3D;2024
+小数点绕过即可   
+post传参num&amp;#x3D;2024.1
+intval() 转换小数类型时，只返回个位数，不遵循四舍五入的原则。
+接下来是一个switch循
+        
+      </article>
+    </div>
+  </div>
+</div>
+      
+    
+      <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/03/27/NSSRound%20Teamez_php/" aria-label="NSSRound#28 Team ez_php"></a>
+    
+    
+    <div class="post-cover-right">
       
         <img data-src="/../covers/3.jpg" data-sizes="auto" alt="NSSRound#28 Team ez_php" class="lazyload">
       
@@ -321,12 +359,12 @@ PHP 进行 非严格比较 (!=) 时，会尝试将字符串转换成数字。如
       
     
       <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/03/24/php%E5%86%85%E7%BD%AE%E7%B1%BB%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/" aria-label="php内置类信息泄露"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/../covers/1.png" data-sizes="auto" alt="php内置类信息泄露" class="lazyload">
       
@@ -391,10 +429,10 @@ PHP 进行 非严格比较 (!=) 时，会尝试将字符串转换成数字。如
     
       <div>
         <span class="icon-brush"></span>
-        41.2k
+        43.5k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        02:55
+        03:07
       </div>
     
     
@@ -430,7 +468,7 @@ PHP 进行 非严格比较 (!=) 时，会尝试将字符串转换成数字。如
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
-    <div class="sidebar-state-number">12</div>
+    <div class="sidebar-state-number">13</div>
   </div>
   <div class="sidebar-state-category">
     <div>分类</div>
