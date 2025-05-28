@@ -227,7 +227,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
-    <div class="sidebar-state-number">13</div>
+    <div class="sidebar-state-number">14</div>
   </div>
   <div class="sidebar-state-category">
     <div>分类</div>
@@ -306,10 +306,52 @@
       <div class="post-wrapper">
   <div class="post-wrap-left" data-aos="fade-up">
     
-      <a class="post-link" href="/2025/05/27/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" aria-label="ssti模板注入"></a>
+      <a class="post-link" href="/2025/05/28/Boring%20Code/" aria-label="ByteCTF 2019 Boring Code"></a>
     
     
     <div class="post-cover-left">
+      
+        <img data-src="/../covers/3.jpg" data-sizes="auto" alt="ByteCTF 2019 Boring Code" class="lazyload">
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2025-05-28</span>
+        <span><span class="icon-pencil"></span>1.5k 字</span>
+        <span><span class="icon-clock"></span>6 分钟</span>
+      </div>
+      <h2 class="post-title">ByteCTF 2019 Boring Code</h2>
+      <article class="post-article">
+        
+          这题考了无参数rce   伪协议读取
+
+flag就在主目录下
+&amp;#x2F;code里的源码
+
+解释过滤了data:&amp;#x2F;&amp;#x2F;
+有个parse_url($url)函数
+检测url的host部分  是不是baidu.com
+然后下面是无参
+最终执行eval($code)
+这里通过compress.zlib:&amp;#x2F;&amp;#x2F;伪协议进行文件读取
+可以分解为：
+
+compress.zlib:// → 这是 PHP 的流封装器，用于处理 zlib 压缩 的数据流（.gz 格式）。
+data: → 这是 data URI scheme，可以内嵌数据而非从文件或网络读取，常用于嵌入 ba
+        
+      </article>
+    </div>
+  </div>
+</div>
+      
+    
+      <div class="post-wrapper">
+  <div class="post-wrap-right" data-aos="fade-up">
+    
+      <a class="post-link" href="/2025/05/27/ssti%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5/" aria-label="ssti模板注入"></a>
+    
+    
+    <div class="post-cover-right">
       
         <img data-src="/../covers/3.jpg" data-sizes="auto" alt="ssti模板注入" class="lazyload">
       
@@ -338,12 +380,12 @@
       
     
       <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/30/php%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/" aria-label="php命令执行"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/../covers/12.jpg" data-sizes="auto" alt="php命令执行" class="lazyload">
       
@@ -372,12 +414,12 @@ exec  回显最后一行exec（字符串 $command， 数组 &amp;amp;$output &am
       
     
       <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/15/TGCTF/" aria-label="TGCTF web"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/../covers/9.jpg" data-sizes="auto" alt="TGCTF web" class="lazyload">
       
@@ -414,12 +456,12 @@ PHP 的 DIRECTORY_SEPARATOR 是一个预定义常量，在 Linux 系统中值为
       
     
       <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/15/SQCTF/" aria-label="SQCTF web"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/../covers/13.jpg" data-sizes="auto" alt="SQCTF web" class="lazyload">
       
@@ -464,12 +506,12 @@ ezGame很明显需要你得分高于2048（游戏高手可以选择自己慢慢�
       
     
       <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/14/php%E6%AD%BB%E4%BA%A1exit()%E7%BB%95%E8%BF%87/" aria-label="php死亡exit()绕过"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/../covers/10.jpg" data-sizes="auto" alt="php死亡exit()绕过" class="lazyload">
       
@@ -496,12 +538,12 @@ tips：伪协议处理时会对过滤器urldecode一次；面对不可用的规�
       
     
       <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/06/NSSRound30/" aria-label="NSSCTF Round#30"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/../covers/2.jpg" data-sizes="auto" alt="NSSCTF Round#30" class="lazyload">
       
@@ -537,12 +579,12 @@ strlen($add) = 2 &amp;gt; 1 → ✅ 条件成立
       
     
       <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/01/polar%20%20%E5%86%99shell/" aria-label="polar 写shell"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/../covers/6.png" data-sizes="auto" alt="polar 写shell" class="lazyload">
       
@@ -574,12 +616,12 @@ tips：伪协议处理时会对过滤器urld
       
     
       <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
+  <div class="post-wrap-left" data-aos="fade-up">
     
       <a class="post-link" href="/2025/04/01/polar%20bllbl_rce/" aria-label="polar bllbl_rce"></a>
     
     
-    <div class="post-cover-right">
+    <div class="post-cover-left">
       
         <img data-src="/../covers/7.gif" data-sizes="auto" alt="polar bllbl_rce" class="lazyload">
       
@@ -618,12 +660,12 @@ if (strpos($command, ‘bllbl’) &amp;#x3D;&amp;#x3D;&amp;#x3D; false)
       
     
       <div class="post-wrapper">
-  <div class="post-wrap-left" data-aos="fade-up">
+  <div class="post-wrap-right" data-aos="fade-up">
     
       <a class="post-link" href="/2025/03/31/php%E7%89%B9%E6%80%A7/" aria-label="ctfshow php特性刷题笔记(待补充)"></a>
     
     
-    <div class="post-cover-left">
+    <div class="post-cover-right">
       
         <img data-src="/../covers/5.jpg" data-sizes="auto" alt="ctfshow php特性刷题笔记(待补充)" class="lazyload">
       
@@ -647,42 +689,6 @@ strops()strpos() 是 PHP 用来查找字符串 的函数，它用于查找 某�
     &amp;#125;
 
 strops函数匹配上传的参
-        
-      </article>
-    </div>
-  </div>
-</div>
-      
-    
-      <div class="post-wrapper">
-  <div class="post-wrap-right" data-aos="fade-up">
-    
-      <a class="post-link" href="/2025/03/31/ISCTF%20%20%E5%8D%83%E5%B9%B4%E6%A8%B1/" aria-label="ISCTF 千年樱"></a>
-    
-    
-    <div class="post-cover-right">
-      
-        <img data-src="/../covers/4.jpg" data-sizes="auto" alt="ISCTF 千年樱" class="lazyload">
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2025-03-31</span>
-        <span><span class="icon-pencil"></span>2.8k 字</span>
-        <span><span class="icon-clock"></span>15 分钟</span>
-      </div>
-      <h2 class="post-title">ISCTF 千年樱</h2>
-      <article class="post-article">
-        
-          Base  ctf  千年樱
-设置cookie：  from&amp;#x3D;ISCTF
-
-访问&amp;#x2F;get_contents_qwerghjkl.php
-
-这里有个file_get_content函数   用data:&amp;#x2F;&amp;#x2F;伪协议绕过
-file_get_contents($_POST[‘name’])   会尝试读取一个文件  名为name  而不是文件的内容
-所以这里要让 file_get_contents() 读取的是一个“伪造的文件”，它的内容正好是 &amp;quot;ISCTF&amp;quot;。
-而data:// 是 PHP 的 数据流（Stream Wrapper），允许直
         
       </article>
     </div>
@@ -726,10 +732,10 @@ file_get_contents($_POST[‘name’])   会尝试读取一个文件  名为name 
     
       <div>
         <span class="icon-brush"></span>
-        43.5k
+        45k
         &nbsp;|&nbsp;
         <span class="icon-coffee"></span>
-        03:07
+        03:13
       </div>
     
     
@@ -765,7 +771,7 @@ file_get_contents($_POST[‘name’])   会尝试读取一个文件  名为name 
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
-    <div class="sidebar-state-number">13</div>
+    <div class="sidebar-state-number">14</div>
   </div>
   <div class="sidebar-state-category">
     <div>分类</div>
