@@ -14,7 +14,7 @@
 
   
 
-  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":{"en":"Copy successfully (*^▽^*)","zh-CN":"复制成功 (*^▽^*)","zh-TW":"複製成功 (*^▽^*)","ja":"コピー成功 (*^▽^*)"},"fail":{"en":"Copy failed (ﾟ⊿ﾟ)ﾂ","zh-CN":"复制失败 (ﾟ⊿ﾟ)ﾂ","zh-TW":"複製失敗 (ﾟ⊿ﾟ)ﾂ","ja":"コピー失敗 (ﾟ⊿ﾟ)ﾂ"},"copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = '本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://csd0617.github.io';</script>
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":{"en":"Copy successfully (*^▽^*)","zh-CN":"复制成功 (*^▽^*)","zh-TW":"複製成功 (*^▽^*)","ja":"コピー成功 (*^▽^*)"},"fail":{"en":"Copy failed (ﾟ⊿ﾟ)ﾂ","zh-CN":"复制失败 (ﾟ⊿ﾟ)ﾂ","zh-TW":"複製失敗 (ﾟ⊿ﾟ)ﾂ","ja":"コピー失敗 (ﾟ⊿ﾟ)ﾂ"},"copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = '本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://dada-06.github.io';</script>
   
   <title>
     ByteCTF 2019 Boring Code |
@@ -38,7 +38,7 @@
     <meta name="description" content="这题考了无参数rce   伪协议读取  flag就在主目录下 &#x2F;code里的源码  解释过滤了data:&#x2F;&#x2F; 有个parse_url($url)函数 检测url的host部分  是不是baidu.com 然后下面是无参 最终执行eval($code) 这里通过compress.zlib:&#x2F;&#x2F;伪协议进行文件读取 可以分解为：  compress.zl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ByteCTF 2019 Boring Code">
-<meta property="og:url" content="http://csd0617.github.io/2025/05/28/Boring%20Code/index.html">
+<meta property="og:url" content="http://dada-06.github.io/2025/05/28/Boring%20Code/index.html">
 <meta property="og:site_name" content="达达">
 <meta property="og:description" content="这题考了无参数rce   伪协议读取  flag就在主目录下 &#x2F;code里的源码  解释过滤了data:&#x2F;&#x2F; 有个parse_url($url)函数 检测url的host部分  是不是baidu.com 然后下面是无参 最终执行eval($code) 这里通过compress.zlib:&#x2F;&#x2F;伪协议进行文件读取 可以分解为：  compress.zl">
 <meta property="og:locale" content="zh_CN">
@@ -754,7 +754,7 @@
         window.REIMU_POST = {
           author: "达达",
           title: "ByteCTF 2019 Boring Code",
-          url: "http://csd0617.github.io/2025/05/28/Boring%20Code/",
+          url: "http://dada-06.github.io/2025/05/28/Boring%20Code/",
           excerpt: "",
           description: "",
           stripContent: "这题考了无参数rce   伪协议读取  flag就在主目录下 &amp;#x2F;code里的源码  解释过滤了data:&amp;#x2F;&amp;#x2F; 有个parse_url($url)函数 检测url的host部分  是不是baidu.com 然后下面是无参 最终执行eval($code) 这里通过compress.zlib:&amp;#x2F;&amp;#x2F;伪协议进行文件读取 可以分解为：  compress.zlib:// → 这是 PHP 的流封装器，用于处理 zlib 压缩 的数据流（.gz 格式）。 da",

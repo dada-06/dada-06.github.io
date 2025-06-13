@@ -14,7 +14,7 @@
 
   
 
-  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":{"en":"Copy successfully (*^▽^*)","zh-CN":"复制成功 (*^▽^*)","zh-TW":"複製成功 (*^▽^*)","ja":"コピー成功 (*^▽^*)"},"fail":{"en":"Copy failed (ﾟ⊿ﾟ)ﾂ","zh-CN":"复制失败 (ﾟ⊿ﾟ)ﾂ","zh-TW":"複製失敗 (ﾟ⊿ﾟ)ﾂ","ja":"コピー失敗 (ﾟ⊿ﾟ)ﾂ"},"copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = '本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://csd0617.github.io';</script>
+  <script>window.REIMU_CONFIG = {};window.REIMU_CONFIG.icon_font = '4552607_0khxww3tj3q9';window.REIMU_CONFIG.clipboard_tips = {"success":{"en":"Copy successfully (*^▽^*)","zh-CN":"复制成功 (*^▽^*)","zh-TW":"複製成功 (*^▽^*)","ja":"コピー成功 (*^▽^*)"},"fail":{"en":"Copy failed (ﾟ⊿ﾟ)ﾂ","zh-CN":"复制失败 (ﾟ⊿ﾟ)ﾂ","zh-TW":"複製失敗 (ﾟ⊿ﾟ)ﾂ","ja":"コピー失敗 (ﾟ⊿ﾟ)ﾂ"},"copyright":{"enable":false,"count":50,"license_type":"by-nc-sa"}};window.REIMU_CONFIG.clipboard_tips.copyright.content = '本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！';window.REIMU_CONFIG.code_block = {"expand":true};window.REIMU_CONFIG.base = 'http://dada-06.github.io';</script>
   
   <title>
     php内置类信息泄露 |
@@ -38,7 +38,7 @@
     <meta name="description" content="通过 __toString() 方法输出数据，从而被滥用于信息泄露。 1. ExceptionException 的 __toString() 方法会输出 message，可以用来泄露敏感信息： 1?v1&#x3D;Exception&amp;v2&#x3D;file_get_contents&amp;arg&#x3D;&#x2F;etc&#x2F;passwd  相当于： 1echo new Exception(file_get_content">
 <meta property="og:type" content="article">
 <meta property="og:title" content="php内置类信息泄露">
-<meta property="og:url" content="http://csd0617.github.io/2025/03/24/php%E5%86%85%E7%BD%AE%E7%B1%BB%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/index.html">
+<meta property="og:url" content="http://dada-06.github.io/2025/03/24/php%E5%86%85%E7%BD%AE%E7%B1%BB%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/index.html">
 <meta property="og:site_name" content="达达">
 <meta property="og:description" content="通过 __toString() 方法输出数据，从而被滥用于信息泄露。 1. ExceptionException 的 __toString() 方法会输出 message，可以用来泄露敏感信息： 1?v1&#x3D;Exception&amp;v2&#x3D;file_get_contents&amp;arg&#x3D;&#x2F;etc&#x2F;passwd  相当于： 1echo new Exception(file_get_content">
 <meta property="og:locale" content="zh_CN">
@@ -717,7 +717,7 @@
         window.REIMU_POST = {
           author: "达达",
           title: "php内置类信息泄露",
-          url: "http://csd0617.github.io/2025/03/24/php%E5%86%85%E7%BD%AE%E7%B1%BB%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/",
+          url: "http://dada-06.github.io/2025/03/24/php%E5%86%85%E7%BD%AE%E7%B1%BB%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2/",
           excerpt: "",
           description: "",
           stripContent: "通过 __toString() 方法输出数据，从而被滥用于信息泄露。 1. ExceptionException 的 __toString() 方法会输出 message，可以用来泄露敏感信息： 1?v1=Exception&amp;amp;v2=file_get_contents&amp;amp;arg=/etc/passwd  相当于： 1echo new Exception(file_get_contents(&amp;#x27;/etc/passwd&amp;#x27;));  如果 file_get_contents",
