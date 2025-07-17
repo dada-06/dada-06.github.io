@@ -1,3 +1,0 @@
-var posts=["2025/03/24/php内置类信息泄露/","2025/03/27/NSSRound Teamez_php/","2025/04/01/polar  写shell/","2025/03/31/php特性/","2025/03/30/小蓝鲨的冒险/","2025/04/01/polar bllbl_rce/","2025/03/31/ISCTF  千年樱/","2025/04/14/php死亡exit()绕过/","2025/04/06/NSSRound30/","2025/04/15/TGCTF/","2025/04/15/SQCTF/","2025/04/30/php命令执行/","2025/05/27/ssti模板注入/","2025/05/28/Boring Code/"];function toRandomPost(){
-    pjax.loadUrl('/'+posts[Math.floor(Math.random() * posts.length)]);
-  };
