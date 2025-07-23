@@ -67,10 +67,10 @@ class ProgressiveLoad {
   };
   
   const config = {
-    smallSrc: 'https://cdn.jsdelivr.net/gh/csd0617/piclist@main/img/20250723093925428.png', // 小图链接 尽可能配置小于100k的图片
-    largeSrc: 'https://cdn.jsdelivr.net/gh/csd0617/piclist@main/img/20250723093925428.png', // 大图链接 最终显示的图片
-    mobileSmallSrc: 'https://cdn.jsdelivr.net/gh/csd0617/piclist@main/img/20250723093925428.png', // 手机端小图链接 尽可能配置小于100k的图片
-    mobileLargeSrc: 'https://cdn.jsdelivr.net/gh/csd0617/piclist@main/img/20250723093925428.png', // 手机端大图链接 最终显示的图片
+    smallSrc: '/img/top.png', // 小图链接 尽可能配置小于100k的图片
+    largeSrc: '/img/top.png', // 大图链接 最终显示的图片
+    mobileSmallSrc: '/img/top.png', // 手机端小图链接 尽可能配置小于100k的图片
+    mobileLargeSrc: '/img/top.png', // 手机端大图链接 最终显示的图片
     enableRoutes: ['/'],
     };
 
@@ -156,17 +156,17 @@ class ProgressiveLoad {
 
   const ldconfig = {
     light: {
-	  smallSrc: 'https://cdn.jsdelivr.net/gh/csd0617/piclist@main/img/20250723093925428.png', //浅色模式 小图链接 尽可能配置小于100k的图片 
-	  largeSrc: 'https://cdn.jsdelivr.net/gh/csd0617/piclist@main/img/20250723093925428.png', //浅色模式 大图链接 最终显示的图片
-	  mobileSmallSrc: 'https://cdn.jsdelivr.net/gh/csd0617/piclist@main/img/20250723093925428.png', //手机端浅色小图链接 尽可能配置小于100k的图片
-	  mobileLargeSrc: 'https://cdn.jsdelivr.net/gh/csd0617/piclist@main/img/20250723093925428.png', //手机端浅色大图链接 最终显示的图片
+	  smallSrc: '/img/top.png', //浅色模式 小图链接 尽可能配置小于100k的图片 
+	  largeSrc: '/img/top.png', //浅色模式 大图链接 最终显示的图片
+	  mobileSmallSrc: '/img/top.png', //手机端浅色小图链接 尽可能配置小于100k的图片
+	  mobileLargeSrc: '/img/top.png', //手机端浅色大图链接 最终显示的图片
 	  enableRoutes: ['/'],
 	  },
 	dark: {
-	  smallSrc: 'https://cdn.jsdelivr.net/gh/csd0617/piclist@main/img/20250723093925428.png', //深色模式 小图链接 尽可能配置小于100k的图片 
-	  largeSrc: 'https://cdn.jsdelivr.net/gh/csd0617/piclist@main/img/20250723093925428.png', //深色模式 大图链接 最终显示的图片
-	  mobileSmallSrc: 'https://cdn.jsdelivr.net/gh/csd0617/piclist@main/img/20250723093925428.png', //手机端深色模式小图链接 尽可能配置小于100k的图片
-	  mobileLargeSrc: 'https://cdn.jsdelivr.net/gh/csd0617/piclist@main/img/20250723093925428.png', //手机端深色大图链接 最终显示的图片
+	  smallSrc: '/img/top.png', //深色模式 小图链接 尽可能配置小于100k的图片 
+	  largeSrc: '/img/top.png', //深色模式 大图链接 最终显示的图片
+	  mobileSmallSrc: '/img/top.png', //手机端深色模式小图链接 尽可能配置小于100k的图片
+	  mobileLargeSrc: '/img/top.png', //手机端深色大图链接 最终显示的图片
 	  enableRoutes: ['/'],
 	  },
 	};
