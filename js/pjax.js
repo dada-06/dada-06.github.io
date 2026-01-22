@@ -1,6 +1,6 @@
 window.addEventListener("pjax:success", () => {
   _$$("script[data-pjax]").forEach((element) => {
-    const { textContent, parentNode, id, className, type, src, dataset, onload, integrity, crossOrigin } =
+    const { textContent, parentNode, id, className, type, src, dataset, onload } =
       element;
     const code = textContent || "";
     const script = document.createElement("script");
@@ -10,8 +10,6 @@ window.addEventListener("pjax:success", () => {
     type && (script.type = type);
     dataset.pjax !== undefined && (script.dataset.pjax = "");
     onload && (script.onload = onload);
-    integrity && (script.integrity = integrity);
-    crossOrigin && (script.crossOrigin = crossOrigin);
 
     if (src) {
       script.src = src;
